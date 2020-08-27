@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
-import { MovieFlatList } from '../../../../MovieLists/MovieFlatList';
+import { MovieFlatList } from '../../MovieLists/MovieFlatList';
 
 const HomePageScreen = ({ navigation }: any) => {
     return (
