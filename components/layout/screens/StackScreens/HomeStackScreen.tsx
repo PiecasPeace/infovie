@@ -1,44 +1,42 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DetailPageScreen from '../PageScreens/DetailPageScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomePageScreen from '../PageScreens/HomePageScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const DetailStack = createStackNavigator();
-
-const DetailStackScreen = ({ navigation }: any) => {
+const HomeStack = createStackNavigator();
+const HomeStackScreen = ({ navigation }: any) => {
     return (
-        <DetailStack.Navigator screenOptions={{
+        <HomeStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#079300',
+                backgroundColor: '#930000',
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
                 fontWeight: 'bold',
-                justifyContent: "center"
             }
         }} >
-            <DetailStack.Screen
-                name="Details"
-                component={DetailPageScreen}
+            <HomeStack.Screen
+                name="HomePage"
+                component={HomePageScreen}
                 options={{
                     title: "Infovie",
                     headerLeft: () =>
-                        <Icon.Button
+                        <MaterialCommunityIcons.Button
                             name='menu-open'
                             size={25}
                             style={styles.BurgerMenu}
                             onPress={() => navigation.openDrawer()}
                         />
                 }} />
-        </DetailStack.Navigator>
+        </HomeStack.Navigator>
     )
 }
 
 const styles = StyleSheet.create({
     BurgerMenu: {
-        backgroundColor: '#079300'
+        backgroundColor: '#930000'
     }
 });
 
-export default DetailStackScreen
+export default HomeStackScreen

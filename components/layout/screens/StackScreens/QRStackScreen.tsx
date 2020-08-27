@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import QRPageScreen from '../PageScreens/QRPageScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const QRStack = createStackNavigator();
 
@@ -24,7 +24,7 @@ const QRStackScreen = ({ navigation }: any) => {
                 options={{
                     title: "Infovie",
                     headerLeft: () =>
-                        <Icon.Button
+                        <MaterialCommunityIcons.Button
                             name='menu-open'
                             size={25}
                             style={styles.BurgerMenu}

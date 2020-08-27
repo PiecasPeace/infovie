@@ -1,9 +1,11 @@
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomeStackScreen from '../StackScreens/HomeStackScreen';
-import AboutStackScreen from '../StackScreens/AboutStackScreen';
 import QRStackScreen from '../StackScreens/QRStackScreen';
+import AboutStackScreen from '../StackScreens/AboutStackScreen';
+
 import DetailStackScreen from '../StackScreens/DetailStackScreen';
+import HomeStackScreen from '../StackScreens/HomeStackScreen';
+
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 const Tab = createMaterialBottomTabNavigator();

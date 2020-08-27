@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AboutPageScreen from '../PageScreens/AboutPageScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const AboutStack = createStackNavigator();
 
@@ -23,7 +24,7 @@ const AboutStackScreen = ({ navigation }: any) => {
                 name="About" component={AboutPageScreen} options={{
                     title: "Infovie",
                     headerLeft: () =>
-                        <Icon.Button
+                        <MaterialCommunityIcons.Button
                             name='menu-open'
                             size={25}
                             style={styles.BurgerMenu}
