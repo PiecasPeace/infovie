@@ -7,14 +7,15 @@ import {
     Image,
     Text,
     StyleSheet,
-    Modal
+    Modal, 
+    Button
 } from 'react-native'
 import axios from 'axios';
 
 export const MovieFlatList = () => {
     const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
     const [movies, setMovieName] = useState({
-        searchBar: "Enter a movie...",
+        searchBar: "",
         results: [] as any,
         selected: {} as any,
         length: [] as any,
@@ -70,6 +71,7 @@ export const MovieFlatList = () => {
                 })}
                 onSubmitEditing={search}
                 value={movies.searchBar}
+                placeholder="Enter Movie"
             />
 
             <FlatList
@@ -85,31 +87,56 @@ export const MovieFlatList = () => {
                 transparent={false}
                 visible={(typeof movies.selected.Title != "undefined")}
             >
-                <View style={styles.viewPopup}>
+                <View style={styles.ContainerPopup}>
                     <Text style={styles.titlePopup}>
-                        Title: {movies.selected.Title}
+                        {movies.selected.Title}
                     </Text>
-                    <Text style={styles.ratingPopup}>
-                        Rating: {movies.selected.Rating}
+                    <Image
+                        source={{ uri: movies.selected.Poster }}
+                        style={styles.ImagePopup}
+                    />
+                    <Text style={styles.ReleaseYearPopup}>
+                        Release Year: {movies.selected.Year}
                     </Text>
+
                     <Text style={styles.plotPopup}>
                         Description: {movies.selected.Plot}
                     </Text>
-                    <TouchableHighlight
-                        onPress={() => setMovieName(prevState => {
-                            return { ...prevState, selected: {} }
-                        })}
-                    >
-                        <Text style={styles.closePopUpButton}>Close</Text>
-                    </TouchableHighlight>
+
+                    <Button onPress={() => setMovieName(prevState => {
+                        return { ...prevState, selected: {} }
+                    })} title="Close">
+
+                    </Button>
                 </View>
             </Modal>
+            {/* style={styles.closePopUpButton}  */}
         </>
     )
 }
 
 
 const styles = StyleSheet.create({
+    ContainerPopup: {
+        padding: 20,
+        backgroundColor: '#f9d6ff',
+        height: '100%',
+        flex: 1
+    },
+    titlePopup: {
+        fontSize: 24,
+        fontWeight: '300',
+        marginBottom: 5,
+        color: "#FFF",
+        backgroundColor: '#010101'
+    },
+    ImagePopup: {
+        height: 300,
+        width: 200,
+        borderRadius: 5,
+        display: "flex",
+        resizeMode: "stretch"
+    },
     results: {
         flex: 1,
         width: '90%',
@@ -140,22 +167,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 40,
     },
-    viewPopup: {
-        padding: 20,
-    },
-    titlePopup: {
-        fontSize: 24,
-        fontWeight: '700',
-        marginBottom: 5
-    },
     closePopUpButton: {
         padding: 20,
         fontSize: 20,
-        fontWeight: '700',
         backgroundColor: '#eeeeee',
         color: '#FFF'
     },
-    ratingPopup: {
+    ReleaseYearPopup: {
         padding: 10,
     },
     plotPopup: {
