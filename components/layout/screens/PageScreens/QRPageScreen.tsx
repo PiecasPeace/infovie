@@ -1,68 +1,77 @@
 import React from 'react';
-import { StyleSheet, View, Button, Text, TouchableOpacity } from "react-native";
-
+import { StyleSheet, View, Button, Text, TouchableOpacity, Linking } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import QRCode from 'react-native-qrcode-svg';
 
 class QRPageScreen extends React.Component {
-    state = {
-        qr: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            scan: false,
+            ScanResult: false,
+            result: null
+        };
     }
 
-    onRead = (e: any) => {
-        this.setState({ qr: e.data })
+    onSuccess = (e: any) => {
+        const check = e.data.substring(0, 4);
+        console.log('scanned data ' + check + ": TRUE -> " + e.data);
+        this.setState({
+            result: e,
+            scan: false,
+            ScanResult: true
+        })
+        if (check === 'http') {
+            Linking
+                .openURL(e.data)
+                .catch(err => console.error('An error occured, please Check if the URL is correct', err));
+        } else {
+            this.setState({
+                result: e,
+                scan: false,
+                ScanResult: true
+            })
+        }
     }
 
     ScanQR = () => {
         return (
-            <View>
-                <QRCodeScanner
-                    onRead={this.onRead}
-                />
-                {
-                    this.state.qr ?
-                        <QRCode
-                            value={this.state.qr}
-                        /> : null
-                }
-            </View>
+            this.setState({ qr: "" })
         )
     }
 
     render() {
         return (
-            <>
-                <View>
-                    <Text>
-                        Please press the button to open up your Camera and scan a QR-Code.
+            <View style={styles.QRContainer}>
+                <Text>
+                    Please press the button to open up your Camera and scan a QR-Code.
                     </Text>
+                <View>
                     <QRCodeScanner
-                        onRead={this.onRead}
+                        reactivate={true}
+                        onRead={this.onSuccess}
                         topContent={
-                            <Text style={styles.centerText}>
-                                Go to{' '}
-                                <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-            your computer and scan the QR code.
-          </Text>
+                            <View>
+                                <Text style={styles.centerText}>
+                                    Go to{' '}
+                                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                                 your computer and scan the QR code.
+                             </Text>
+                            </View>
                         }
                         bottomContent={
-                            <TouchableOpacity style={styles.buttonTouchable}>
-                                <Text style={styles.buttonText}>OK. Got it!</Text>
-                            </TouchableOpacity>
+                            <View>
+                                <TouchableOpacity style={styles.buttonTouchable}>
+                                    <Text style={styles.buttonText}>OK. Got it!</Text>
+                                </TouchableOpacity>
+                            </View>
                         }
                     />
-                    {
-                        this.state.qr ?
-                            <QRCode
-                                value={this.state.qr}
-                            /> : null
-                    }
-                    <Button
-                        title="Scan a QR-Code!"
-                        onPress={() => this.ScanQR()}>
-                    </Button>
                 </View>
-            </>
+                <Button
+                    title="Reset your Progress"
+                    onPress={() => this.ScanQR()}>
+                </Button>
+            </View>
         )
     }
 }
@@ -72,23 +81,26 @@ class QRPageScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
-    centerText: {
-        flex: 1,
-        fontSize: 18,
-        padding: 32,
-        color: '#777'
+    QRContainer: {
+        // flex: 1
     },
-    textBold: {
-        fontWeight: '500',
-        color: '#000'
-    },
-    buttonText: {
-        fontSize: 21,
-        color: 'rgb(0,122,255)'
-    },
-    buttonTouchable: {
-        padding: 16
-    }
+    // centerText: {
+    //     flex: 1,
+    //     fontSize: 18,
+    //     padding: 32,
+    //     color: '#777'
+    // },
+    // textBold: {
+    //     fontWeight: '500',
+    //     color: '#000'
+    // },
+    // buttonText: {
+    //     fontSize: 21,
+    //     color: 'rgb(0,122,255)'
+    // },
+    // buttonTouchable: {
+    //     padding: 16
+    // }
 });
 
 export default QRPageScreen;
