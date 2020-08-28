@@ -117,7 +117,7 @@ const LeftDrawer = (props: any) => {
                         />
                     }
                     label="Sign out"
-                    onPress={() => "BRUH"}
+                    onPress={() => {}}
                 />
             </Drawer.Section>
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet, View, Button, Text, TouchableOpacity } from "react-native";
 
-// import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRCode from 'react-native-qrcode-svg';
 
 class QRPageScreen extends React.Component {
     state = {
@@ -9,39 +10,66 @@ class QRPageScreen extends React.Component {
     }
 
     onRead = (e: any) => {
-        this.setState({ qr: e })
+        this.setState({ qr: e.data })
+    }
+
+    ScanQR = () => {
+        return (
+            <View>
+                <QRCodeScanner
+                    onRead={this.onRead}
+                />
+                {
+                    this.state.qr ?
+                        <QRCode
+                            value={this.state.qr}
+                        /> : null
+                }
+            </View>
+        )
     }
 
     render() {
         return (
             <>
-                {/* <QRCodeScanner
-                    onRead={this.onRead}
-
-                    topContent={
-                        <Text style={styles.centerText}>
-                            Go to{' '}
-                            <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                <View>
+                    <Text>
+                        Please press the button to open up your Camera and scan a QR-Code.
+                    </Text>
+                    <QRCodeScanner
+                        onRead={this.onRead}
+                        topContent={
+                            <Text style={styles.centerText}>
+                                Go to{' '}
+                                <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
             your computer and scan the QR code.
           </Text>
+                        }
+                        bottomContent={
+                            <TouchableOpacity style={styles.buttonTouchable}>
+                                <Text style={styles.buttonText}>OK. Got it!</Text>
+                            </TouchableOpacity>
+                        }
+                    />
+                    {
+                        this.state.qr ?
+                            <QRCode
+                                value={this.state.qr}
+                            /> : null
                     }
-                    bottomContent={
-                        <TouchableOpacity style={styles.buttonTouchable}>
-                            <Text style={styles.buttonText}>OK. Got it!</Text>
-                        </TouchableOpacity>
-                    }
-                />
-                <Text>
-                    this is a qr page
-                </Text> */}
-                <Text>
-                    BRUH QR PAGE
-                </Text>
+                    <Button
+                        title="Scan a QR-Code!"
+                        onPress={() => this.ScanQR()}>
+                    </Button>
+                </View>
             </>
         )
     }
-
 }
+
+
+
+
 
 const styles = StyleSheet.create({
     centerText: {
