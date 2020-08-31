@@ -1,14 +1,23 @@
-import React from 'react';
-import { StyleSheet, View, Button, Text, TouchableOpacity, Linking } from "react-native";
+import React, { Fragment } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, StatusBar } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { Button } from 'react-native-paper';
 
-class QRPageScreen extends React.Component {
+interface iQRState {
+    scan: boolean,
+    ScanResult: boolean
+    result: any,
+    scanner: null
+}
+
+class QRPageScreen extends React.Component<{}, iQRState> {
     constructor(props) {
         super(props);
         this.state = {
             scan: false,
             ScanResult: false,
-            result: null
+            result: null,
+            scanner: null
         };
     }
 
@@ -33,74 +42,129 @@ class QRPageScreen extends React.Component {
         }
     }
 
-    ScanQR = () => {
-        return (
-            this.setState({ qr: "" })
-        )
+    activeQR = () => {
+        this.setState({
+            scan: true
+        })
+    }
+
+    scanAgain = () => {
+        this.setState({
+            scan: true,
+            ScanResult: false
+        })
     }
 
     render() {
         return (
             <View style={styles.QRContainer}>
-                <Text>
-                    Please press the button to open up your Camera and scan a QR-Code.
+                <Fragment>
+                    <Text style={styles.DescriptionText}>
+                        Toggle between QR and Barcodescanner in the settings!
                     </Text>
-                <View>
-                    <QRCodeScanner
-                        reactivate={true}
-                        onRead={this.onSuccess}
-                        topContent={
-                            <View>
-                                <Text style={styles.centerText}>
-                                    Go to{' '}
-                                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                                 your computer and scan the QR code.
-                             </Text>
+
+                    {!this.state.scan && !this.state.ScanResult &&
+                        <View style={styles.activeScan}>
+                            <View style={{ width: 180 }}>
+                                <Button
+                                    contentStyle={{ height: 80, backgroundColor: '#fff0f2' }}
+                                    icon="qrcode-scan"
+                                    onPress={this.activeQR}
+                                    color="#400a13"
+                                    mode="outlined">
+                                    Scan QR-code
+                                </Button>
                             </View>
-                        }
-                        bottomContent={
-                            <View>
-                                <TouchableOpacity style={styles.buttonTouchable}>
-                                    <Text style={styles.buttonText}>OK. Got it!</Text>
+                            <View style={{ width: 180 }}>
+                                <Button
+                                    contentStyle={{ height: 80, backgroundColor: '#fff0f2' }}
+                                    icon="barcode-scan"
+                                    onPress={this.activeQR}
+                                    color="#400a13"
+                                    mode="outlined">
+                                    Scan Bar-code
+                                 </Button>
+                            </View>
+                        </View>
+                    }
+
+                    {this.state.ScanResult &&
+                        <Fragment>
+                            <Text style={styles.textTitle1}>Result !</Text>
+                            <View style={this.state.ScanResult ? styles.scanCardView : styles.cardView}>
+                                <Text>Type : {this.state.result.type}</Text>
+                                <Text>Result : {this.state.result.data}</Text>
+                                <Text numberOfLines={1}>RawData: {this.state.result.rawData}</Text>
+                                <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
+                                    <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
                                 </TouchableOpacity>
+
                             </View>
-                        }
-                    />
-                </View>
-                <Button
-                    title="Reset your Progress"
-                    onPress={() => this.ScanQR()}>
-                </Button>
+                        </Fragment>
+                    }
+
+
+                    {this.state.scan &&
+                        <QRCodeScanner
+                            reactivate={true}
+                            showMarker={true}
+                            // ref={(node) => { this.state.scanner = node }}
+                            onRead={this.onSuccess}
+                            bottomContent={
+                                <View style={styles.StopScan}>
+                                    <Button mode="outlined" color='#fff' onPress={() => this.setState({ scan: false })}>
+                                        Stop Scan
+                                    </Button>
+                                </View>
+                            }
+                        />
+                    }
+                </Fragment>
             </View>
         )
     }
 }
 
-
-
-
-
 const styles = StyleSheet.create({
     QRContainer: {
-        // flex: 1
+        flex: 1,
+        // backgroundColor:'#fff' //replace for background
     },
-    // centerText: {
-    //     flex: 1,
-    //     fontSize: 18,
-    //     padding: 32,
-    //     color: '#777'
-    // },
-    // textBold: {
-    //     fontWeight: '500',
-    //     color: '#000'
-    // },
-    // buttonText: {
-    //     fontSize: 21,
-    //     color: 'rgb(0,122,255)'
-    // },
-    // buttonTouchable: {
-    //     padding: 16
-    // }
+    DescriptionText: {
+        padding: 10,
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: "white",
+        backgroundColor: "#010101"
+    },
+    activeScan: {
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    StopScan: {
+        // color: '#fff'
+        backgroundColor:'red'
+    },
+
+    centerText: {
+        flex: 1,
+        fontSize: 18,
+        padding: 32,
+        color: '#777'
+    },
+    textBold: {
+        fontWeight: '500',
+        color: '#000'
+    },
+    buttonText: {
+        fontSize: 21,
+        color: 'rgb(0,122,255)'
+    },
+    buttonTouchable: {
+        padding: 16
+    }
 });
 
 export default QRPageScreen;
