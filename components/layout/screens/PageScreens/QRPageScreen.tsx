@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, StatusBar } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 
@@ -29,6 +29,7 @@ class QRPageScreen extends React.Component<{}, iQRState> {
             scan: false,
             ScanResult: true
         })
+
         if (check === 'http') {
             Linking
                 .openURL(e.data)
@@ -54,36 +55,34 @@ class QRPageScreen extends React.Component<{}, iQRState> {
             ScanResult: false
         })
     }
-
+    // You can scan both QR and Barcode. QR will automatically link you.
     render() {
         return (
             <View style={styles.QRContainer}>
                 <Fragment>
-                    <Text style={styles.DescriptionText}>
-                        Toggle between QR and Barcodescanner in the settings!
-                    </Text>
-
                     {!this.state.scan && !this.state.ScanResult &&
-                        <View style={styles.activeScan}>
-                            <View style={{ width: 180 }}>
+                        <View>
+                            <Text style={styles.DescriptionText}>
+                                Please scan a Code !
+                            </Text>
+                            <View>
                                 <Button
-                                    contentStyle={{ height: 80, backgroundColor: '#fff0f2' }}
-                                    icon="qrcode-scan"
+                                    contentStyle={{
+                                        height: 80,
+                                        backgroundColor: '#fff0f2',
+                                        alignContent: 'center',
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 25
+                                    }}
+                                    style={styles.activateScan}
+                                    icon="barcode"
+
                                     onPress={this.activeQR}
                                     color="#400a13"
                                     mode="outlined">
-                                    Scan QR-code
+                                    Scan Code
                                 </Button>
-                            </View>
-                            <View style={{ width: 180 }}>
-                                <Button
-                                    contentStyle={{ height: 80, backgroundColor: '#fff0f2' }}
-                                    icon="barcode-scan"
-                                    onPress={this.activeQR}
-                                    color="#400a13"
-                                    mode="outlined">
-                                    Scan Bar-code
-                                 </Button>
                             </View>
                         </View>
                     }
@@ -98,11 +97,17 @@ class QRPageScreen extends React.Component<{}, iQRState> {
                                 <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
                                     <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
                                 </TouchableOpacity>
-
+                                <View style={styles.StopScan}>
+                                    <Button
+                                        mode="outlined"
+                                        color='#fff'
+                                        onPress={() => this.setState({ scan: false, ScanResult: false })}>
+                                        Stop Scan
+                                    </Button>
+                                </View>
                             </View>
                         </Fragment>
                     }
-
 
                     {this.state.scan &&
                         <QRCodeScanner
@@ -112,7 +117,10 @@ class QRPageScreen extends React.Component<{}, iQRState> {
                             onRead={this.onSuccess}
                             bottomContent={
                                 <View style={styles.StopScan}>
-                                    <Button mode="outlined" color='#fff' onPress={() => this.setState({ scan: false })}>
+                                    <Button
+                                        mode="outlined"
+                                        color='#fff'
+                                        onPress={() => this.setState({ scan: false })}>
                                         Stop Scan
                                     </Button>
                                 </View>
@@ -127,25 +135,29 @@ class QRPageScreen extends React.Component<{}, iQRState> {
 
 const styles = StyleSheet.create({
     QRContainer: {
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
         flex: 1,
-        // backgroundColor:'#fff' //replace for background
+        backgroundColor: '#55505e', //replace for background
+        flexDirection: 'column',
     },
     DescriptionText: {
         padding: 10,
         fontSize: 14,
         fontWeight: 'bold',
         color: "white",
-        backgroundColor: "#010101"
+        backgroundColor: "#010101",
+        textAlign: 'center',
     },
-    activeScan: {
+    activateScan: {
         padding: 10,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
+        width: '100%',
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        marginTop:480
     },
     StopScan: {
-        // color: '#fff'
-        backgroundColor:'red'
+        backgroundColor: 'red',
+        borderRadius: 5,
     },
 
     centerText: {

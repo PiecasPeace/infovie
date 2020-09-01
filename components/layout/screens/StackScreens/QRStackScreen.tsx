@@ -10,19 +10,20 @@ const QRStackScreen = ({ navigation }: any) => {
     return (
         <QRStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#020093',
+                backgroundColor: '#29272e',
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
-                fontWeight: 'bold',
-                justifyContent: "center"
+                justifyContent: "center",
+                textAlign: 'center',
+                marginRight: 50
             }
         }} >
             <QRStack.Screen
                 name="QR"
                 component={QRPageScreen}
                 options={{
-                    title: "Infovie",
+                    title: "Infovie - Scan",
                     headerLeft: () =>
                         <MaterialCommunityIcons.Button
                             name='menu-open'
@@ -37,7 +38,7 @@ const QRStackScreen = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
     BurgerMenu: {
-        backgroundColor: '#020093'
+        backgroundColor: '#29272e'
     }
 });
 

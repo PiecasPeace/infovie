@@ -14,7 +14,7 @@ const MainTabScreen = () => {
         <Tab.Navigator
             initialRouteName="Home"
             activeColor="#FFF"
-            inactiveColor='#010101'
+            inactiveColor='#81798f'
 
         >
             <Tab.Screen
@@ -70,10 +70,10 @@ const MainTabScreen = () => {
                 component={QRStackScreen}
                 options={{
                     tabBarLabel: 'QR-Scan',
-                    tabBarColor: "#020093",
+                    tabBarColor: "#29272e",
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
-                            name="qrcode-scan"
+                            name="barcode"
                             color={color}
                             size={26}
                         />
