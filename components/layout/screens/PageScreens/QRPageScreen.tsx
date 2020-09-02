@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, constructor } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
@@ -8,144 +8,132 @@ import axios from 'axios';
 
 interface iQRState {
     scan: boolean,
-    ScanResult: boolean
+    scanResult: boolean
     result: any,
-    scanner: null,
-    selected: {}
 }
-const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
 
-class QRPageScreen extends React.Component<{}, iQRState> {
-    constructor(props) {
-        super(props);
-        this.state = {
+const QRPageScreen = () => {
+    const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
+    let barcode = "";
+    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcode}`
+    const [scanSuccess, setScanSuccess] = useState<iQRState>({
+        scan: false,
+        scanResult: false,
+        result: "",
+    })
+
+    const onSuccess = (event: any) => {
+        const check = event.data.substring(0, 4);
+        console.log('scanned data ' + check + ": TRUE -> " + event.data + event);
+        console.log(event)
+        console.log(event.origin)
+        setScanSuccess({
+            result: event,
             scan: false,
-            ScanResult: false,
-            result: null,
-            scanner: null,
-            selected: {}
-        };
-    }
-
-    openPopup = (id: [], selected: any) => {
-        axios(apiurl + "&i=" + id).then(({ data }) => {
-            let result = data;
-
-            selected(prevState => {
-                return { ...prevState, selected: result }
-            })
-        })
-    }
-
-    onSuccess = (e: any) => {
-        const check = e.data.substring(0, 4);
-        console.log('scanned data ' + check + ": TRUE -> " + e.data);
-        this.setState({
-            result: e,
-            scan: false,
-            ScanResult: true
+            scanResult: true
         })
 
         if (check === 'http') {
             Linking
-                .openURL(e.data)
+                .openURL(event.data)
                 .catch(err => console.error('An error occured, please Check if the URL is correct', err));
         } else {
-            this.setState({
-                result: e,
+            setScanSuccess({
+                result: event,
                 scan: false,
-                ScanResult: true
+                scanResult: true
             })
         }
     }
 
-    activeQR = () => {
-        this.setState({
-            scan: true
+    const activeQR = () => {
+        setScanSuccess(prevState => {
+            return { ...prevState, scan: true }
         })
     }
 
-    scanAgain = () => {
-        this.setState({
-            scan: true,
-            ScanResult: false
+    const scanAgain = () => {
+        setScanSuccess(prevState => {
+            return { ...prevState, scanResult: false, scan: true }
         })
     }
 
-    render() {
-        return (
-            <View style={styles.QRContainer}>
-                <Fragment>
-                    {!this.state.scan && !this.state.ScanResult &&
-                        <View>
-                            <Text style={styles.DescriptionText}>
-                                Please scan a Code !
+    return (
+        <View style={styles.QRContainer}>
+            <Fragment>
+                {!scanSuccess.scan && !scanSuccess.scanResult &&
+                    <View>
+                        <Text style={styles.DescriptionText}>
+                            Please scan a Code !
                             </Text>
-                            <View>
-                                <Button
-                                    contentStyle={{
-                                        height: 80,
-                                        backgroundColor: '#fff0f2',
-                                        alignContent: 'center',
-                                    }}
-                                    labelStyle={{
-                                        fontSize: 25
-                                    }}
-                                    style={styles.activateScan}
-                                    icon="barcode"
-                                    onPress={this.activeQR}
-                                    color="#400a13"
-                                    mode="outlined">
-                                    Scan Code
+                        <View>
+                            <Button
+                                contentStyle={{
+                                    height: 80,
+                                    backgroundColor: '#fff0f2',
+                                    alignContent: 'center',
+                                }}
+                                labelStyle={{
+                                    fontSize: 25
+                                }}
+                                style={styles.activateScan}
+                                icon="barcode"
+                                onPress={activeQR}
+                                color="#400a13"
+                                mode="outlined">
+                                Scan Code
                                 </Button>
-                            </View>
                         </View>
-                    }
+                    </View>
+                }
 
-                    {this.state.ScanResult &&
-                        <Fragment>
-                            <Image
-                                source={{ uri: this.state.selected.Poster}}
-                                style={styles.Images}
-                                resizeMode="cover" />
-                            <Text>Name : {this.state.result.Text}</Text>
-                            <Text numberOfLines={1}>RawData: {this.state.result.rawData}</Text>
-                            <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
-                                <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
-                            </TouchableOpacity>
+                {scanSuccess.scanResult &&
+                    <Fragment>
+                        {/* <Image
+                            source={{ uri: this.state.selected.Poster }}
+                            style={styles.Images}
+                            resizeMode="cover" /> */}
+                        <Text>Name : {scanSuccess.result.data}</Text>
+                        <Text numberOfLines={1}>RawData: {scanResult.rawData}</Text>
+                        <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
+                            <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
+                        </TouchableOpacity>
+                        <View style={styles.StopScan}>
+                            <Button
+                                mode="outlined"
+                                color='#fff'
+                                onPress={() => setScanSuccess(prevState => {
+                                    return { ...prevState, scan: false, scanResult: false }
+                                })}>
+                                Stop Scan
+                                    </Button>
+                        </View>
+                    </Fragment>
+                }
+
+                {scanSuccess.scan &&
+                    <QRCodeScanner
+                        reactivate={true}
+                        showMarker={true}
+                        // ref={(node) => { this.state.scanner = node }}
+                        onRead={onSuccess}
+                        bottomContent={
                             <View style={styles.StopScan}>
                                 <Button
                                     mode="outlined"
                                     color='#fff'
-                                    onPress={() => this.setState({ scan: false, ScanResult: false })}>
+                                    onPress={() => setScanSuccess(prevState => {
+                                        return { ...prevState, scan: false }
+                                    })}>
                                     Stop Scan
                                     </Button>
                             </View>
-                        </Fragment>
-                    }
-
-                    {this.state.scan &&
-                        <QRCodeScanner
-                            reactivate={true}
-                            showMarker={true}
-                            // ref={(node) => { this.state.scanner = node }}
-                            onRead={this.onSuccess}
-                            bottomContent={
-                                <View style={styles.StopScan}>
-                                    <Button
-                                        mode="outlined"
-                                        color='#fff'
-                                        onPress={() => this.setState({ scan: false })}>
-                                        Stop Scan
-                                    </Button>
-                                </View>
-                            }
-                        />
-                    }
-                </Fragment>
-            </View>
-        )
-    }
+                        }
+                    />
+                }
+            </Fragment>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
