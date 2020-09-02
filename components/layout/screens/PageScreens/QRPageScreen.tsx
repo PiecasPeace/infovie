@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
+import request from '../../../services/api';
+
+import axios from 'axios';
 
 interface iQRState {
     scan: boolean,
     ScanResult: boolean
     result: any,
-    scanner: null
+    scanner: null,
+    selected: {}
 }
+const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
 
 class QRPageScreen extends React.Component<{}, iQRState> {
     constructor(props) {
@@ -17,8 +22,19 @@ class QRPageScreen extends React.Component<{}, iQRState> {
             scan: false,
             ScanResult: false,
             result: null,
-            scanner: null
+            scanner: null,
+            selected: {}
         };
+    }
+
+    openPopup = (id: [], selected: any) => {
+        axios(apiurl + "&i=" + id).then(({ data }) => {
+            let result = data;
+
+            selected(prevState => {
+                return { ...prevState, selected: result }
+            })
+        })
     }
 
     onSuccess = (e: any) => {
@@ -88,22 +104,22 @@ class QRPageScreen extends React.Component<{}, iQRState> {
 
                     {this.state.ScanResult &&
                         <Fragment>
-                            <Text style={styles.textTitle1}>Result !</Text>
-                            <View style={this.state.ScanResult ? styles.scanCardView : styles.cardView}>
-                                <Text>Type : {this.state.result.type}</Text>
-                                <Text>Result : {this.state.result.data}</Text>
-                                <Text numberOfLines={1}>RawData: {this.state.result.rawData}</Text>
-                                <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
-                                    <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
-                                </TouchableOpacity>
-                                <View style={styles.StopScan}>
-                                    <Button
-                                        mode="outlined"
-                                        color='#fff'
-                                        onPress={() => this.setState({ scan: false, ScanResult: false })}>
-                                        Stop Scan
+                            <Image
+                                source={{ uri: this.state.selected.Poster}}
+                                style={styles.Images}
+                                resizeMode="cover" />
+                            <Text>Name : {this.state.result.Text}</Text>
+                            <Text numberOfLines={1}>RawData: {this.state.result.rawData}</Text>
+                            <TouchableOpacity onPress={this.scanAgain} style={styles.buttonTouchable}>
+                                <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
+                            </TouchableOpacity>
+                            <View style={styles.StopScan}>
+                                <Button
+                                    mode="outlined"
+                                    color='#fff'
+                                    onPress={() => this.setState({ scan: false, ScanResult: false })}>
+                                    Stop Scan
                                     </Button>
-                                </View>
                             </View>
                         </Fragment>
                     }
@@ -138,6 +154,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#55505e', //replace for background
         flexDirection: 'column',
+    },
+    Images: {
+        height: 300,
+        width: 200,
+        borderRadius: 5,
+        display: "flex",
+        resizeMode: "stretch"
     },
     DescriptionText: {
         padding: 10,
