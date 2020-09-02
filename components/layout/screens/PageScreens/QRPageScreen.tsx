@@ -55,7 +55,7 @@ class QRPageScreen extends React.Component<{}, iQRState> {
             ScanResult: false
         })
     }
-    // You can scan both QR and Barcode. QR will automatically link you.
+
     render() {
         return (
             <View style={styles.QRContainer}>
@@ -77,7 +77,6 @@ class QRPageScreen extends React.Component<{}, iQRState> {
                                     }}
                                     style={styles.activateScan}
                                     icon="barcode"
-
                                     onPress={this.activeQR}
                                     color="#400a13"
                                     mode="outlined">
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'flex-end',
         position: 'absolute',
-        marginTop:480
+        marginTop: 480
     },
     StopScan: {
         backgroundColor: 'red',

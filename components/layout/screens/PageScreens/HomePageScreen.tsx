@@ -5,9 +5,6 @@ import { MovieFlatList } from '../../MovieLists/MovieFlatList';
 const HomePageScreen = ({ navigation }: any) => {
     return (
         <View style={styles.container}>
-            <Button title="Want to QR-Scan a movie?"
-                onPress={() => navigation.navigate("QR")}>
-            </Button>
 
             <MovieFlatList />
         </View>

@@ -10,7 +10,6 @@ const AboutPageScreen = () => {
                 ABOUUUUUUUUUUUUT
             </Text>
             <Button title="DINGDONG" onPress={() => setText(text)}>
-
             </Button>
         </View>
     )

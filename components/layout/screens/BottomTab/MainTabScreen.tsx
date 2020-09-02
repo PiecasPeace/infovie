@@ -70,7 +70,7 @@ const MainTabScreen = () => {
                 component={QRStackScreen}
                 options={{
                     tabBarLabel: 'QR-Scan',
-                    tabBarColor: "#29272e",
+                    tabBarColor: '#29272e',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="barcode"

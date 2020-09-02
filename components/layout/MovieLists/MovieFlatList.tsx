@@ -7,10 +7,11 @@ import {
     Image,
     Text,
     StyleSheet,
-    Modal, 
+    Modal,
     Button
 } from 'react-native'
 import axios from 'axios';
+import { lightpurple, darkpurple } from '../../utils/colors';
 
 export const MovieFlatList = () => {
     const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
@@ -54,7 +55,7 @@ export const MovieFlatList = () => {
                         style={styles.Images}
                         resizeMode="cover"
                     />
-                    <Text style={styles.header}>
+                    <Text style={styles.headertext}>
                         {result.Title}
                     </Text>
                 </View>
@@ -115,11 +116,10 @@ export const MovieFlatList = () => {
     )
 }
 
-
 const styles = StyleSheet.create({
     ContainerPopup: {
         padding: 20,
-        backgroundColor: '#f9d6ff',
+        backgroundColor: lightpurple,
         height: '100%',
         flex: 1
     },
@@ -145,18 +145,22 @@ const styles = StyleSheet.create({
     resultMovie: {
         flex: 1,
         width: '100%',
-        marginBottom: 30
+        marginBottom: 30,
+        justifyContent: 'space-between',
+        alignItems: 'stretch'
     },
-    header: {
-        color: '#fff',
+    headertext: {
+        color: darkpurple,
         fontSize: 18,
         fontWeight: '700',
-        padding: 20,
-        backgroundColor: '#445565',
+        padding: 5
     },
     Images: {
-        width: '100%',
         height: 300,
+        width: 200,
+        borderRadius: 5,
+        display: "flex",
+        resizeMode: "stretch"
     },
     searchBox: {
         fontSize: 20,
