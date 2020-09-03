@@ -1,10 +1,9 @@
-import React, { Fragment, useState, constructor } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image } from "react-native";
+import React, { Fragment, useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image, FlatList } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import request from '../../../services/api';
-
-import axios from 'axios';
+import Spinner from '../../../utils/spinner';
 
 interface iQRState {
     scan: boolean,
@@ -13,25 +12,27 @@ interface iQRState {
 }
 
 const QRPageScreen = () => {
-    const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
-    let barcode = "";
-    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcode}`
+    let [barcodeKEY, setBarcodeKEY] = useState("");
+    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcodeKEY}`
+    const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
+    const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
+    const [barcodes, setBarcodes] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
     const [scanSuccess, setScanSuccess] = useState<iQRState>({
         scan: false,
         scanResult: false,
         result: "",
-    })
+    });
 
     const onSuccess = (event: any) => {
         const check = event.data.substring(0, 4);
         console.log('scanned data ' + check + ": TRUE -> " + event.data + event);
         console.log(event)
-        console.log(event.origin)
         setScanSuccess({
             result: event,
             scan: false,
             scanResult: true
-        })
+        });
 
         if (check === 'http') {
             Linking
@@ -43,6 +44,31 @@ const QRPageScreen = () => {
                 scan: false,
                 scanResult: true
             })
+        }
+
+
+    }
+
+    const convertScanResultToTitle = (barcodeKEY: any) => {
+        let successdata = scanSuccess.result.data
+        barcodeKEY = successdata
+        setBarcodeKEY(barcodeKEY)
+        console.log(barcodeKEY)
+    };
+
+    useEffect(() => {
+        fetch(BarcodeURL)
+            .then((response) => response.json())
+            .then((json) => setBarcodes(json.items))
+            .then(convertScanResultToTitle)
+
+            .catch(error => { console.log(error); })
+            .finally(() => setLoading(false));
+    }, []);
+
+    const isLoading = () => {
+        if (loading) {
+            return <Spinner />
         }
     }
 
@@ -87,18 +113,29 @@ const QRPageScreen = () => {
                     </View>
                 }
 
-                {scanSuccess.scanResult &&
+                {scanSuccess.scanResult && isLoading &&
                     <Fragment>
-                        {/* <Image
-                            source={{ uri: this.state.selected.Poster }}
-                            style={styles.Images}
-                            resizeMode="cover" /> */}
+                        <View>
+                            <FlatList
+                                data={barcodes}
+                                keyExtractor={({ id }, index) => id}
+                                renderItem={({ item }) => (
+                                    <View>
+                                        <Text>MOVIE AFTER SCAN: {item.title}</Text>
+                                        <Text>MOVIE AFTER SCAN: {item.title}</Text>
+                                        <Text>IMAGES: {item.images}</Text>
+                                    </View>
+                                )}
+                            />
+                        </View>
+
                         <Text>Name : {scanSuccess.result.data}</Text>
-                        <Text numberOfLines={1}>RawData: {scanResult.rawData}</Text>
+                        <Text numberOfLines={1}>Type: {scanSuccess.result.type}</Text>
                         <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
-                            <Text style={styles.buttonTextStyle}>Click to Scan again!</Text>
+                            <Text style={styles.DescriptionText}>Click to Scan again!</Text>
                         </TouchableOpacity>
                         <View style={styles.StopScan}>
+
                             <Button
                                 mode="outlined"
                                 color='#fff'

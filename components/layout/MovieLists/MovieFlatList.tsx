@@ -30,7 +30,7 @@ export const MovieFlatList = () => {
             setMovieName(prevState => {
                 return { ...prevState, results: results }
             })
-        })
+        })  
     }
 
     const openPopup = (id: []) => {
