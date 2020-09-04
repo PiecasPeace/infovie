@@ -4,6 +4,10 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import request from '../../../services/api';
 import Spinner from '../../../utils/spinner';
+import {styles} from './styles';
+
+const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
+const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
 
 interface iQRState {
     scan: boolean,
@@ -11,11 +15,52 @@ interface iQRState {
     result: any,
 }
 
+const bigmokjson = {
+    "code": "string",
+    "total": 0,
+    "offset": 0,
+    "items": [
+        {
+            "ean": "0012569713710",
+            "title": "Batman",
+            "upc": "012569713710",
+            "gtin": "string",
+            "asin": "B00NQGOZV0",
+            "description": "iPhone 6 isn't just bigger - it's better...",
+            "brand": "Apple",
+            "model": "MG5A2LL/A",
+            "dimension": "string",
+            "weight": "string",
+            "category": "Electronics > Communications > Telephony > Mobile Phones > Unlocked Mobile Phones",
+            "currency": "string",
+            "lowest_recorded_price": 3.79,
+            "highest_recorded_price": 8500,
+            "images": [
+                "https://images-na.ssl-images-amazon.com/images/I/61sXtDrzDaL._AC_SY679_.jpg"
+            ],
+            "offers": [
+                {
+                    "merchant": "Newegg.com",
+                    "domain": "newegg.com",
+                    "title": "Apple iPhone 6 64GB T-Mobile Space Gray MG5A2LL/A",
+                    "currency": "string",
+                    "list_price": 0,
+                    "price": 1200,
+                    "shipping": "Free Shipping",
+                    "condition": "New",
+                    "availability": "Out of Stock",
+                    "link": "https://www.upcitemdb.com/norob/alink/?id=v2p2...",
+                    "updated_t": 1479243029
+                }
+            ]
+        }
+    ]
+}
+
 const QRPageScreen = () => {
-    let [barcodeKEY, setBarcodeKEY] = useState("");
-    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcodeKEY}`
-    const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
-    const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
+    const [barcodeKEY, setBarcodeKEY] = useState('');
+    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcodeKEY}`;
+
     const [barcodes, setBarcodes] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [scanSuccess, setScanSuccess] = useState<iQRState>({
@@ -26,14 +71,16 @@ const QRPageScreen = () => {
 
     const onSuccess = (event: any) => {
         const check = event.data.substring(0, 4);
-        console.log('scanned data ' + check + ": TRUE -> " + event.data + event);
-        console.log(event)
+        // console.log('scanned data ' + check + ": TRUE -> " + event.data);
+        // console.log(event.data)
+        setBarcodeKEY(event.data);
         setScanSuccess({
             result: event,
             scan: false,
-            scanResult: true
+            scanResult: true,
         });
 
+        //For QR Scan
         if (check === 'http') {
             Linking
                 .openURL(event.data)
@@ -42,26 +89,18 @@ const QRPageScreen = () => {
             setScanSuccess({
                 result: event,
                 scan: false,
-                scanResult: true
-            })
+                scanResult: true,
+            });
         }
-
-
     }
-
-    const convertScanResultToTitle = (barcodeKEY: any) => {
-        let successdata = scanSuccess.result.data
-        barcodeKEY = successdata
-        setBarcodeKEY(barcodeKEY)
-        console.log(barcodeKEY)
-    };
 
     useEffect(() => {
         fetch(BarcodeURL)
-            .then((response) => response.json())
+            .then((response) =>
+                // response.json()
+                bigmokjson
+            )
             .then((json) => setBarcodes(json.items))
-            .then(convertScanResultToTitle)
-
             .catch(error => { console.log(error); })
             .finally(() => setLoading(false));
     }, []);
@@ -119,21 +158,31 @@ const QRPageScreen = () => {
                             <FlatList
                                 data={barcodes}
                                 keyExtractor={({ id }, index) => id}
+                                key={id.unique}
                                 renderItem={({ item }) => (
                                     <View>
-                                        <Text>MOVIE AFTER SCAN: {item.title}</Text>
-                                        <Text>MOVIE AFTER SCAN: {item.title}</Text>
-                                        <Text>IMAGES: {item.images}</Text>
+                                        <Text style={{ color: '#fff', fontSize: 20 }}>MOVIE AFTER SCAN: {item.title}</Text>
+                                        <Text style={{ color: '#fff', fontSize: 20 }}>IMAGES: {item.images}</Text>
+
+                                        <Image
+                                            source={{ uri: item.images[0] }}
+                                            style={styles.Images}
+                                            resizeMode="cover"
+                                        />
+
                                     </View>
                                 )}
                             />
                         </View>
 
-                        <Text>Name : {scanSuccess.result.data}</Text>
-                        <Text numberOfLines={1}>Type: {scanSuccess.result.type}</Text>
-                        <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
-                            <Text style={styles.DescriptionText}>Click to Scan again!</Text>
-                        </TouchableOpacity>
+                        <View style={{ padding: 15 }}>
+                            <Text style={{ color: '#fff', fontSize: 20 }}>Name : {scanSuccess.result.data}</Text>
+                            <Text style={{ color: '#fff', fontSize: 20 }} numberOfLines={1}>Type: {scanSuccess.result.type}</Text>
+                            <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
+                                <Text style={styles.DescriptionText}>Click to Scan again!</Text>
+                            </TouchableOpacity>
+                        </View>
+
                         <View style={styles.StopScan}>
 
                             <Button
@@ -172,58 +221,5 @@ const QRPageScreen = () => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    QRContainer: {
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-        flex: 1,
-        backgroundColor: '#55505e', //replace for background
-        flexDirection: 'column',
-    },
-    Images: {
-        height: 300,
-        width: 200,
-        borderRadius: 5,
-        display: "flex",
-        resizeMode: "stretch"
-    },
-    DescriptionText: {
-        padding: 10,
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: "white",
-        backgroundColor: "#010101",
-        textAlign: 'center',
-    },
-    activateScan: {
-        padding: 10,
-        width: '100%',
-        alignSelf: 'flex-end',
-        position: 'absolute',
-        marginTop: 480
-    },
-    StopScan: {
-        backgroundColor: 'red',
-        borderRadius: 5,
-    },
-
-    centerText: {
-        flex: 1,
-        fontSize: 18,
-        padding: 32,
-        color: '#777'
-    },
-    textBold: {
-        fontWeight: '500',
-        color: '#000'
-    },
-    buttonText: {
-        fontSize: 21,
-        color: 'rgb(0,122,255)'
-    },
-    buttonTouchable: {
-        padding: 16
-    }
-});
 
 export default QRPageScreen;
