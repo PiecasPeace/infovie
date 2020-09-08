@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
-import { MovieFlatList } from '../../MovieLists/MovieFlatList';
+import { View, StyleSheet } from 'react-native';
+import CustomFlatlist from '../../Flatlist/CustomFlatlist';
 
-const HomePageScreen = ({ navigation }: any) => {
+const HomePageScreen = () => {
     return (
         <View style={styles.container}>
-
-            <MovieFlatList />
+            <CustomFlatlist />
         </View>
     )
 }

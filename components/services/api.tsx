@@ -22,3 +22,7 @@ export default async function request(url, content = {}, debug = false) {
 
     return data;
 }
+
+//my data
+//my key: 94ff60134af5b7bbe6cb00087e37359f
+//my request: https://api.themoviedb.org/3/movie/550?api_key=94ff60134af5b7bbe6cb00087e37359f

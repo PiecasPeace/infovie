@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image, FlatList } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image, FlatList, TouchableHighlight } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import request from '../../../services/api';
 import Spinner from '../../../utils/spinner';
-import {styles} from './styles';
+import { styles } from './styles';
 
-const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
-const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
+// const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
+// const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
 
 interface iQRState {
     scan: boolean,
@@ -59,9 +59,14 @@ const bigmokjson = {
 
 const QRPageScreen = () => {
     const [barcodeKEY, setBarcodeKEY] = useState('');
-    const BarcodeURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcodeKEY}`;
+    const [barcodeTitle, setBarcodeTitle] = useState('');
+    const [IMDBJson, setIMDBListJson] = useState<any[]>([]);
+    const [barcodesJson, setBarcodesJson] = useState<any[]>([]);
 
-    const [barcodes, setBarcodes] = useState<any[]>([]);
+    // const tmdbURL = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=${movieTitle}`
+    const upcURL = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcodeKEY}`;
+    const imdbURL = `http://omdbapi.com/?apikey=9ebc6b68&s=batman`
+    // const imdbURL = `http://omdbapi.com/?apikey=9ebc6b68&s=${barcodeTitle}`
     const [loading, setLoading] = useState(true);
     const [scanSuccess, setScanSuccess] = useState<iQRState>({
         scan: false,
@@ -71,8 +76,6 @@ const QRPageScreen = () => {
 
     const onSuccess = (event: any) => {
         const check = event.data.substring(0, 4);
-        // console.log('scanned data ' + check + ": TRUE -> " + event.data);
-        // console.log(event.data)
         setBarcodeKEY(event.data);
         setScanSuccess({
             result: event,
@@ -93,34 +96,87 @@ const QRPageScreen = () => {
             });
         }
     }
-
-    useEffect(() => {
-        fetch(BarcodeURL)
-            .then((response) =>
-                // response.json()
-                bigmokjson
-            )
-            .then((json) => setBarcodes(json.items))
-            .catch(error => { console.log(error); })
-            .finally(() => setLoading(false));
-    }, []);
-
     const isLoading = () => {
         if (loading) {
             return <Spinner />
         }
     }
-
     const activeQR = () => {
         setScanSuccess(prevState => {
             return { ...prevState, scan: true }
         })
     }
-
     const scanAgain = () => {
         setScanSuccess(prevState => {
             return { ...prevState, scanResult: false, scan: true }
         })
+    }
+
+    useEffect(() => {
+        fetch(upcURL)
+            .then((response) =>
+                // response.json()
+                bigmokjson
+            )
+            .then((json) => {
+                setBarcodesJson(json.items);
+                // setBarcodeTitle(json.items);
+            })
+            .catch(error => { console.log(error); })
+            .finally(() => setLoading(false));
+    }, []);
+
+    const upcDBList = (result: any) => {
+        return (
+            <TouchableHighlight
+                key={result.upcitemdbID}
+            >
+                <View>
+                    <Text
+                        style={{ color: '#fff', fontSize: 20 }}>
+                        MOVIE AFTER SCAN: {result.title}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+        )
+    }
+
+    const getBarcodeTitle = (result: any) => {
+        setBarcodeTitle(result.title)
+    }
+
+    useEffect(() => {
+        fetch(imdbURL)
+            .then((response) =>
+                response.json()
+            )
+            .then((json) => {
+                setIMDBListJson(json.Search)
+                getBarcodeTitle
+            })
+            .catch(error => { console.log(error); })
+            .finally(() => setLoading(false));
+
+    }, []);
+
+    const imDBList = (result: any) => {
+        return (
+            <TouchableHighlight
+                key={result.imdbID}
+            >
+                <View>
+                    <Text
+                        style={{ color: '#fff', fontSize: 13 }}>
+                        imdb Titel: {result.Title}
+                    </Text>
+                    <Image
+                        source={{ uri: result.Poster }}
+                        style={styles.Images}
+                        resizeMode="cover"
+                    />
+                </View>
+            </TouchableHighlight>
+        )
     }
 
     return (
@@ -154,26 +210,21 @@ const QRPageScreen = () => {
 
                 {scanSuccess.scanResult && isLoading &&
                     <Fragment>
-                        <View>
-                            <FlatList
-                                data={barcodes}
-                                keyExtractor={({ id }, index) => id}
-                                key={id.unique}
-                                renderItem={({ item }) => (
-                                    <View>
-                                        <Text style={{ color: '#fff', fontSize: 20 }}>MOVIE AFTER SCAN: {item.title}</Text>
-                                        <Text style={{ color: '#fff', fontSize: 20 }}>IMAGES: {item.images}</Text>
+                        <FlatList
+                            data={barcodesJson}
+                            keyExtractor={(result, index) => `${result.upcitemdbID}-${index}`}
+                            renderItem={result => upcDBList(result.item)}
+                            keyboardShouldPersistTaps='always'
+                            showsVerticalScrollIndicator={true}
+                        />
 
-                                        <Image
-                                            source={{ uri: item.images[0] }}
-                                            style={styles.Images}
-                                            resizeMode="cover"
-                                        />
-
-                                    </View>
-                                )}
-                            />
-                        </View>
+                        <FlatList
+                            data={IMDBJson}
+                            keyExtractor={(result, index) => `${result.imdbID}-${index}`}
+                            showsVerticalScrollIndicator={true}
+                            renderItem={result => imDBList(result.item)}
+                            keyboardShouldPersistTaps='always'
+                        />
 
                         <View style={{ padding: 15 }}>
                             <Text style={{ color: '#fff', fontSize: 20 }}>Name : {scanSuccess.result.data}</Text>
@@ -184,7 +235,6 @@ const QRPageScreen = () => {
                         </View>
 
                         <View style={styles.StopScan}>
-
                             <Button
                                 mode="outlined"
                                 color='#fff'
@@ -192,7 +242,7 @@ const QRPageScreen = () => {
                                     return { ...prevState, scan: false, scanResult: false }
                                 })}>
                                 Stop Scan
-                                    </Button>
+                            </Button>
                         </View>
                     </Fragment>
                 }

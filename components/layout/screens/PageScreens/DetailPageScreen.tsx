@@ -1,12 +1,25 @@
 import React from 'react';
-import { Text } from 'react-native'
+import { View, StyleSheet, Button } from 'react-native';
+import { MovieFlatList } from '../../MovieLists/MovieFlatList';
 
 const DetailPageScreen = () => {
     return (
-        <>
-            <Text> DETAILS HERE </Text>
-        </>
+        <View style={styles.container}>
+
+            <MovieFlatList />
+        </View>
     )
 }
 
-export default DetailPageScreen;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+});
+
+export default DetailPageScreen
