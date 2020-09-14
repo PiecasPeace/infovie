@@ -1,11 +1,18 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import CustomFlatlist from '../../Flatlist/CustomFlatlist';
+import requests from '../../../services/requests';
 
 const HomePageScreen = () => {
     return (
         <View style={styles.container}>
-            <CustomFlatlist />
+            <Text>
+                Trending
+                    </Text>
+            <CustomFlatlist
+                fetchUrl={requests.Trending}
+               
+            />
         </View>
     )
 }

@@ -1,76 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import {
     FlatList, View, Text, Image, StyleSheet, TouchableHighlight,
 } from 'react-native'
-import axios from 'axios';
-import requests from '../../services/requests';
+import axios from '../../services/axios';
 import { darkpurple } from '../../utils/colors';
+import Spinner from '../../utils/spinner';
 
-const CustomFlatlist = (title: any, fetchUrl: any) => {
-    const [movies, setMovies] = useState<any[]>([])
-    const imageURL = "https://image.tmdb.org/t/p/original/";
+const CustomFlatlist = ({ fetchUrl }) => {
+    const [movies, setMovies] = useState<any[]>([]);
+    const imageURL = "https://image.tmdb.org/t/p/original";
+    const [loading, setLoading] = useState(true);
 
-    const PictureList = (movies: any) => {
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const request = await axios.get(fetchUrl);
+                setMovies(request.data.results);
+                return request;
+            } catch (err) {
+                console.log("There was a problem with your fetch: " + err.message);
+                throw err;
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchData();
+    }, [fetchUrl]);
+
+    const TrendingList = (movie: any) => {
+        const getImageURL = `${imageURL}${movie.poster_path}`
         return (
             <TouchableHighlight
-                key={movies.tmdb}
-                onPress={() => ""}
+                key={movie.tmdbID}
             >
                 <View style={styles.resultMovie}>
-                    <Image
-                        key={movies.id}
-                        source={{ uri: `${imageURL}${movies.poster_path}` }}
-                        style={styles.imageTrending}
-                    />
                     <Text style={styles.headertext}>
-                        {movies.Title}
+                        {movie.title}
                     </Text>
+                    <Text>
+                        {movie.description}
+                    </Text>
+                    {/* {console.log(`${imageURL}${movie.poster_path}`)} */}
+                    <Image
+                        source={{ uri: getImageURL }}
+                        defaultSource={require('../../assets/images/not_found.png')}
+                        style={styles.Images}
+                        resizeMode="cover"
+                    />
                 </View>
             </TouchableHighlight>
         )
     }
 
-    useEffect(() => {
-        async function fetchData() {
-            const request = await axios.get(fetchUrl);
-            setMovies(request.data.results);
-            return request;
+    const isLoading = () => {
+        if (loading) {
+            return <Spinner />
         }
-        fetchData();
-    }, [fetchUrl])
+    }
 
     return (
-        <View>
-            <Text>
-                {title}
-            </Text>
-            <FlatList
-                data={fetchUrl}
-                keyExtractor={(movies, index) => `${movies.tmdb}-${index}`}
-                showsVerticalScrollIndicator={true}
-                renderItem={movies => PictureList(movies.item)}
-                keyboardShouldPersistTaps='always'
-            />
-
-            {movies.map(movies => (
-                <Image
-                    source={{ uri: `${imageURL}${movies.poster_path}` }}
-                    style={styles.imageTrending}
-                />
-            ))}
+        <View style={styles.FlatlistContainer}>
+            {isLoading &&
+                <Fragment>
+                    <FlatList
+                        data={movies}
+                        keyExtractor={(movie, index) => `${movie.tmdbID}-${index}`}
+                        showsVerticalScrollIndicator={true}
+                        renderItem={movie => TrendingList(movie.item)}
+                        keyboardShouldPersistTaps='always'
+                    />
+                </Fragment>
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    imageTrending: {
+    FlatlistContainer: {
         flex: 1,
-        width: '100%',
-        maxHeight: 100,
-        objectFit: 'contain',
-        // transition: 450, still missing, also hover is maybe missing, not sure (1.08)
-        marginBottom: 10,
-
+        width: "100%",
+        padding: 10,
     },
     resultMovie: {
         flex: 1,
@@ -86,10 +95,9 @@ const styles = StyleSheet.create({
         padding: 5
     },
     Images: {
-        height: 300,
-        width: 200,
-        borderRadius: 5,
-        display: "flex",
+        height: 250,
+        width: 150,
+        borderRadius: 10,
         resizeMode: "stretch"
     },
 })

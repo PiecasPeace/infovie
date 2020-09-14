@@ -18,8 +18,7 @@ export const MovieFlatList = () => {
     const [movies, setMovieName] = useState({
         searchBar: "",
         results: [] as any,
-        selected: {} as any,
-        length: [] as any,
+        selected: {} as any
     })
 
     const search = () => {
@@ -30,7 +29,7 @@ export const MovieFlatList = () => {
             setMovieName(prevState => {
                 return { ...prevState, results: results }
             })
-        })  
+        })
     }
 
     const openPopup = (id: []) => {

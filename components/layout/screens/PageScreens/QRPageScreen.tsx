@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Linking, Platform, Image, FlatList, TouchableHighlight } from "react-native";
+import { View, Text, TouchableOpacity, Linking, Platform, Image, FlatList, TouchableHighlight } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import request from '../../../services/api';
 import Spinner from '../../../utils/spinner';
 import { styles } from './styles';
+import Axios from 'axios';
 
 // const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
 // const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";
@@ -57,7 +58,7 @@ const bigmokjson = {
     ]
 }
 
-const QRPageScreen = () => {
+const QRPageScreen = (fetchUrl: any) => {
     const [barcodeKEY, setBarcodeKEY] = useState('');
     const [barcodeTitle, setBarcodeTitle] = useState('');
     const [IMDBJson, setIMDBListJson] = useState<any[]>([]);
@@ -87,7 +88,9 @@ const QRPageScreen = () => {
         if (check === 'http') {
             Linking
                 .openURL(event.data)
-                .catch(err => console.error('An error occured, please Check if the URL is correct', err));
+                .catch(err => console.error
+                    ('An error occured, please Check if the URL is correct', err)
+                );
         } else {
             setScanSuccess({
                 result: event,
@@ -126,6 +129,19 @@ const QRPageScreen = () => {
             .finally(() => setLoading(false));
     }, []);
 
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         try {
+    //             const requests = await Axios.get(fetchUrl);
+    //             setBarcodesJson(requests.data.items)
+    //             return requests;
+    //         }
+    //         catch { (error) => { console.log(error); } }
+    //         finally { () => setLoading(false) };
+    //     }
+    //     fetchData()
+    // }, [fetchUrl])
+
     const upcDBList = (result: any) => {
         return (
             <TouchableHighlight
@@ -134,7 +150,7 @@ const QRPageScreen = () => {
                 <View>
                     <Text
                         style={{ color: '#fff', fontSize: 20 }}>
-                        MOVIE AFTER SCAN: {result.title}
+                        {result.title}
                     </Text>
                 </View>
             </TouchableHighlight>
