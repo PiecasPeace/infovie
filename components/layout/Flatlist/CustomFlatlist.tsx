@@ -1,15 +1,15 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import {
-    FlatList, View, Text, Image, StyleSheet, TouchableHighlight,
+    FlatList, View, Text, Image, TouchableHighlight,
 } from 'react-native'
 import axios from '../../services/axios';
-import { darkpurple } from '../../utils/colors';
 import Spinner from '../../utils/spinner';
+import { styles } from "./styles";
 
 const CustomFlatlist = ({ fetchUrl }) => {
     const [movies, setMovies] = useState<any[]>([]);
-    const imageURL = "https://image.tmdb.org/t/p/original";
     const [loading, setLoading] = useState(true);
+    const imageURL = "https://image.tmdb.org/t/p/original";
 
     useEffect(() => {
         async function fetchData() {
@@ -18,7 +18,9 @@ const CustomFlatlist = ({ fetchUrl }) => {
                 setMovies(request.data.results);
                 return request;
             } catch (err) {
-                console.log("There was a problem with your fetch: " + err.message);
+                console.log(
+                    "Fetchproblem at CustomFlatList Url: " + err.message
+                );
                 throw err;
             } finally {
                 setLoading(false)
@@ -28,22 +30,25 @@ const CustomFlatlist = ({ fetchUrl }) => {
     }, [fetchUrl]);
 
     const TrendingList = (movie: any) => {
-        const getImageURL = `${imageURL}${movie.poster_path}`
         return (
             <TouchableHighlight
                 key={movie.tmdbID}
             >
                 <View style={styles.resultMovie}>
                     <Text style={styles.headertext}>
-                        {movie.title}
+                        {movie.title != undefined ? movie.title : movie.original_title}
+                        {movie.name != undefined ? movie.name : movie.original_name}
                     </Text>
                     <Text>
                         {movie.description}
                     </Text>
-                    {/* {console.log(`${imageURL}${movie.poster_path}`)} */}
                     <Image
-                        source={{ uri: getImageURL }}
-                        defaultSource={require('../../assets/images/not_found.png')}
+                        source={
+                            { uri: `${imageURL}${movie.poster_path}` }
+                        }
+                        defaultSource={
+                            require('../../assets/images/not_found.png')
+                        }
                         style={styles.Images}
                         resizeMode="cover"
                     />
@@ -64,7 +69,9 @@ const CustomFlatlist = ({ fetchUrl }) => {
                 <Fragment>
                     <FlatList
                         data={movies}
-                        keyExtractor={(movie, index) => `${movie.tmdbID}-${index}`}
+                        keyExtractor={
+                            (movie, index) => `${movie.tmdbID}-${index}`
+                        }
                         showsVerticalScrollIndicator={true}
                         renderItem={movie => TrendingList(movie.item)}
                         keyboardShouldPersistTaps='always'
@@ -74,32 +81,5 @@ const CustomFlatlist = ({ fetchUrl }) => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    FlatlistContainer: {
-        flex: 1,
-        width: "100%",
-        padding: 10,
-    },
-    resultMovie: {
-        flex: 1,
-        width: '100%',
-        marginBottom: 30,
-        justifyContent: 'space-between',
-        alignItems: 'stretch'
-    },
-    headertext: {
-        color: darkpurple,
-        fontSize: 18,
-        fontWeight: '700',
-        padding: 5
-    },
-    Images: {
-        height: 250,
-        width: 150,
-        borderRadius: 10,
-        resizeMode: "stretch"
-    },
-})
 
 export default CustomFlatlist;

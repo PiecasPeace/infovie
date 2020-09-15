@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet, Platform } from 'react-native';
+import {darkpurple} from "../../../utils/colors"
 
 export const styles = StyleSheet.create({
     QRContainer: {
@@ -51,5 +51,18 @@ export const styles = StyleSheet.create({
     },
     buttonTouchable: {
         padding: 16
-    }
+    },
+    resultMovie: {
+        flex: 1,
+        width: '100%',
+        marginBottom: 30,
+        justifyContent: 'space-between',
+        alignItems: 'stretch'
+    },
+    headertext: {
+        color: darkpurple,
+        fontSize: 18,
+        fontWeight: '700',
+        padding: 5
+    },
 });

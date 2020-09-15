@@ -8,10 +8,9 @@ const HomePageScreen = () => {
         <View style={styles.container}>
             <Text>
                 Trending
-                    </Text>
+             </Text>
             <CustomFlatlist
                 fetchUrl={requests.Trending}
-               
             />
         </View>
     )
