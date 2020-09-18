@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailPageScreen from '../PageScreens/DetailPageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomePageScreen from '../PageScreens/HomePageScreen';
+import AboutPageScreen from '../PageScreens/AboutPageScreen';
+import QRPageScreen from '../PageScreens/QRPage/QRPageScreen';
 
 const DetailStack = createStackNavigator();
 
@@ -10,7 +13,7 @@ const DetailStackScreen = ({ navigation }: any) => {
     return (
         <DetailStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#079300',
+                backgroundColor: '#29272e',
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -37,7 +40,7 @@ const DetailStackScreen = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
     BurgerMenu: {
-        backgroundColor: '#079300'
+        backgroundColor: '#29272e'
     }
 });
 

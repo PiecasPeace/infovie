@@ -5,9 +5,10 @@ const AboutPageScreen = () => {
     const [text, setText] = useState("BRUH");
 
     return (
-        <View>
+        <View style={{ backgroundColor: "#55505e" }}>
             <Text>
                 ABOUUUUUUUUUUUUT
+
             </Text>
             <Button title="DINGDONG" onPress={() => setText(text)}>
             </Button>

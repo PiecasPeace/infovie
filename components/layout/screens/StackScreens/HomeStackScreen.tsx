@@ -9,7 +9,7 @@ const HomeStackScreen = ({ navigation }: any) => {
     return (
         <HomeStack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#930000',
+                backgroundColor: '#29272e',
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -35,7 +35,8 @@ const HomeStackScreen = ({ navigation }: any) => {
 
 const styles = StyleSheet.create({
     BurgerMenu: {
-        backgroundColor: '#930000'
+        backgroundColor: '#29272e',
+        color:'#29272e',
     }
 });
 

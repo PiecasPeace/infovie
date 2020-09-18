@@ -12,7 +12,7 @@ const AboutStackScreen = ({ navigation }: any) => {
         <AboutStack.Navigator
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: '#009387',
+                    backgroundColor: '#29272e',
                 },
                 headerTintColor: "#fff",
                 headerTitleStyle: {
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     BurgerMenu: {
-        backgroundColor: '#009387'
+        backgroundColor: '#29272e'
     }
 });
 

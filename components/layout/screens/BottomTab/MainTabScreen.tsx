@@ -5,24 +5,24 @@ import AboutStackScreen from '../StackScreens/AboutStackScreen';
 import { Platform } from "react-native"
 import DetailStackScreen from '../StackScreens/DetailStackScreen';
 import HomeStackScreen from '../StackScreens/HomeStackScreen';
+import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     return (
         <Tab.Navigator
             initialRouteName="Home"
-            activeColor="#FFF"
-            inactiveColor='#81798f'
-            style={{ paddingTop: (Platform.OS === 'ios') ? 20 : 0 }}
+            tabBarOptions={{
+                activeTintColor: '#fff',
+                style: { backgroundColor: "#29272e", paddingTop: (Platform.OS === 'ios') ? 20 : 0 }
+            }}
         >
             <Tab.Screen
                 name="Home"
                 component={HomeStackScreen}
                 options={{
                     tabBarLabel: 'Home',
-                    tabBarColor: "#930000",
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="home"
@@ -38,7 +38,6 @@ const MainTabScreen = () => {
                 component={DetailStackScreen}
                 options={{
                     tabBarLabel: 'Search',
-                    tabBarColor: "#079300",
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="movie-outline"
@@ -54,7 +53,6 @@ const MainTabScreen = () => {
                 component={AboutStackScreen}
                 options={{
                     tabBarLabel: 'About',
-                    tabBarColor: "#009387",
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="account-box"
@@ -70,7 +68,6 @@ const MainTabScreen = () => {
                 component={QRStackScreen}
                 options={{
                     tabBarLabel: 'QR-Scan',
-                    tabBarColor: '#29272e',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons
                             name="barcode"

@@ -19,7 +19,7 @@ const HomePageScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#55505e',
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingTop: 10,
