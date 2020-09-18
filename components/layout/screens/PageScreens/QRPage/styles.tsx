@@ -1,9 +1,8 @@
-import { StyleSheet, Platform } from 'react-native';
-import {darkpurple} from "../../../utils/colors"
+import { StyleSheet } from 'react-native';
+import {darkpurple} from "../../../../utils/colors"
 
 export const styles = StyleSheet.create({
     QRContainer: {
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
         flex: 1,
         backgroundColor: '#55505e', //replace for background
         flexDirection: 'column',

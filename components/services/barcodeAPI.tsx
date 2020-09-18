@@ -18,3 +18,17 @@ export default async function requestBarcode(url, content = {}, debug: false) {
     const response = await fetch(`${BarcodeURL}/${url}?${queryString(obj)}`);
     const data = await (debug ? response.status : response.json())
 }
+    // useEffect(() => {
+    //     fetch(upcUrl)
+    //         .then((response) =>
+    //             // response.json()
+    //             bigmokjson
+    //         )
+    //         .then((json) => {
+    //             setBarcodesJson(json.items);
+    //             // setBarcodeTitle(json.items);
+    //         })
+    //         .catch(error => { console.log(error); })
+    //         .finally(() => setLoading(false));
+    // }, []);
+

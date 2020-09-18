@@ -16,3 +16,6 @@ export default requests;
 // https://image.tmdb.org/t/p/original//trending/all/week?api_key=94ff60134af5b7bbe6cb00087e37359f&language=en-US
 // https://image.tmdb.org/t/p/original/uGhQ2ZGBpzCj6wC5jUrybsZuPTI.jpg
 // const fetchUrl = "https://api.themoviedb.org/3/trending/all/week?api_key=94ff60134af5b7bbe6cb00087e37359f&language=en-US";
+
+// const omdbURL = "http://omdbapi.com/?apikey=9ebc6b68"
+// const apiurl = "https://api.themoviedb.org/3/movie/76341?api_key=024d69b581633d457ac58359146c43f6";

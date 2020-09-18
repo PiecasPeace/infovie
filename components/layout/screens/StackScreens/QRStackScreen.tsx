@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import QRPageScreen from '../PageScreens/QRPageScreen';
+import QRPageScreen from '../PageScreens/QRPage/QRPageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const QRStack = createStackNavigator();

@@ -2,7 +2,7 @@ import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import QRStackScreen from '../StackScreens/QRStackScreen';
 import AboutStackScreen from '../StackScreens/AboutStackScreen';
-
+import { Platform } from "react-native"
 import DetailStackScreen from '../StackScreens/DetailStackScreen';
 import HomeStackScreen from '../StackScreens/HomeStackScreen';
 
@@ -15,7 +15,7 @@ const MainTabScreen = () => {
             initialRouteName="Home"
             activeColor="#FFF"
             inactiveColor='#81798f'
-
+            style={{ paddingTop: (Platform.OS === 'ios') ? 20 : 0 }}
         >
             <Tab.Screen
                 name="Home"
