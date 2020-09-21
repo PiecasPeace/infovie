@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     FlatList,
     TouchableHighlight,
@@ -6,47 +6,164 @@ import {
     View,
     Image,
     Text,
-    StyleSheet,
     Modal,
     Button
 } from 'react-native'
-import axios from 'axios';
-import { lightpurple, darkpurple } from '../../utils/colors';
+import { styles } from "./styles";
+import request from '../../services/api';
+import axios from '../../services/axios';
+import { TouchableOpacity } from '../../utils/TouchableOpacity';
+import Spinner from '../../utils/Spinner';
+import Screen from '../../utils/Screen';
+import MovieListRow from './MovieListRow/MovieListRow';
+import InputSearch from '../InputSearch/InputSearch';
+import { getImageApi } from '../../utils/images';
 
-export const MovieFlatList = () => {
+export const MovieFlatList = ({ navigation }) => {
     const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
+    const [loading, setLoading] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const [isRefresh, setIsRefresh] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [hasAdultContent, setHasAdultContent] = useState(false);
+    const [results, setResults] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
+    const [page, setPage] = useState(1);
+    const [filter, setFilter] = useState({
+        filterType: 'popularity.desc',
+        filterName: 'Most popular'
+    });
+
     const [movies, setMovieName] = useState({
         searchBar: "",
         results: [] as any,
         selected: {} as any
     })
+    const [view, setView] = useState({ numColumns: 1, keyGrid: 1 });
+    const {
+        params: { id = null, name = null, typeRequest = 'discover' } = {}
+    } = navigation.state;
 
-    const search = () => {
-        axios(apiurl + "&s=" + movies.searchBar).then(({ data }) => {
-            let results = data.Search
-            console.log(results)
+    const [params, setParams] = useState({
+        id: null,
+        name: null,
+        typerequest: 'discover',
+    })
 
-            setMovieName(prevState => {
-                return { ...prevState, results: results }
-            })
-        })
+    const getQueryRequest = () => {
+        if (typeRequest === 'discover') {
+            return id ? { with_genres: `${id}` } : null;
+        }
+
+        if (typeRequest === 'search') {
+            return { query: `${name.trim()}` };
+        }
+
+        return null;
+    };
+
+
+    const requestMoviesList = async () => {
+        try {
+            setLoading(true);
+            const { filterType } = filter;
+            // const dateRelease = getTodayDate();
+
+            const data = await request(`${typeRequest}/movie`, {
+                page,
+                // 'release_date.lte': dateRelease,
+                sort_by: filterType,
+                with_release_type: '1|2|3|4|5|6|7',
+                // include_adult: hasAdultContent,
+                ...getQueryRequest()
+            });
+
+            setLoading(false);
+            setIsLoadingMore(false);
+            setIsRefresh(false);
+            setIsError(false);
+            setTotalPages(data.total_pages);
+            setResults(isRefresh ? data.results : [...results, ...data.results]);
+        } catch (err) {
+            setLoading(false);
+            setIsLoadingMore(false);
+            setIsRefresh(false);
+            setIsError(true);
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                // const adultContentStorage = await getItem(
+                //     '@ConfigKey',
+                //     'hasAdultContent'
+                // );
+                // setHasAdultContent(adultContentStorage);
+                requestMoviesList();
+            } catch (error) {
+                requestMoviesList();
+            } finally {
+                setLoading(false)
+            }
+        })();
+    }, []);
+
+    const handleRefresh = async () => {
+        await setIsRefresh(true);
+        await setPage(1);
+        await requestMoviesList();
+    };
+
+    const handleLoadMore = async () => {
+        await setIsLoadingMore(true);
+        await setPage(page + 1);
+        await requestMoviesList();
+    };
+
+    const handleGrid = () => {
+        const { numColumns, keyGrid } = view;
+
+        setView({ numColumns: numColumns === 1 ? 2 : 1, keyGrid: keyGrid + 1 });
+    };
+
+
+    const { navigate } = navigation;
+    const { filterName } = filter;
+    const { numColumns, keyGrid } = view;
+
+    const TMDBList = (movie: any) => {
+        return (
+            <TouchableHighlight
+                key={movie.tmdbID2}
+            >
+                <View style={styles.resultMovie}>
+                    <Text style={styles.headertext}>
+                        {movie.title != undefined ? movie.title : movie.original_title}
+                        {movie.name != undefined ? movie.name : movie.original_name}
+                    </Text>
+                    <Text>
+                        {movie.description}
+                    </Text>
+                    <Image
+                       source={getImageApi(movie.poster_path)}
+                        defaultSource={
+                            require('../../../../assets/images/not_found.png')
+                        }
+                        style={styles.Images}
+                        resizeMode="cover"
+                    />
+                </View>
+            </TouchableHighlight>
+        )
     }
 
-    const openPopup = (id: []) => {
-        axios(apiurl + "&i=" + id).then(({ data }) => {
-            let result = data;
-
-            setMovieName(prevState => {
-                return { ...prevState, selected: result }
-            })
-        })
-    }
 
     const MovieFlatlistView = (result: any) => {
         return (
             <TouchableHighlight
                 key={result.imdbID}
-                onPress={() => openPopup(result.imdbID)}
+            // onPress={() => openPopup(result.imdbID)}
             >
                 <View style={styles.resultMovie}>
                     <Image
@@ -62,124 +179,83 @@ export const MovieFlatList = () => {
         )
     }
 
-    return (
-        <>
-            <TextInput
-                style={styles.searchBox}
-                onChangeText={text => setMovieName(prevState => {
-                    return { ...prevState, searchBar: text }
-                })}
-                onSubmitEditing={search}
-                value={movies.searchBar}
-                placeholder="Enter Movie"
-            />
+    const renderFooter = () => {
+        if (isLoadingMore) return <Spinner size={25} />;
 
-            <FlatList
-                style={styles.results}
-                data={movies.results}
-                keyExtractor={result => result.imdbID}
-                showsVerticalScrollIndicator={true}
-                renderItem={result => MovieFlatlistView(result.item)}
-                keyboardShouldPersistTaps='always'
-            />
-            <Modal
-                animationType='fade'
-                transparent={false}
-                visible={(typeof movies.selected.Title != "undefined")}
-            >
-                <View style={styles.ContainerPopup}>
-                    <Text style={styles.titlePopup}>
-                        {movies.selected.Title}
-                    </Text>
-                    <Image
-                        source={{ uri: movies.selected.Poster }}
-                        style={styles.ImagePopup}
-                    />
-                    <Text style={styles.ReleaseYearPopup}>
-                        Release Year: {movies.selected.Year}
-                    </Text>
-
-                    <Text style={styles.plotPopup}>
-                        Description: {movies.selected.Plot}
-                    </Text>
-
-                    <Button onPress={() => setMovieName(prevState => {
-                        return { ...prevState, selected: {} }
-                    })} title="Close">
-
-                    </Button>
+        if (totalPages !== page && results.length > 0) {
+            return (
+                <View style={styles.loadingMore}>
+                    <TouchableOpacity
+                        style={styles.loadingButton}
+                        onPress={handleLoadMore}
+                    >
+                        <Text style={styles.loadingText}>Load more</Text>
+                    </TouchableOpacity>
                 </View>
-            </Modal>
-            {/* style={styles.closePopUpButton}  */}
-        </>
+            );
+        }
+
+        if (results.length > 0) return <View style={styles.loadingMore} />;
+
+        return null;
+    };
+
+    return (
+        <Screen>
+            <View style={styles.container}>
+                <InputSearch typeRequest="search" navigate={navigate} />
+                <MovieListRow
+                    data={results}
+                    type="normal"
+                    isSearch={false}
+                    keyGrid={keyGrid}
+                    numColumns={numColumns}
+                    refreshing={isRefresh}
+                    onRefresh={handleRefresh}
+                    ListFooterComponent={renderFooter}
+                    navigate={navigate}
+                    renderItem={TMDBList}
+                />
+
+                {/* <FlatList
+                    style={styles.results}
+                    data={movies.results}
+                    keyExtractor={result => result.imdbID}
+                    showsVerticalScrollIndicator={true}
+                    renderItem={result => TMDBList(result.item)}
+                    keyboardShouldPersistTaps='always'
+                /> */}
+
+
+                <Modal
+                    animationType='fade'
+                    transparent={false}
+                    visible={(typeof movies.selected.Title != "undefined")}
+                >
+                    <View style={styles.ContainerPopup}>
+                        <Text style={styles.titlePopup}>
+                            {movies.selected.Title}
+                        </Text>
+                        <Image
+                            source={{ uri: movies.selected.Poster }}
+                            style={styles.ImagePopup}
+                        />
+                        <Text style={styles.ReleaseYearPopup}>
+                            Release Year: {movies.selected.Year}
+                        </Text>
+
+                        <Text style={styles.plotPopup}>
+                            Description: {movies.selected.Plot}
+                        </Text>
+
+                        <Button onPress={() => setMovieName(prevState => {
+                            return { ...prevState, selected: {} }
+                        })} title="Close">
+
+                        </Button>
+                    </View>
+                </Modal>
+            </View>
+        </Screen>
     )
 }
-
-const styles = StyleSheet.create({
-    ContainerPopup: {
-        padding: 20,
-        backgroundColor: lightpurple,
-        height: '100%',
-        flex: 1
-    },
-    titlePopup: {
-        fontSize: 24,
-        fontWeight: '300',
-        marginBottom: 5,
-        color: "#FFF",
-        backgroundColor: '#010101'
-    },
-    ImagePopup: {
-        height: 300,
-        width: 200,
-        borderRadius: 5,
-        display: "flex",
-        resizeMode: "stretch"
-    },
-    results: {
-        flex: 1,
-        width: '90%',
-        marginBottom: 20,
-    },
-    resultMovie: {
-        flex: 1,
-        width: '100%',
-        marginBottom: 30,
-        justifyContent: 'space-between',
-        alignItems: 'stretch'
-    },
-    headertext: {
-        color: darkpurple,
-        fontSize: 18,
-        fontWeight: '700',
-        padding: 5
-    },
-    Images: {
-        height: 300,
-        width: 200,
-        borderRadius: 5,
-        display: "flex",
-        resizeMode: "stretch"
-    },
-    searchBox: {
-        fontSize: 20,
-        fontWeight: '300',
-        padding: 20,
-        width: '90%',
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        marginBottom: 40,
-    },
-    closePopUpButton: {
-        padding: 20,
-        fontSize: 20,
-        backgroundColor: '#eeeeee',
-        color: '#FFF'
-    },
-    ReleaseYearPopup: {
-        padding: 10,
-    },
-    plotPopup: {
-        padding: 10
-    }
-})

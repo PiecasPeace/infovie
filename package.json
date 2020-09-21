@@ -19,6 +19,7 @@
     "@react-navigation/stack": "^5.9.0",
     "@types/react-native-vector-icons": "^6.4.5",
     "axios": "^0.20.0",
+    "feather-icons-react": "^0.4.1",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-camera": "^2.11.1",

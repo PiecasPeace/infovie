@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, ActivityIndicator, View } from 'react-native';
 
-import { darkBlue } from './colors';
+import { darkPurple } from './colors';
 
-const Spinner = ({ style = {}, size = 50, color = darkBlue }) => (
+const Spinner = ({ style = {}, size = 50 || String, color = darkPurple }) => (
   <View style={style}>
     {Platform.OS === 'ios' ? (
       <ActivityIndicator size="small" color={color} />

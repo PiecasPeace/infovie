@@ -3,9 +3,6 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailPageScreen from '../PageScreens/DetailPageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomePageScreen from '../PageScreens/HomePageScreen';
-import AboutPageScreen from '../PageScreens/AboutPageScreen';
-import QRPageScreen from '../PageScreens/QRPage/QRPageScreen';
 
 const DetailStack = createStackNavigator();
 

@@ -3,13 +3,13 @@ import {
     FlatList, View, Text, Image, TouchableHighlight,
 } from 'react-native'
 import axios from '../../services/axios';
-import Spinner from '../../utils/spinner';
+import Spinner from '../../utils/Spinner';
 import { styles } from "./styles";
+import { getImageApi } from '../../utils/images';
 
 const CustomFlatlist = ({ fetchUrl }) => {
     const [movies, setMovies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const imageURL = "https://image.tmdb.org/t/p/original";
 
     useEffect(() => {
         async function fetchData() {
@@ -43,9 +43,7 @@ const CustomFlatlist = ({ fetchUrl }) => {
                         {movie.description}
                     </Text>
                     <Image
-                        source={
-                            { uri: `${imageURL}${movie.poster_path}` }
-                        }
+                        source={getImageApi(movie.poster_path)}
                         defaultSource={
                             require('../../assets/images/not_found.png')
                         }

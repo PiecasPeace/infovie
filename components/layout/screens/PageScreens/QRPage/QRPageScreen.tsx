@@ -5,7 +5,8 @@ import { Button } from 'react-native-paper';
 import { styles } from './styles';
 import axios from '../../../../services/axios';
 import { bigmokjson } from "./bigmokjson";
-import Spinner from '../../../../utils/spinner';
+import Spinner from '../../../../utils/Spinner';
+import { getImageApi } from '../../../../utils/images';
 
 interface iQRState {
     scan: boolean,
@@ -146,9 +147,7 @@ const QRPageScreen = () => {
                         {movie.description}
                     </Text>
                     <Image
-                        source={
-                            { uri: `${imageUrl}${movie.poster_path}` }
-                        }
+                       source={getImageApi(movie.poster_path)}
                         defaultSource={
                             require('../../../../assets/images/not_found.png')
                         }

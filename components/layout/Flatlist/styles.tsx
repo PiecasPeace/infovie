@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         padding: 10,
+        justifyContent: 'center',
     },
     resultMovie: {
         flex: 1,
@@ -25,5 +26,5 @@ export const styles = StyleSheet.create({
         width: 150,
         borderRadius: 10,
         resizeMode: "stretch"
-    },
+    }
 })
