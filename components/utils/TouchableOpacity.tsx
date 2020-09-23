@@ -7,13 +7,13 @@ const TouchableOpacityCustom = ({
   onPress,
   children,
 }) => (
-  <TouchableOpacity
-    activeOpacity={activeOpacity}
-    style={style}
-    onPress={onPress}
-  >
-    {children}
-  </TouchableOpacity>
-);
+    <TouchableOpacity
+      activeOpacity={activeOpacity}
+      style={style}
+      onPress={onPress}
+    >
+      {children}
+    </TouchableOpacity>
+  );
 
 export { TouchableOpacityCustom as TouchableOpacity };

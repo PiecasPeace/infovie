@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import Feather from 'feather-icons-react';
-
 import { TouchableOpacity } from '../../utils/TouchableOpacity';
-
 import { darkGray } from '../../utils/colors';
 import axios from '../../services/axios'
-
 import styles from './styles';
 
-const InputSearch = ({ navigate, typeRequest }) => {
+const InputSearch = () => {
     const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=`;
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
@@ -42,7 +39,6 @@ const InputSearch = ({ navigate, typeRequest }) => {
         }
     }
 
-
     const onChangeSearch = (value: string) => {
         setSearch(value);
     };
@@ -53,10 +49,7 @@ const InputSearch = ({ navigate, typeRequest }) => {
 
     const handleSubmit = () => {
         if (search) {
-            navigate(tmdbUrl, {
-                typeRequest,
-                name: search
-            });
+            requestMovies();
         }
     };
 

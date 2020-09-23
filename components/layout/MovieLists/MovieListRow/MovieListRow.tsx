@@ -11,7 +11,7 @@ const MovieListRow = ({
   onRefresh,
   ListFooterComponent,
   // ListEmptyComponent,
-  navigate,
+  // navigate,
   renderItem
 }) => (
   <FlatList
@@ -25,7 +25,7 @@ const MovieListRow = ({
     ListFooterComponent={ListFooterComponent}
     // ListEmptyComponent={ListEmptyComponent}
     renderItem={({ item }) =>
-      renderItem(item, type, isSearch, numColumns, navigate)
+      renderItem(item, type, isSearch, numColumns)
     }
   />
 );

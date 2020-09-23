@@ -13,7 +13,7 @@ import { styles } from "./styles";
 import request from '../../services/api';
 import axios from '../../services/axios';
 import { TouchableOpacity } from '../../utils/TouchableOpacity';
-import Spinner from '../../utils/Spinner';
+import Spinner from '../../utils/spinner';
 import Screen from '../../utils/Screen';
 import MovieListRow from './MovieListRow/MovieListRow';
 import InputSearch from '../InputSearch/InputSearch';
@@ -95,11 +95,7 @@ export const MovieFlatList = ({ navigation }) => {
     useEffect(() => {
         (async () => {
             try {
-                // const adultContentStorage = await getItem(
-                //     '@ConfigKey',
-                //     'hasAdultContent'
-                // );
-                // setHasAdultContent(adultContentStorage);
+               
                 requestMoviesList();
             } catch (error) {
                 requestMoviesList();
@@ -127,9 +123,6 @@ export const MovieFlatList = ({ navigation }) => {
         setView({ numColumns: numColumns === 1 ? 2 : 1, keyGrid: keyGrid + 1 });
     };
 
-
-    const { navigate } = navigation;
-    const { filterName } = filter;
     const { numColumns, keyGrid } = view;
 
     const TMDBList = (movie: any) => {
@@ -147,9 +140,9 @@ export const MovieFlatList = ({ navigation }) => {
                     </Text>
                     <Image
                        source={getImageApi(movie.poster_path)}
-                        defaultSource={
-                            require('../../../../assets/images/not_found.png')
-                        }
+                        // defaultSource={
+                        //     require('../../../../assets/images/not_found.png')
+                        // }
                         style={styles.Images}
                         resizeMode="cover"
                     />
@@ -203,7 +196,7 @@ export const MovieFlatList = ({ navigation }) => {
     return (
         <Screen>
             <View style={styles.container}>
-                <InputSearch typeRequest="search" navigate={navigate} />
+                <InputSearch />
                 <MovieListRow
                     data={results}
                     type="normal"
@@ -213,7 +206,6 @@ export const MovieFlatList = ({ navigation }) => {
                     refreshing={isRefresh}
                     onRefresh={handleRefresh}
                     ListFooterComponent={renderFooter}
-                    navigate={navigate}
                     renderItem={TMDBList}
                 />
 

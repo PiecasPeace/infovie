@@ -3,7 +3,7 @@ import {
     FlatList, View, Text, Image, TouchableHighlight,
 } from 'react-native'
 import axios from '../../services/axios';
-import Spinner from '../../utils/Spinner';
+import Spinner from '../../utils/spinner';
 import { styles } from "./styles";
 import { getImageApi } from '../../utils/images';
 
@@ -44,9 +44,9 @@ const CustomFlatlist = ({ fetchUrl }) => {
                     </Text>
                     <Image
                         source={getImageApi(movie.poster_path)}
-                        defaultSource={
-                            require('../../assets/images/not_found.png')
-                        }
+                        // defaultSource={
+                        //     require('../../assets/images/not_found.png')
+                        // }
                         style={styles.Images}
                         resizeMode="cover"
                     />

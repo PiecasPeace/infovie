@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {darkpurple} from "../../../../utils/colors"
+import {darkPurple} from "../../../../utils/colors"
 
 export const styles = StyleSheet.create({
     QRContainer: {
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         marginTop: 480
     },
     StopScan: {
-        backgroundColor: 'red',
+        backgroundColor: '#ab0f0c',
         borderRadius: 5,
     },
 
@@ -56,10 +56,11 @@ export const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 30,
         justifyContent: 'space-between',
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        padding:8
     },
     headertext: {
-        color: darkpurple,
+        color: darkPurple,
         fontSize: 18,
         fontWeight: '700',
         padding: 5

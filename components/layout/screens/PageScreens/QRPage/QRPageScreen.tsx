@@ -4,8 +4,8 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
 import axios from '../../../../services/axios';
-import { bigmokjson } from "./bigmokjson";
-import Spinner from '../../../../utils/Spinner';
+import { bigmokjson, JSONITEMS, JSONRESULTS } from "./bigmokjson";
+import Spinner from '../../../../utils/spinner';
 import { getImageApi } from '../../../../utils/images';
 
 interface iQRState {
@@ -16,15 +16,13 @@ interface iQRState {
 
 const QRPageScreen = () => {
     const [barcode, setBarcode] = useState('');
-    const [barcodeTitle, setBarcodeTitle] = useState('');
-    const [barcodesJson, setBarcodesJson] = useState<any[]>([]);
+    const [barcodeTitle, setBarcodeTitle] = useState<string[]>([]);
+    const [barcodesJson, setBarcodesJson] = useState<string[]>([]);
     const [movies, setMovies] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const imageUrl = "https://image.tmdb.org/t/p/original";
-    // const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=${barcodeTitle}`;
+    const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=`;
     const upcUrl = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcode}`;
-    const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=batman`;
-
+    // const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=batman`;
 
     const [scanSuccess, setScanSuccess] = useState<iQRState>({
         scan: false,
@@ -32,7 +30,7 @@ const QRPageScreen = () => {
         result: "",
     });
 
-    const onSuccess = (event: any) => {
+    const onSuccess = async (event: any) => {
         const check = event.data.substring(0, 4);
 
         setBarcode(event.data);
@@ -57,50 +55,61 @@ const QRPageScreen = () => {
                 scanResult: true,
             });
         }
+        //api call ean db
+        await requestBarcodeAndSetTitle();
+        //api call movie db with title
+        await requestBarcodeTitle();
     }
 
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const request = bigmokjson;
-                setBarcodesJson(request.items);
-                return request;
-            } catch (err) {
-                console.log(
-                    "(Z.70~) Fetchproblem at upcUrl: " + err.message
-                );
-                throw err;
-            } finally {
-                setLoading(false);
+    const requestBarcodeAndSetTitle = async () => {
+        console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+        try {
+            const eanList: string[] = [];
+            const titleList: string[] = [];
+            for (let i = 0; i < bigmokjson.items.length; i++) {
+                // eanList.push(bigmokjson.items[i].ean);
+                const getCode = bigmokjson.items[i];
+                if (getCode.ean === undefined) {
+                    eanList.push(bigmokjson.items[i].upc);
+                } else {
+                    eanList.push(bigmokjson.items[i].ean);
+                }
+                titleList[i] = (bigmokjson.items[i].title);
+                console.log("titleList[i] ist  Zeile 78: " + titleList[i]);
+                // console.log(eanList[i])
             }
+            console.log("titleList ist  Zeile 81: " + titleList)
+            setBarcodeTitle(titleList);
+            setBarcodesJson(eanList);
+            console.log("eanList ist  Zeile 83: " + eanList);
+            console.log("titleList ist  Zeile 84: " + titleList);
+        } catch (err) {
+            console.log(
+                "(Z.70~) Fetchproblem at upcUrl: " + err.message
+            );
+            throw err;
+        } finally {
+            setLoading(false);
         }
-        fetchData();
-        return () => {
-            fetchData();
-        };
-    }, []);
+    }
 
-    useEffect(() => {
-        async function fetchDataTMDB() {
-            try {
-                const request = await axios.get(tmdbUrl);
-                setMovies(request.data.results);
-                return request;
-            } catch (error) {
-                console.log(
-                    "(Z.170~) Fetchproblem at tmdbUrl in QRPageSreen: " + error.message
-                );
-                throw error;
-            } finally {
-                setLoading(false)
-            }
+    const requestBarcodeTitle = async () => {
+        console.log("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222")
+        try {
+            console.log("tmdbUrl+Barcodetitle[0] lautet: " + `${tmdbUrl}${encodeURI(barcodeTitle[0])}`)
+            const request = await fetch(`${tmdbUrl}${encodeURI(barcodeTitle[0])}`);
+            // console.log(request);
+            const result = await request.json();
+            setMovies(result.results);
+        } catch (error) {
+            console.log(
+                "(Z.105~) Fetchproblem at tmdbUrl in QRPageSreen: " + error.message
+            );
+            throw error;
+        } finally {
+            setLoading(false);
         }
-        fetchDataTMDB();
-        return () => {
-            fetchDataTMDB();
-        };
-    }, []);
+    }
 
     const isLoading = () => {
         if (loading) {
@@ -118,15 +127,17 @@ const QRPageScreen = () => {
         })
     }
 
-    const upcList = (result: any) => {
+    const upcList = (result: JSONITEMS) => {
+        
         return (
             <TouchableHighlight
-                key={result.upcID}
+                key={result.ean}
             >
                 <View>
                     <Text
                         style={{ color: '#fff', fontSize: 20 }}>
-                        {result.title.trim()}
+                        {/* {result.title !== undefined ? result.title : movie.original_title} */}
+                        {result.title}
                     </Text>
                 </View>
             </TouchableHighlight>
@@ -140,17 +151,17 @@ const QRPageScreen = () => {
             >
                 <View style={styles.resultMovie}>
                     <Text style={styles.headertext}>
-                        {movie.title != undefined ? movie.title : movie.original_title}
-                        {movie.name != undefined ? movie.name : movie.original_name}
+                        {movie.title !== undefined ? movie.title : movie.original_title}
+                        {movie.name !== undefined ? movie.name : movie.original_name}
                     </Text>
                     <Text>
                         {movie.description}
                     </Text>
                     <Image
-                       source={getImageApi(movie.poster_path)}
-                        defaultSource={
-                            require('../../../../assets/images/not_found.png')
-                        }
+                        source={getImageApi(movie.poster_path)}
+                        // defaultSource={
+                        //     require('../../../../assets/images/not_found.png')
+                        // }
                         style={styles.Images}
                         resizeMode="cover"
                     />
@@ -192,7 +203,7 @@ const QRPageScreen = () => {
                     <Fragment>
                         <FlatList
                             data={barcodesJson}
-                            keyExtractor={(result, index) => `${result.upcID}-${index}`}
+                            keyExtractor={(result: any, index) => `${result.ean}-${index}`}
                             renderItem={result => upcList(result.item)}
                             keyboardShouldPersistTaps='always'
                             showsVerticalScrollIndicator={true}

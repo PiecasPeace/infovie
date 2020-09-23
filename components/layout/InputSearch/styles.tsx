@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { fontSizeResponsive } from '../../../utils/dimensions';
+import { fontSizeResponsive } from '../../utils/dimensions';
 
-import { darkPurple, freeze } from '../../../utils/colors';
+import { darkPurple, freeze } from '../../utils/colors';
 
 const styles = StyleSheet.create({
   container: {
