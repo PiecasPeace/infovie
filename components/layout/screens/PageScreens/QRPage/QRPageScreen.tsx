@@ -1,46 +1,48 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { View, Text, TouchableOpacity, Linking, Image, FlatList, TouchableHighlight } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import axios from '../../../../services/axios';
-import { bigmokjson, JSONITEMS, JSONRESULTS } from "./bigmokjson";
+import { bigmokjson, JSONITEMS, JSONGET } from "./bigmokjson";
 import Spinner from '../../../../utils/spinner';
 import { getImageApi } from '../../../../utils/images';
+import { TheMovieDBUrl, API_KEY, UpcUrl } from '../../../../services/Shortcuts';
 
-interface iQRState {
+interface IQRState {
     scan: boolean,
     scanResult: boolean
     result: any,
 }
 
+interface IScanResult {
+    title: string,
+    ean: string,
+
+}
+
 const QRPageScreen = () => {
     const [barcode, setBarcode] = useState('');
-    const [barcodeTitle, setBarcodeTitle] = useState<string[]>([]);
     const [barcodesJson, setBarcodesJson] = useState<string[]>([]);
     const [movies, setMovies] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=`;
-    const upcUrl = `https://api.upcitemdb.com/prod/trial/lookup?upc=${barcode}`;
+    const [dataLoading, setDataLoading] = useState(false);
+    const TMDBRequest = `${TheMovieDBUrl}?${API_KEY}&query=`;
+    const UPCRequest = `${UpcUrl}${barcode}`;
     // const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=batman`;
-
-    const [scanSuccess, setScanSuccess] = useState<iQRState>({
+    // `${tmdbUrl}${encodeURI(getBarcodeTitle)}`
+    const [scanSuccess, setScanSuccess] = useState<IQRState>({
         scan: false,
         scanResult: false,
         result: "",
     });
 
     const onSuccess = async (event: any) => {
-        const check = event.data.substring(0, 4);
-
-        setBarcode(event.data);
-        console.log(event.data)
         setScanSuccess({
             result: event,
             scan: false,
             scanResult: true,
         });
         //For QR-Scan
+        const check = event.data.substring(0, 4);
         if (check === 'http') {
             Linking
                 .openURL(event.data)
@@ -55,67 +57,58 @@ const QRPageScreen = () => {
                 scanResult: true,
             });
         }
-        //api call ean db
-        await requestBarcodeAndSetTitle();
-        //api call movie db with title
-        await requestBarcodeTitle();
+            //api call ean db
+            await requestMovieTitleByBarcode(event.data).then((titleList) => {
+                //api call movie db with title
+                requestBarcodeTitle(titleList)
+            }).catch((message) => {
+                console.log("failed fetching: " + message)
+            });
     }
-
-    const requestBarcodeAndSetTitle = async () => {
-        console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+    const requestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
+        const titleList: string[] = [];
         try {
-            const eanList: string[] = [];
-            const titleList: string[] = [];
-            for (let i = 0; i < bigmokjson.items.length; i++) {
-                // eanList.push(bigmokjson.items[i].ean);
-                const getCode = bigmokjson.items[i];
-                if (getCode.ean === undefined) {
-                    eanList.push(bigmokjson.items[i].upc);
-                } else {
-                    eanList.push(bigmokjson.items[i].ean);
-                }
-                titleList[i] = (bigmokjson.items[i].title);
-                console.log("titleList[i] ist  Zeile 78: " + titleList[i]);
-                // console.log(eanList[i])
-            }
-            console.log("titleList ist  Zeile 81: " + titleList)
-            setBarcodeTitle(titleList);
-            setBarcodesJson(eanList);
-            console.log("eanList ist  Zeile 83: " + eanList);
-            console.log("titleList ist  Zeile 84: " + titleList);
+            const request = await fetch(`${UPCRequest}${eanUpc}`)
+            console.log("REQUESTTTTTTTTTTTTTTT: ")
+            console.log(request)
+            const result: JSONGET = await request.json();
+            console.log(result.items)
+            for (let i = 0; i < result.items.length; i++) {
+                { result.items[i].title ? result.items[i].title : "NOT FOUND" }
+                titleList[i] = result.items[i].title;
+            };
         } catch (err) {
-            console.log(
-                "(Z.70~) Fetchproblem at upcUrl: " + err.message
-            );
+            console.log("FetchProblem -> getMovieTitleByEANOrUPC: " + err.message);
             throw err;
-        } finally {
-            setLoading(false);
         }
+        console.log(titleList)
+        return titleList;
     }
-
-    const requestBarcodeTitle = async () => {
-        console.log("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222")
+    const requestBarcodeTitle = async (title: string[]) => {
+        const titleRegex: RegExp = new RegExp(/([^\,\-\:\.\[\+\(\/]*)/)
+        console.log(titleRegex)
+        let titleArray: string[] = [];
+        const regexOutput: RegExpMatchArray | null = title[0].match(titleRegex)
+        console.log(regexOutput)
+        if (regexOutput !== null) {
+            for (let i = 0; i < regexOutput.length; i++) {
+                titleArray[i] = regexOutput[0].toString();
+            }
+        }
         try {
-            console.log("tmdbUrl+Barcodetitle[0] lautet: " + `${tmdbUrl}${encodeURI(barcodeTitle[0])}`)
-            const request = await fetch(`${tmdbUrl}${encodeURI(barcodeTitle[0])}`);
-            // console.log(request);
+            const request = await fetch(`${TMDBRequest}${encodeURI(titleArray[0])}`);
+            console.log(request)
             const result = await request.json();
             setMovies(result.results);
+            setDataLoading(true)
         } catch (error) {
             console.log(
-                "(Z.105~) Fetchproblem at tmdbUrl in QRPageSreen: " + error.message
+                "FetchProblem -> requestBarcodeTitle: " + error.message
             );
             throw error;
-        } finally {
-            setLoading(false);
         }
     }
 
-    const isLoading = () => {
-        if (loading) {
-            return <Spinner />
-        }
-    }
     const activeQR = () => {
         setScanSuccess(prevState => {
             return { ...prevState, scan: true }
@@ -127,16 +120,13 @@ const QRPageScreen = () => {
         })
     }
 
-    const upcList = (result: JSONITEMS) => {
-        
+    const upcTitleItem = (result: JSONITEMS) => {
         return (
             <TouchableHighlight
                 key={result.ean}
             >
                 <View>
-                    <Text
-                        style={{ color: '#fff', fontSize: 20 }}>
-                        {/* {result.title !== undefined ? result.title : movie.original_title} */}
+                    <Text style={{ color: '#fff', fontSize: 20 }}>
                         {result.title}
                     </Text>
                 </View>
@@ -144,7 +134,7 @@ const QRPageScreen = () => {
         )
     }
 
-    const TMDBList = (movie: any) => {
+    const TMDBListItem = (movie: any) => {
         return (
             <TouchableHighlight
                 key={movie.tmdbID2}
@@ -159,9 +149,9 @@ const QRPageScreen = () => {
                     </Text>
                     <Image
                         source={getImageApi(movie.poster_path)}
-                        // defaultSource={
-                        //     require('../../../../assets/images/not_found.png')
-                        // }
+                        defaultSource={
+                            require('../../../../assets/images/not_found.png')
+                        }
                         style={styles.Images}
                         resizeMode="cover"
                     />
@@ -173,62 +163,55 @@ const QRPageScreen = () => {
     return (
         <View style={styles.QRContainer}>
             <Fragment>
-                {!scanSuccess.scan && !scanSuccess.scanResult &&
-                    <View>
-                        <Text style={styles.DescriptionText}>
-                            Please scan a Code !
-                            </Text>
+                {
+                    !scanSuccess.scan && !scanSuccess.scanResult ?
                         <View>
-                            <Button
-                                contentStyle={{
-                                    height: 80,
-                                    backgroundColor: '#fff0f2',
-                                    alignContent: 'center',
-                                }}
-                                labelStyle={{
-                                    fontSize: 25
-                                }}
-                                style={styles.activateScan}
-                                icon="barcode"
-                                onPress={activeQR}
-                                color="#400a13"
-                                mode="outlined">
-                                Scan Code
+                            <Text style={styles.DescriptionText}>
+                                Please scan a Code !
+                            </Text>
+                            <View>
+                                <Button
+                                    contentStyle={{
+                                        height: 80,
+                                        backgroundColor: '#fff0f2',
+                                        alignContent: 'center',
+                                    }}
+                                    labelStyle={{
+                                        fontSize: 25
+                                    }}
+                                    style={styles.activateScan}
+                                    icon="barcode"
+                                    onPress={activeQR}
+                                    color="#400a13"
+                                    mode="outlined">
+                                    <Text>Start Scan</Text>
                                 </Button>
-                        </View>
-                    </View>
+                            </View>
+                        </View> : <></>
                 }
 
-                {scanSuccess.scanResult && isLoading &&
+                {scanSuccess.scanResult && dataLoading ?
                     <Fragment>
                         <FlatList
                             data={barcodesJson}
                             keyExtractor={(result: any, index) => `${result.ean}-${index}`}
-                            renderItem={result => upcList(result.item)}
+                            renderItem={result => upcTitleItem(result.item)}
                             keyboardShouldPersistTaps='always'
                             showsVerticalScrollIndicator={true}
                         />
-
                         <FlatList
                             data={movies}
                             keyExtractor={(movie, index) => `${movie.tmdbID2}-${index}`}
                             showsVerticalScrollIndicator={true}
-                            renderItem={movie => TMDBList(movie.item)}
+                            renderItem={movie => TMDBListItem(movie.item)}
                             keyboardShouldPersistTaps='always'
                         />
-
                         <View style={{ padding: 1 }}>
-                            {/* <Text style={{ color: '#fff', fontSize: 20 }}>
-                                Name : {scanSuccess.result.data}
-                            </Text>
-                            <Text style={{ color: '#fff', fontSize: 20 }} numberOfLines={1}>
-                                Type: {scanSuccess.result.type}
-                            </Text> */}
+
                             <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
                                 <Text style={styles.DescriptionText}>Click to Scan again!</Text>
                             </TouchableOpacity>
                         </View>
-
                         <View style={styles.StopScan}>
                             <Button
                                 mode="outlined"
@@ -236,17 +219,16 @@ const QRPageScreen = () => {
                                 onPress={() => setScanSuccess(prevState => {
                                     return { ...prevState, scan: false, scanResult: false }
                                 })}>
-                                Stop Scan
+                                <Text>Stop Scan</Text>
                             </Button>
                         </View>
-                    </Fragment>
+                    </Fragment> : <></>
                 }
 
-                {scanSuccess.scan &&
+                {scanSuccess.scan ?
                     <QRCodeScanner
                         reactivate={true}
                         showMarker={true}
-                        // ref={(node) => { this.state.scanner = node }}
                         onRead={onSuccess}
                         bottomContent={
                             <View style={styles.StopScan}>
@@ -256,11 +238,11 @@ const QRPageScreen = () => {
                                     onPress={() => setScanSuccess(prevState => {
                                         return { ...prevState, scan: false }
                                     })}>
-                                    Stop Scan
-                                    </Button>
+                                    <Text>Stop Scan</Text>
+                                </Button>
                             </View>
                         }
-                    />
+                    /> : <></>
                 }
             </Fragment>
         </View>

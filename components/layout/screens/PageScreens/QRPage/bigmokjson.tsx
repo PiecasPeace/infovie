@@ -1,4 +1,4 @@
-interface JSONGET {
+export interface JSONGET {
     code: string,
     total: number,
     offset: number,
@@ -10,6 +10,7 @@ export interface JSONRESULTS {
 export interface JSONITEMS {
     ean: string,
     title: string,
+    // original_title: string,
     description: string,
     upc: string,
     brand: string,
