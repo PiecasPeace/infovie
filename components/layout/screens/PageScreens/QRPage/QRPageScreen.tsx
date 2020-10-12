@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, Linking, Image, FlatList, TouchableHighli
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import { bigmokjson, JSONITEMS, JSONGET } from "./bigmokjson";
+import { JSONITEMS, JSONGET } from "./Interfaces";
 import Spinner from '../../../../utils/spinner';
 import { getImageApi } from '../../../../utils/images';
 import { TheMovieDBUrl, API_KEY, UpcUrl } from '../../../../services/Shortcuts';
+import {titleRegex} from './Regex';
 
 interface IQRState {
     scan: boolean,
@@ -14,21 +15,11 @@ interface IQRState {
     result: any,
 }
 
-interface IScanResult {
-    title: string,
-    ean: string,
-
-}
-
 const QRPageScreen = () => {
-    const [barcode, setBarcode] = useState('');
-    const [barcodesJson, setBarcodesJson] = useState<string[]>([]);
     const [movies, setMovies] = useState<any[]>([]);
     const [dataLoading, setDataLoading] = useState(false);
     const TMDBRequest = `${TheMovieDBUrl}?${API_KEY}&query=`;
-    const UPCRequest = `${UpcUrl}${barcode}`;
-    // const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=batman`;
-    // `${tmdbUrl}${encodeURI(getBarcodeTitle)}`
+    const UPCRequest = `${UpcUrl}`;
     const [scanSuccess, setScanSuccess] = useState<IQRState>({
         scan: false,
         scanResult: false,
@@ -57,20 +48,18 @@ const QRPageScreen = () => {
                 scanResult: true,
             });
         }
-            //api call ean db
-            await requestMovieTitleByBarcode(event.data).then((titleList) => {
-                //api call movie db with title
-                requestBarcodeTitle(titleList)
-            }).catch((message) => {
-                console.log("failed fetching: " + message)
-            });
+        //api call ean db
+        await requestMovieTitleByBarcode(event.data).then((titleList) => {
+            //api call movie db with title
+            requestBarcodeTitle(titleList)
+        }).catch((message) => {
+            console.log("failed fetching: " + message)
+        });
     }
     const requestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
         const titleList: string[] = [];
         try {
             const request = await fetch(`${UPCRequest}${eanUpc}`)
-            console.log("REQUESTTTTTTTTTTTTTTT: ")
-            console.log(request)
             const result: JSONGET = await request.json();
             console.log(result.items)
             for (let i = 0; i < result.items.length; i++) {
@@ -85,11 +74,8 @@ const QRPageScreen = () => {
         return titleList;
     }
     const requestBarcodeTitle = async (title: string[]) => {
-        const titleRegex: RegExp = new RegExp(/([^\,\-\:\.\[\+\(\/]*)/)
-        console.log(titleRegex)
-        let titleArray: string[] = [];
         const regexOutput: RegExpMatchArray | null = title[0].match(titleRegex)
-        console.log(regexOutput)
+        let titleArray: string[] = [];
         if (regexOutput !== null) {
             for (let i = 0; i < regexOutput.length; i++) {
                 titleArray[i] = regexOutput[0].toString();
@@ -192,13 +178,13 @@ const QRPageScreen = () => {
 
                 {scanSuccess.scanResult && dataLoading ?
                     <Fragment>
-                        <FlatList
+                        {/* <FlatList
                             data={barcodesJson}
                             keyExtractor={(result: any, index) => `${result.ean}-${index}`}
                             renderItem={result => upcTitleItem(result.item)}
                             keyboardShouldPersistTaps='always'
                             showsVerticalScrollIndicator={true}
-                        />
+                        /> */}
                         <FlatList
                             data={movies}
                             keyExtractor={(movie, index) => `${movie.tmdbID2}-${index}`}
