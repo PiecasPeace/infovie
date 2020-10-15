@@ -1,33 +1,28 @@
 import React, { Fragment, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, Image, FlatList, TouchableHighlight, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Linking, FlatList, Alert } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import { upcITEMS, upcJsonGET, tmdbITEMS, tmdbJsonGET } from "./Interfaces";
 import Spinner from '../../../../utils/spinner';
-import { getImageApi } from '../../../../utils/images';
-import { TheMovieDBUrl, API_KEY, UpcUrl } from '../../../../services/Shortcuts';
-import { strongerRegex, firstRegex } from './Regex';
-import request from '../../../../services/api';
-import { InitialState } from '@react-navigation/native';
-
+import { TMDBRequest, UPCRequest } from '../../../../services/Shortcuts';
+import { strongerRegex, firstRegex } from './utils/Regex';
+import RequestMovieTitleByBarcode from './QRcomponents/RequestMovieTitleByBarcode';
+import QRFlatList from './QRcomponents/QRFlatList';
 interface IQRState {
     scan: boolean,
     scanResult: boolean
-    result: "",
+    result: any,
 }
 
 const QRPageScreen = () => {
     const [movies, setMovies] = useState<any[]>([]);
     const [dataLoading, setDataLoading] = useState(false);
-    const TMDBRequest = `${TheMovieDBUrl}?${API_KEY}&query=`;
-    const UPCRequest = `${UpcUrl}`;
     const [scanSuccess, setScanSuccess] = useState<IQRState>({
         scan: false,
         scanResult: false,
         result: "",
     });
-
+    //After scan, onSuccess starts
     const onSuccess = async (event: any) => {
         setScanSuccess({
             result: event,
@@ -50,31 +45,14 @@ const QRPageScreen = () => {
                 scanResult: true,
             });
         }
-        //api call ean db
-        await requestMovieTitleByBarcode(event.data).then((titleList) => {
-            //api call movie db with title
+        //api call upc DB (passing event.data, which is the barcode, titleList will be the title for the tmdb)
+        await RequestMovieTitleByBarcode(event.data).then((titleList) => {
+            //api call movie DB with title parameter
             requestBarcodeTitle(titleList)
         }).catch((message) => {
             console.log("failed fetching: " + message)
         });
     }
-    const requestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
-        const titleList: string[] = [];
-        try {
-            const request = await fetch(`${UPCRequest}${eanUpc}`)
-            const result: upcJsonGET = await request.json();
-            console.log(result.items)
-            for (let i = 0; i < result.items.length; i++) {
-                { result.items[i].title ? result.items[i].title : "NOT FOUND" }
-                titleList[i] = result.items[i].title;
-            };
-        } catch (err) {
-            console.log("FetchProblem -> requestMovieTitleByBarcode: " + err.message);
-            throw err;
-        }
-        return titleList;
-    }
-
     const requestBarcodeTitle = async (title: string[]) => {
         const RegexOutput: RegExpMatchArray | null = title[0].match(firstRegex);
         const strongRegexOutput: RegExpMatchArray | null = title[0].match(strongerRegex);
@@ -82,6 +60,7 @@ const QRPageScreen = () => {
         let strongTitleArray: string[] = [];
         if (RegexOutput !== null) {
             for (let i = 0; i < RegexOutput.length; i++) {
+                //Regex gives back an array so we have to give it the [0] index
                 lightTitleArray[i] = RegexOutput[0].toString();
                 console.log(lightTitleArray[i])
             };
@@ -92,11 +71,14 @@ const QRPageScreen = () => {
                 console.log(strongTitleArray[i])
             };
         };
-
         try {
+            //before every scan, we clear setMovies so we dont see it in the background after second scan
+            setMovies([]);
+            //fetch url with the lighterRegex
             const request = await fetch(`${TMDBRequest}${encodeURI(lightTitleArray[0])}`);
             console.log(request)
             const result = await request.json();
+            //if total_results are 0, open an Alert which asks if you want to search with the strongerRegex (total_results is from the JSON request)
             if (result.total_results === 0) {
                 return Alert.alert(
                     `Title not found`,
@@ -109,29 +91,25 @@ const QRPageScreen = () => {
                         },
                         {
                             text: "Yes",
+                            //if you click yes, we fetching data from the strongerRegex
                             onPress: async () => {
                                 const betterRequest = await fetch(`${TMDBRequest}${encodeURI(strongTitleArray[0]).trim()}`)
                                 console.log(`${TMDBRequest}${encodeURI(strongTitleArray[0]).trim()}`)
                                 const betterResult = await betterRequest.json();
                                 setMovies(betterResult.results);
                                 setDataLoading(true)
-                                setScanSuccess(prevState => {
-                                    return { ...prevState, event: "" }
-                                })
                             },
                         }
                     ],
+                    //this makes so you cant click outside of the box
                     { cancelable: false }
                 );
             } else {
-                 setMovies(result.results);
-                 setDataLoading(true)
+                setMovies(result.results);
+                setDataLoading(true)
             }
-
         } catch (error) {
-            console.log(
-                "FetchProblem -> requestBarcodeTitle: " + error.message
-            );
+            console.log("FetchProblem -> requestBarcodeTitle: " + error.message);
             throw error;
         }
     }
@@ -143,32 +121,6 @@ const QRPageScreen = () => {
     }
     const scanAgain = () => {
         setScanSuccess({ result: "", scan: true, scanResult: false })
-    }
-
-    const TMDBListItem = (movie: any) => {
-        return (
-            <TouchableHighlight
-                key={movie.tmdbID2}
-            >
-                <View style={styles.resultMovie}>
-                    <Text style={styles.headertext}>
-                        {movie.title !== undefined ? movie.title : movie.original_title}
-                        {movie.name !== undefined ? movie.name : movie.original_name}
-                    </Text>
-                    <Text>
-                        {movie.description}
-                    </Text>
-                    <Image
-                        source={getImageApi(movie.poster_path)}
-                        defaultSource={
-                            require('../../../../assets/images/not_found.png')
-                        }
-                        style={styles.Images}
-                        resizeMode="cover"
-                    />
-                </View>
-            </TouchableHighlight>
-        )
     }
 
     return (
@@ -203,15 +155,10 @@ const QRPageScreen = () => {
 
                 {scanSuccess.scanResult && dataLoading ?
                     <Fragment>
-                        <FlatList
+                        <QRFlatList
                             data={movies}
-                            keyExtractor={(movie, index) => `${movie.tmdbID2}-${index}`}
-                            showsVerticalScrollIndicator={true}
-                            renderItem={movie => TMDBListItem(movie.item)}
-                            keyboardShouldPersistTaps='always'
                         />
                         <View style={{ padding: 1 }}>
-
                             <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
                                 <Text style={styles.DescriptionText}>Click to Scan again!</Text>
                             </TouchableOpacity>
