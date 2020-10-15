@@ -17,6 +17,7 @@ export default async function requestBarcode(url, content = {}, debug: false) {
 
     const response = await fetch(`${BarcodeURL}/${url}?${queryString(obj)}`);
     const data = await (debug ? response.status : response.json())
+    return data;
 }
     // useEffect(() => {
     //     fetch(upcUrl)

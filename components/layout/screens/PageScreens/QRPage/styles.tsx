@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
         color: 'rgb(0,122,255)'
     },
     buttonTouchable: {
-        padding: 16
+        padding: 8
     },
     resultMovie: {
         flex: 1,

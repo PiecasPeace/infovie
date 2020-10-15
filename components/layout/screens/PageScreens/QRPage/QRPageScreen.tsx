@@ -1,18 +1,20 @@
 import React, { Fragment, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking, Image, FlatList, TouchableHighlight } from "react-native";
+import { View, Text, TouchableOpacity, Linking, Image, FlatList, TouchableHighlight, Alert } from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import { JSONITEMS, JSONGET } from "./Interfaces";
+import { upcITEMS, upcJsonGET, tmdbITEMS, tmdbJsonGET } from "./Interfaces";
 import Spinner from '../../../../utils/spinner';
 import { getImageApi } from '../../../../utils/images';
 import { TheMovieDBUrl, API_KEY, UpcUrl } from '../../../../services/Shortcuts';
-import {titleRegex} from './Regex';
+import { strongerRegex, firstRegex } from './Regex';
+import request from '../../../../services/api';
+import { InitialState } from '@react-navigation/native';
 
 interface IQRState {
     scan: boolean,
     scanResult: boolean
-    result: any,
+    result: "",
 }
 
 const QRPageScreen = () => {
@@ -60,33 +62,72 @@ const QRPageScreen = () => {
         const titleList: string[] = [];
         try {
             const request = await fetch(`${UPCRequest}${eanUpc}`)
-            const result: JSONGET = await request.json();
+            const result: upcJsonGET = await request.json();
             console.log(result.items)
             for (let i = 0; i < result.items.length; i++) {
                 { result.items[i].title ? result.items[i].title : "NOT FOUND" }
                 titleList[i] = result.items[i].title;
             };
         } catch (err) {
-            console.log("FetchProblem -> getMovieTitleByEANOrUPC: " + err.message);
+            console.log("FetchProblem -> requestMovieTitleByBarcode: " + err.message);
             throw err;
         }
-        console.log(titleList)
         return titleList;
     }
+
     const requestBarcodeTitle = async (title: string[]) => {
-        const regexOutput: RegExpMatchArray | null = title[0].match(titleRegex)
-        let titleArray: string[] = [];
-        if (regexOutput !== null) {
-            for (let i = 0; i < regexOutput.length; i++) {
-                titleArray[i] = regexOutput[0].toString();
-            }
-        }
+        const RegexOutput: RegExpMatchArray | null = title[0].match(firstRegex);
+        const strongRegexOutput: RegExpMatchArray | null = title[0].match(strongerRegex);
+        let lightTitleArray: string[] = [];
+        let strongTitleArray: string[] = [];
+        if (RegexOutput !== null) {
+            for (let i = 0; i < RegexOutput.length; i++) {
+                lightTitleArray[i] = RegexOutput[0].toString();
+                console.log(lightTitleArray[i])
+            };
+        };
+        if (strongRegexOutput !== null) {
+            for (let i = 0; i < strongRegexOutput.length; i++) {
+                strongTitleArray[i] = strongRegexOutput[0].toString();
+                console.log(strongTitleArray[i])
+            };
+        };
+
         try {
-            const request = await fetch(`${TMDBRequest}${encodeURI(titleArray[0])}`);
+            const request = await fetch(`${TMDBRequest}${encodeURI(lightTitleArray[0])}`);
             console.log(request)
             const result = await request.json();
-            setMovies(result.results);
-            setDataLoading(true)
+            if (result.total_results === 0) {
+                return Alert.alert(
+                    `Title not found`,
+                    `Couldnt find title "${lightTitleArray[0]}" \nSearch with "${strongTitleArray[0]}" instead?`,
+                    [
+                        {
+                            text: "Cancel",
+                            onPress: () => setScanSuccess({ result: "", scan: false, scanResult: false }),
+                            style: "cancel",
+                        },
+                        {
+                            text: "Yes",
+                            onPress: async () => {
+                                const betterRequest = await fetch(`${TMDBRequest}${encodeURI(strongTitleArray[0]).trim()}`)
+                                console.log(`${TMDBRequest}${encodeURI(strongTitleArray[0]).trim()}`)
+                                const betterResult = await betterRequest.json();
+                                setMovies(betterResult.results);
+                                setDataLoading(true)
+                                setScanSuccess(prevState => {
+                                    return { ...prevState, event: "" }
+                                })
+                            },
+                        }
+                    ],
+                    { cancelable: false }
+                );
+            } else {
+                 setMovies(result.results);
+                 setDataLoading(true)
+            }
+
         } catch (error) {
             console.log(
                 "FetchProblem -> requestBarcodeTitle: " + error.message
@@ -101,23 +142,7 @@ const QRPageScreen = () => {
         })
     }
     const scanAgain = () => {
-        setScanSuccess(prevState => {
-            return { ...prevState, scanResult: false, scan: true }
-        })
-    }
-
-    const upcTitleItem = (result: JSONITEMS) => {
-        return (
-            <TouchableHighlight
-                key={result.ean}
-            >
-                <View>
-                    <Text style={{ color: '#fff', fontSize: 20 }}>
-                        {result.title}
-                    </Text>
-                </View>
-            </TouchableHighlight>
-        )
+        setScanSuccess({ result: "", scan: true, scanResult: false })
     }
 
     const TMDBListItem = (movie: any) => {
@@ -178,13 +203,6 @@ const QRPageScreen = () => {
 
                 {scanSuccess.scanResult && dataLoading ?
                     <Fragment>
-                        {/* <FlatList
-                            data={barcodesJson}
-                            keyExtractor={(result: any, index) => `${result.ean}-${index}`}
-                            renderItem={result => upcTitleItem(result.item)}
-                            keyboardShouldPersistTaps='always'
-                            showsVerticalScrollIndicator={true}
-                        /> */}
                         <FlatList
                             data={movies}
                             keyExtractor={(movie, index) => `${movie.tmdbID2}-${index}`}

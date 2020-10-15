@@ -1,16 +1,34 @@
-export interface JSONGET {
+export interface tmdbJsonGET {
+    page: number,
+    total_results: number,
+    total_pages: number,
+    results: tmdbITEMS[],
+}
+export interface tmdbITEMS {
+    popularity: number,
+    vote_count: number,
+    video: boolean,
+    poster_path: string,
+    id: number,
+    adult: boolean,
+    backdrop_path: string,
+    original_language: string,
+    original_title: string,
+    genre_ids: number[],
+    title: string,
+    vote_average: number,
+    overview: string,
+    release_date: string,
+}
+export interface upcJsonGET {
     code: string,
     total: number,
     offset: number,
-    items: JSONITEMS[]
+    items: upcITEMS[],
 }
-export interface JSONRESULTS {
-    original_title: string,
-}
-export interface JSONITEMS {
+export interface upcITEMS {
     ean: string,
     title: string,
-    // original_title: string,
     description: string,
     upc: string,
     brand: string,
@@ -28,8 +46,8 @@ export interface JSONITEMS {
     asin: string,
     elid: string,
 }
-// /The Superman II: The Richard Donner Cut/Superman Returns [3 Discs] [Blu-ray]
-export const bigmokjson: JSONGET = {
+
+export const UPCMOKJSON: upcJsonGET = {
     "code": "OK",
     "total": 1,
     "offset": 0,

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {darkPurple} from '../../utils/colors';
+import {white} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
     FlatlistContainer: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         alignItems: 'stretch'
     },
     headertext: {
-        color: darkPurple,
+        color: white,
         fontSize: 18,
         fontWeight: '700',
         padding: 5

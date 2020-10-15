@@ -1,4 +1,3 @@
-export const titleRegex: RegExp = new RegExp(/([^\,\-\:\.\[\+\(\/])+/)
-export const VolumeRegex: RegExp = new RegExp(/(.+) vol\..+/i)
-// ([^\,\-\:\.\[\+\(\/]*)+(.+) vol\..+)
-//([^\W])* 
+export const strongerRegex: RegExp = new RegExp(/([\w\s])*/)
+export const firstRegex: RegExp = new RegExp(/([^\(\[\,\|\()])+/)
+// export const sonderZeichenRegex: RegExp = new RegExp(/([^\,\-\:\.\[\+\(\/])+/)
