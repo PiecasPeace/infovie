@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { FlatList } from 'react-native';
-import TMDBListItem from './TMDBListItem';
+import TMDBListItem from '../TMDBListItem';
 
-const QRFlatList = ({ data }) => {
+const CustomFlatList = ({ data }) => {
     return (
         <Fragment>
             <FlatList
@@ -16,4 +16,4 @@ const QRFlatList = ({ data }) => {
     )
 }
 
-export default QRFlatList;
+export default CustomFlatList;

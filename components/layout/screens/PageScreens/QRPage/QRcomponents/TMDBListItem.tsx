@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { View, Text, Image, TouchableHighlight } from 'react-native';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
 import { getImageApi } from '../../../../../utils/images';
-import { styles } from '../styles';
+import { styles } from './styles';
 
 const TMDBListItem = (movie: any) => {
     return (

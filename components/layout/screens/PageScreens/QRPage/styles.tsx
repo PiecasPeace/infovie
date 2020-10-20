@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {darkPurple} from "../../../../utils/colors"
+import { black, darkGreen, darkPurple, darkRed } from "../../../../utils/colors"
 
 export const styles = StyleSheet.create({
     QRContainer: {
@@ -7,19 +7,12 @@ export const styles = StyleSheet.create({
         backgroundColor: '#55505e', //replace for background
         flexDirection: 'column',
     },
-    Images: {
-        height: 300,
-        width: 200,
-        borderRadius: 5,
-        display: "flex",
-        resizeMode: "stretch"
-    },
     DescriptionText: {
         padding: 10,
         fontSize: 14,
         fontWeight: 'bold',
         color: "white",
-        backgroundColor: "#010101",
+        backgroundColor: black,
         textAlign: 'center',
     },
     activateScan: {
@@ -30,39 +23,13 @@ export const styles = StyleSheet.create({
         marginTop: 480
     },
     StopScan: {
-        backgroundColor: '#ab0f0c',
-        borderRadius: 5,
+        borderRadius: 2,
+        backgroundColor: darkRed,
+        width: '50%',
     },
-
-    centerText: {
-        flex: 1,
-        fontSize: 18,
-        padding: 32,
-        color: '#777'
-    },
-    textBold: {
-        fontWeight: '500',
-        color: '#000'
-    },
-    buttonText: {
-        fontSize: 21,
-        color: 'rgb(0,122,255)'
-    },
-    buttonTouchable: {
-        padding: 8
-    },
-    resultMovie: {
-        flex: 1,
-        width: '100%',
-        marginBottom: 30,
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        padding:8
-    },
-    headertext: {
-        color: darkPurple,
-        fontSize: 18,
-        fontWeight: '700',
-        padding: 5
+    ScanAgain: {
+        borderRadius: 2,
+        backgroundColor: darkGreen,
+        width: '50%'
     },
 });

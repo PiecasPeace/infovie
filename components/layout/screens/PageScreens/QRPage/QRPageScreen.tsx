@@ -7,7 +7,7 @@ import Spinner from '../../../../utils/spinner';
 import { TMDBRequest, UPCRequest } from '../../../../services/Shortcuts';
 import { strongerRegex, firstRegex } from './utils/Regex';
 import RequestMovieTitleByBarcode from './QRcomponents/RequestMovieTitleByBarcode';
-import QRFlatList from './QRcomponents/QRFlatList';
+import CustomFlatList from './QRcomponents/FlatList/CustomFlatList';
 interface IQRState {
     scan: boolean,
     scanResult: boolean
@@ -82,12 +82,12 @@ const QRPageScreen = () => {
             if (result.total_results === 0) {
                 return Alert.alert(
                     `Title not found`,
-                    `Couldnt find title "${lightTitleArray[0]}" \nSearch with "${strongTitleArray[0]}" instead?`,
+                    `Couldnt find title \n\n"${lightTitleArray[0].trim()}" \n\nSearch with "${strongTitleArray[0].trim()}" instead?`,
                     [
                         {
                             text: "Cancel",
                             onPress: () => setScanSuccess({ result: "", scan: false, scanResult: false }),
-                            style: "cancel",
+                            style: "destructive",
                         },
                         {
                             text: "Yes",
@@ -155,24 +155,32 @@ const QRPageScreen = () => {
 
                 {scanSuccess.scanResult && dataLoading ?
                     <Fragment>
-                        <QRFlatList
+                        <CustomFlatList
                             data={movies}
                         />
-                        <View style={{ padding: 1 }}>
-                            <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            {/* <TouchableOpacity onPress={scanAgain} style={styles.buttonTouchable}>
                                 <Text style={styles.DescriptionText}>Click to Scan again!</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.StopScan}>
+                            </TouchableOpacity> */}
                             <Button
+                                style={styles.StopScan}
                                 mode="outlined"
                                 color='#fff'
                                 onPress={() => setScanSuccess(prevState => {
                                     return { ...prevState, scan: false, scanResult: false }
                                 })}>
-                                <Text>Stop Scan</Text>
+                                <Text>Stop</Text>
                             </Button>
+                            <Button
+                                style={styles.ScanAgain}
+                                mode="outlined"
+                                color='#fff'
+                                onPress={scanAgain}>
+                                <Text>Scan again</Text>
+                            </Button>
+
                         </View>
+
                     </Fragment> : <></>
                 }
 

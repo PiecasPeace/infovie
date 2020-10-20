@@ -1,4 +1,3 @@
-import React from 'react';
 import { UPCRequest } from '../../../../../services/Shortcuts';
 import { upcJsonGET } from '../utils/Interfaces';
 
@@ -20,4 +19,4 @@ const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> =
     }
     return titleList;
 }
-export default RequestMovieTitleByBarcode
+export default RequestMovieTitleByBarcode;

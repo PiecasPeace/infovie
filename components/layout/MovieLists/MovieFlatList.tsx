@@ -95,7 +95,7 @@ export const MovieFlatList = ({ navigation }) => {
     useEffect(() => {
         (async () => {
             try {
-               
+
                 requestMoviesList();
             } catch (error) {
                 requestMoviesList();
@@ -139,7 +139,7 @@ export const MovieFlatList = ({ navigation }) => {
                         {movie.description}
                     </Text>
                     <Image
-                       source={getImageApi(movie.poster_path)}
+                        source={getImageApi(movie.poster_path)}
                         // defaultSource={
                         //     require('../../../../assets/images/not_found.png')
                         // }
@@ -156,7 +156,7 @@ export const MovieFlatList = ({ navigation }) => {
         return (
             <TouchableHighlight
                 key={result.imdbID}
-            // onPress={() => openPopup(result.imdbID)}
+                onPress={() => openPopup(result.imdbID)}
             >
                 <View style={styles.resultMovie}>
                     <Image
