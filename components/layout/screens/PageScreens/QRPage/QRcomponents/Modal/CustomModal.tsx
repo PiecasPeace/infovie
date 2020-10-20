@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, Image, Button } from 'react-native';
-import { styles } from '../../styles';
-
+import { styles } from './styles';
 
 const CustomModal = (movies: any, { onPress, title }) => {
     return (
