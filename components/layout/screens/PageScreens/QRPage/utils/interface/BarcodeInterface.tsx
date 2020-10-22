@@ -1,25 +1,3 @@
-export interface tmdbJsonGET {
-    page: number,
-    total_results: number,
-    total_pages: number,
-    results: tmdbITEMS[],
-}
-export interface tmdbITEMS {
-    popularity: number,
-    vote_count: number,
-    video: boolean,
-    poster_path: string,
-    id: number,
-    adult: boolean,
-    backdrop_path: string,
-    original_language: string,
-    original_title: string,
-    genre_ids: number[],
-    title: string,
-    vote_average: number,
-    overview: string,
-    release_date: string,
-}
 export interface upcJsonGET {
     code: string,
     total: number,
@@ -46,7 +24,6 @@ export interface upcITEMS {
     asin: string,
     elid: string,
 }
-
 export const UPCMOKJSON: upcJsonGET = {
     "code": "OK",
     "total": 1,
@@ -125,24 +102,3 @@ export const UPCMOKJSON: upcJsonGET = {
         }
     ]
 }
-
- // useEffect(() => {
-    //     async function fetchData() {
-    //         try {
-    //             const request = bigmokjson;
-    //             setBarcodesJson(bigmokjson.items);
-    //             return request;
-    //         } catch (err) {
-    //             console.log(
-    //                 "(Z.130~) Fetchproblem at upcUrl: " + err.message
-    //             );
-    //             throw err;
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     }
-    //     fetchData();
-    //     return () => {
-    //         fetchData();
-    //     };
-    // }, []);

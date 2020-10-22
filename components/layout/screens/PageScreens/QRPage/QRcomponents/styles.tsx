@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { darkPurple } from "../../../../../utils/colors"
+import { white } from "../../../../../utils/colors"
 
-export const styles = StyleSheet.create({
+export const stylese = StyleSheet.create({
     resultMovie: {
         flex: 1,
         width: '100%',
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         padding: 8
     },
     headertext: {
-        color: darkPurple,
+        color: white,
         fontSize: 18,
         fontWeight: '700',
         padding: 5
