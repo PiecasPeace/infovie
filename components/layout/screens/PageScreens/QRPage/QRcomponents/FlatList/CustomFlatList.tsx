@@ -1,15 +1,19 @@
 import React, { Fragment } from 'react';
 import { FlatList } from 'react-native';
-import TMDBListItem from '../TMDBListItem';
+import TMDBListItem from '../ListItem/TMDBListItem';
 
-const CustomFlatList = ({ data }) => {
+interface IFlatListProps {
+    movieData: any[];
+}
+
+const CustomFlatList = ({ movieData }: IFlatListProps) => {
     return (
         <Fragment>
             <FlatList
-                data={data}
-                keyExtractor={(movie, index) => `${movie.tmdbID2}-${index}`}
+                data={movieData}
+                keyExtractor={(movie, index) => `${movie.id}-${index}`}
                 showsVerticalScrollIndicator={true}
-                renderItem={movie => TMDBListItem(movie.item)}
+                renderItem={(movie) => TMDBListItem(movie.item)}
                 keyboardShouldPersistTaps='always'
             />
         </Fragment>

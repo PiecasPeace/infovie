@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { darkPurple, lightPurple } from '../../utils/colors';
-import { fontSizeResponsive } from '../../utils/dimensions';
+import { darkPurple, lightPurple } from '../../../../../../utils/colors';
 
 export const styles = StyleSheet.create({
     ContainerPopup: {
@@ -9,11 +8,6 @@ export const styles = StyleSheet.create({
         height: '100%',
         flex: 1
     },
-    // container: {
-    //     flex: 1,
-    //     backgroundColor: '#fff',
-    //     justifyContent: 'center'
-    // },
     titlePopup: {
         fontSize: 24,
         fontWeight: '300',
@@ -52,23 +46,5 @@ export const styles = StyleSheet.create({
     },
     plotPopup: {
         padding: 10
-    },
-    loadingMore: {
-        paddingTop: 20,
-        paddingBottom: 50,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loadingButton: {
-        padding: 10,
-        width: '50%',
-        borderWidth: 1,
-        borderRadius: 100,
-        borderColor: lightPurple
-    },
-    loadingText: {
-        fontSize: fontSizeResponsive(2.1),
-        color: darkPurple,
-        textAlign: 'center'
     },
 })

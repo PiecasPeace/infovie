@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { white } from "../../../../../utils/colors"
+import { white } from "../../../../../../utils/colors"
 
-export const stylese = StyleSheet.create({
+export const ListItemstyles = StyleSheet.create({
     resultMovie: {
         flex: 1,
         width: '100%',

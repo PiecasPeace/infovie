@@ -1,4 +1,4 @@
-export interface tmdbIDITEMS {
+export interface movieIDItem {
     adult: boolean,
     backdrop_path: string,
     belongs_to_collection: COLLECTION[],
