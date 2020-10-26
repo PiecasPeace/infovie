@@ -13,11 +13,11 @@ import { styles } from "./styles";
 import request from '../../services/api';
 import axios from '../../services/axios';
 import { TouchableOpacity } from '../../utils/TouchableOpacity';
-import Spinner from '../../utils/spinner';
+import Spinner from '../../utils/Spinner';
 import Screen from '../../utils/Screen';
 import MovieListRow from './MovieListRow/MovieListRow';
 import InputSearch from '../InputSearch/InputSearch';
-import { getImageApi } from '../../utils/images';
+import { getImageApi } from '../../utils/Image';
 
 export const MovieFlatList = ({ navigation }) => {
     const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";
@@ -156,7 +156,6 @@ export const MovieFlatList = ({ navigation }) => {
         return (
             <TouchableHighlight
                 key={result.imdbID}
-                onPress={() => openPopup(result.imdbID)}
             >
                 <View style={styles.resultMovie}>
                     <Image

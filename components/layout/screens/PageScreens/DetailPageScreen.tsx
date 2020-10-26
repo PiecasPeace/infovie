@@ -5,8 +5,15 @@ import { MovieFlatList } from '../../MovieLists/MovieFlatList';
 const DetailPageScreen = () => {
     return (
         <View style={styles.container}>
+            {/* <MovieFlatList /> */}
+            HAAAAAAAAAAAAA
+            HAAAAAAAAAAAAAhA
+            AHAHAH
+            AHAHAHAHAHAH
+            HAHAHAAHAUAU
+            HAHAHAAHAUAUAHAHAHDAD
 
-            <MovieFlatList />
+            ADADAd
         </View>
     )
 }

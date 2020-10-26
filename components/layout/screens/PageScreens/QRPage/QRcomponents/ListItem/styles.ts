@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { white } from "../../../../../../utils/colors"
-
+//change tsx from ts
 export const ListItemstyles = StyleSheet.create({
     resultMovie: {
         flex: 1,

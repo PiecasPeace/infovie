@@ -1,13 +1,13 @@
 import { buildIDUrl } from '../../../../../../services/Shortcuts';
-import { movieIDItem } from '../../utils/interface/IDInterface';
+import { IMovieIDItem } from '../../utils/interface/IDInterface';
 import { tmdbITEM } from '../../utils/interface/MovieInterface';
 
 interface IRequestMovieIDProps {
-    item: movieIDItem;
+    item: IMovieIDItem;
 }
 const RequestMovieID = async ({ item }: IRequestMovieIDProps) => {
     const request = await fetch(buildIDUrl(item.id))
-    const result: movieIDItem = await request.json();
+    const result: IMovieIDItem = await request.json();
     { item }
 };
 export default RequestMovieID;

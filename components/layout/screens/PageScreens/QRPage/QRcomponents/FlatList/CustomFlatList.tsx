@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { FlatList } from 'react-native';
-import TMDBListItem from '../ListItem/TMDBListItem';
+// import TMDBListItem from '../TMDBListItem';
 
 interface IFlatListProps {
     movieData: any[];

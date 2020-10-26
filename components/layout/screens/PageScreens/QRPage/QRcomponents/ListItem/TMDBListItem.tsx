@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableHighlight, ListRenderItem, ListRenderItemInfo } from 'react-native';
-import { getImageApi } from '../../../../../../utils/images';
+import { getImageApi } from '../../../../../../utils/Image';
 import { tmdbITEM, tmdbItemForFlatlist } from '../../utils/interface/MovieInterface';
 import { ListItemstyles } from './styles';
 

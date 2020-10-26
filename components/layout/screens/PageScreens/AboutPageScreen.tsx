@@ -8,10 +8,11 @@ const AboutPageScreen = () => {
         <View style={{ backgroundColor: "#55505e" }}>
             <Text>
                 ABOUUUUUUUUUUUUT
-
             </Text>
-            <Button title="DINGDONG" onPress={() => setText(text)}>
+            <Button title="DINGDONG" onPress={() => setText("XDDDDDDDDDDD")}>
+
             </Button>
+            {console.log(text)}
         </View>
     )
 }

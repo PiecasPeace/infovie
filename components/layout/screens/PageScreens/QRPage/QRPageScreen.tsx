@@ -3,23 +3,23 @@ import { View, Text, Linking, Alert, FlatList, Image, ListRenderItem, TouchableH
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Button } from 'react-native-paper';
 import { styles } from './styles';
-import Spinner from '../../../../utils/spinner';
+import Spinner from '../../../../utils/Spinner';
 import { buildIDUrl, TMDBRequest } from '../../../../services/Shortcuts';
 import { strongerRegex, firstRegex } from './utils/interface/Regex/Regex';
 import RequestMovieTitleByBarcode from './QRcomponents/Requests/RequestMovieTitleByBarcode';
 import CustomFlatList from './QRcomponents/FlatList/CustomFlatList';
-import { movieIDItem } from './utils/interface/IDInterface';
+import { IMovieIDItem } from './utils/interface/IDInterface';
 import { tmdbITEM, tmdbItemForFlatlist, tmdbJsonGET } from './utils/interface/MovieInterface';
 import CustomButton from '../../../../utils/CustomButton';
 import CustomModal from './QRcomponents/Modal/CustomModal';
 import { renderItem } from './QRcomponents/ListItem/TMDBListItem';
-import { getImageApi } from '../../../../utils/images';
+import { getImageApi } from '../../../../utils/Image';
 import { ListItemstyles } from './QRcomponents/ListItem/styles';
 interface IQRState {
     scan: boolean,
     scanResult: boolean
     result: any,
-    selected: movieIDItem,
+    selected: IMovieIDItem,
 }
 
 const QRPageScreen = () => {
@@ -30,7 +30,7 @@ const QRPageScreen = () => {
         scan: false,
         scanResult: false,
         result: "",
-        selected: {} as movieIDItem,
+        selected: {} as IMovieIDItem,
     });
     //After scan, onSuccess starts
     const onSuccess = async (event: any) => {
@@ -38,7 +38,7 @@ const QRPageScreen = () => {
             result: event,
             scan: false,
             scanResult: true,
-            selected: {} as movieIDItem,
+            selected: {} as IMovieIDItem,
         });
         //For QR-Scan
         const check = event.data.substring(0, 4);
@@ -54,7 +54,7 @@ const QRPageScreen = () => {
                 result: event,
                 scan: false,
                 scanResult: true,
-                selected: {} as movieIDItem,
+                selected: {} as IMovieIDItem,
             });
         }
         //api call upc DB (passing event.data, which is the barcode, titleList will be the title for the tmdb)
@@ -98,7 +98,7 @@ const QRPageScreen = () => {
                     [
                         {
                             text: "Cancel",
-                            onPress: () => setScanSuccess({ result: "", scan: false, scanResult: false, selected: {} as movieIDItem, }),
+                            onPress: () => setScanSuccess({ result: "", scan: false, scanResult: false, selected: {} as IMovieIDItem, }),
                             style: "destructive",
                         },
                         {
@@ -130,7 +130,7 @@ const QRPageScreen = () => {
         })
     }
     const scanAgain = () => {
-        setScanSuccess({ result: "", scan: true, scanResult: false, selected: {} as movieIDItem, })
+        setScanSuccess({ result: "", scan: true, scanResult: false, selected: {} as IMovieIDItem, })
     }
     const closeModal = () => {
         setShowModal(false)
@@ -139,7 +139,7 @@ const QRPageScreen = () => {
         const request = await fetch(buildIDUrl(movieID))
         console.log(request)
         console.log(buildIDUrl(movieID))
-        const result: movieIDItem = await request.json();
+        const result: IMovieIDItem = await request.json();
         setScanSuccess(prevState => {
             return { ...prevState, selected: result, }
         })
@@ -156,7 +156,6 @@ const QRPageScreen = () => {
             <View style={ListItemstyles.resultMovie}>
                 <Text style={ListItemstyles.headertext}>
                     {item.title !== undefined ? item.title : item.original_title}
-                    {item.original_title !== undefined ? item.title : item.original_title}
                 </Text>
                 <Text>
                     {/* {movie.overview} */}

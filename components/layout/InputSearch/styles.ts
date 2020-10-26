@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { fontSizeResponsive } from '../../utils/dimensions';
+import { fontSizeResponsive } from '../../utils/Dimensions';
 
 import { darkPurple, freeze } from '../../utils/colors';
 

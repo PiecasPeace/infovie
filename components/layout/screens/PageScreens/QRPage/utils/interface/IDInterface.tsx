@@ -1,9 +1,9 @@
-export interface movieIDItem {
+export interface IMovieIDItem {
     adult: boolean,
     backdrop_path: string,
-    belongs_to_collection: COLLECTION[],
+    belongs_to_collection: ICollection,
     budget: number,
-    genres: GENRES[],
+    genres: IGenres[],
     homepage: string,
     id: number,
     imdb_id: string,
@@ -12,12 +12,12 @@ export interface movieIDItem {
     overview: string,
     popularity: number,
     poster_path: string,
-    production_companies: PRODcompanies[],
-    production_countries: PRODcountries[],
+    production_companies: IProductionCompanies[],
+    production_countries: IProductionContries[],
     release_date: string,
     revenue: number,
     runtime: number,
-    spoken_language: SPOKEN[],
+    spoken_language: ISpoken[],
     status: string,
     tagline: string,
     title: string,
@@ -26,28 +26,28 @@ export interface movieIDItem {
     vote_count: number,
 }
 
-export interface COLLECTION {
+export interface ICollection {
     id: number,
     name: string,
     poster_path: string,
     backdrop_path: string,
 }
-export interface GENRES {
+export interface IGenres {
     id: number,
     name: string,
 }
-export interface PRODcompanies {
+export interface IProductionCompanies {
     id: number,
     logo_path: null,
     name: string,
     original_country: string,
 }
 
-export interface PRODcountries {
+export interface IProductionContries {
     iso_3166_1: string,
     name: string,
 }
-export interface SPOKEN {
+export interface ISpoken {
     iso_639_1: string,
     name: string,
 }
