@@ -19,6 +19,8 @@ export interface tmdbITEM {
     vote_average: number,
     overview: string,
     release_date: string,
+    type: any,
+    isSearch: any,
 }
 
 export type tmdbItemForFlatlist = tmdbITEM & {

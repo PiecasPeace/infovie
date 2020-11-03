@@ -1,15 +1,31 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import {
-    FlatList, View, Text, Image, TouchableHighlight,
+    FlatList, View, Text, Image, TouchableHighlight, ListRenderItem,
 } from 'react-native'
 import axios from '../../services/axios';
 import Spinner from '../../utils/Spinner';
 import { styles } from "./styles";
 import { getImageApi } from '../../utils/Image';
+import { tmdbITEM } from '../screens/PageScreens/QRPage/utils/interface/MovieInterface';
+import { convertToYear } from '../../utils/dates';
+import isoLanguage from '../../dataJSON/iso.json';
+import { convertToUpperCaseFirstLetter } from '../../utils/letters';
+import { convertTypeWithGenre } from '../../utils/genre';
 
 const CustomFlatlist = ({ fetchUrl }) => {
-    const [movies, setMovies] = useState<any[]>([]);
+    const [movies, setMovies] = useState<tmdbITEM[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const renderDivider = (releaseDate, originalLanguage) =>
+        releaseDate && originalLanguage !== 'xx' ? (
+            <Text style={styles.trace}>|</Text>
+        ) : null;
+
+    const getLanguage = value => {
+        const str = isoLanguage[value] || '';
+
+        return convertToUpperCaseFirstLetter(str);
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -29,31 +45,37 @@ const CustomFlatlist = ({ fetchUrl }) => {
         fetchData();
     }, [fetchUrl]);
 
-    const TrendingList = (movie: any) => {
-        return (
-            <TouchableHighlight
-                key={movie.tmdbID}
-            >
-                <View style={styles.resultMovie}>
-                    <Text style={styles.headertext}>
-                        {movie.title != undefined ? movie.title : movie.original_title}
-                        {movie.name != undefined ? movie.name : movie.original_name}
+    const TrendingList: ListRenderItem<tmdbITEM> = ({ item }) => (
+        <TouchableHighlight
+            key={item.id}
+        >
+            <View style={styles.containerItem}>
+                <Image
+                    source={getImageApi(item.poster_path)}
+                    style={styles.photo}
+                    resizeMode="cover"
+                />
+                <View style={styles.item}>
+                    <Text numberOfLines={2} style={styles.headertext}>
+                        {item.title}
                     </Text>
-                    <Text>
-                        {movie.description}
+                    <View style={[styles.textRow, styles.containerSubTitle]}>
+                        <Text style={styles.textSmall}>
+                            {convertToYear(item.release_date)}
+                        </Text>
+                        {renderDivider(item.release_date, item.original_language)}
+                        <Text numberOfLines={1} style={styles.textSmall}>
+                            {getLanguage(item.original_language)}
+                        </Text>
+                    </View>
+                    <Text numberOfLines={1} style={styles.textSmall}>
+                        {convertTypeWithGenre(item.genre_ids, item.type, item.isSearch)}
                     </Text>
-                    <Image
-                        source={getImageApi(movie.poster_path)}
-                        // defaultSource={
-                        //     require('../../assets/images/not_found.png')
-                        // }
-                        style={styles.Images}
-                        resizeMode="cover"
-                    />
                 </View>
-            </TouchableHighlight>
-        )
-    }
+
+            </View>
+        </TouchableHighlight>
+    )
 
     const isLoading = () => {
         if (loading) {
@@ -68,10 +90,10 @@ const CustomFlatlist = ({ fetchUrl }) => {
                     <FlatList
                         data={movies}
                         keyExtractor={
-                            (movie, index) => `${movie.tmdbID}-${index}`
+                            (movie, index) => `${movie.id}-${index}`
                         }
                         showsVerticalScrollIndicator={true}
-                        renderItem={movie => TrendingList(movie.item)}
+                        renderItem={TrendingList}
                         keyboardShouldPersistTaps='always'
                     />
                 </Fragment>

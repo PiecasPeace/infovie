@@ -8,11 +8,11 @@ const HomePageScreen = () => {
     return (
         <View style={styles.container}>
                 <Text style={styles.TrendingText}>
-                    Trending
+                    Most Popular
              </Text>
 
             <CustomFlatlist
-                fetchUrl={requests.Trending}
+                fetchUrl={requests.MostPopular}
             />
         </View>
     )

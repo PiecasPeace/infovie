@@ -19,18 +19,21 @@ const CustomModal = ({ item, onPress, visible }: ICustomModalProps) => {
         >
             <View style={styles.ContainerPopup}>
                 <Text style={styles.titlePopup}>
-                     {item.original_title !== "undefined" ? item.original_title : item.title}
+                    {item.title !== undefined ? item.title : item.original_title}
                 </Text>
-                <Image
-                    source={getImageApi(item.poster_path !== "undefined" ? item.poster_path : item.backdrop_path)}
-                    defaultSource={
-                        require('../../../../../../assets/images/not_found.png')
-                    }
-                />
-                <Text style={styles.ReleaseYearPopup}>
-                    Release Year: {item.release_date}
-                </Text>
+                <View style={{alignContent:"space-between", justifyContent:"space-between"}}>
+                    <Image
+                        source={getImageApi(item.poster_path)}
+                        defaultSource={
+                            require('../../../../../../assets/images/not_found.png')
+                        }
+                        style={styles.ImagePopup}
+                    />
+                    <Text style={styles.ReleaseYearPopup}>
+                        Release Year: {item.release_date}
+                    </Text>
 
+                </View>
                 <Text style={styles.plotPopup}>
                     Description: {item.overview}
                 </Text>

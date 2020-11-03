@@ -7,12 +7,10 @@ import Spinner from '../../../../utils/Spinner';
 import { buildIDUrl, TMDBRequest } from '../../../../services/Shortcuts';
 import { strongerRegex, firstRegex } from './utils/interface/Regex/Regex';
 import RequestMovieTitleByBarcode from './QRcomponents/Requests/RequestMovieTitleByBarcode';
-import CustomFlatList from './QRcomponents/FlatList/CustomFlatList';
 import { IMovieIDItem } from './utils/interface/IDInterface';
-import { tmdbITEM, tmdbItemForFlatlist, tmdbJsonGET } from './utils/interface/MovieInterface';
+import { tmdbITEM, tmdbJsonGET } from './utils/interface/MovieInterface';
 import CustomButton from '../../../../utils/CustomButton';
 import CustomModal from './QRcomponents/Modal/CustomModal';
-import { renderItem } from './QRcomponents/ListItem/TMDBListItem';
 import { getImageApi } from '../../../../utils/Image';
 import { ListItemstyles } from './QRcomponents/ListItem/styles';
 interface IQRState {
@@ -157,14 +155,13 @@ const QRPageScreen = () => {
                 <Text style={ListItemstyles.headertext}>
                     {item.title !== undefined ? item.title : item.original_title}
                 </Text>
-                <Text>
-                    {/* {movie.overview} */}
-                </Text>
+                {console.log(getImageApi(item.poster_path))}
                 <Image
                     source={getImageApi(item.poster_path)}
                     // defaultSource={
                     //     require('../../../../../../assets/images/not_found.png')
                     // }
+                    
                     style={ListItemstyles.Images}
                     resizeMode="cover"
                 />

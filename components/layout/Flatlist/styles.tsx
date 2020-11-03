@@ -1,19 +1,43 @@
 import { StyleSheet } from 'react-native';
-import {white} from '../../utils/colors';
+import { darkBlue, white } from '../../utils/colors';
+import { fontSizeResponsive } from '../../utils/Dimensions';
 
 export const styles = StyleSheet.create({
     FlatlistContainer: {
         flex: 1,
         width: "100%",
         padding: 10,
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
     },
-    resultMovie: {
-        flex: 1,
-        width: '100%',
-        marginBottom: 30,
+    containerItem: {
+        paddingRight: 20,
+        paddingLeft: 5,
+        paddingTop: 5,
+        marginBottom: 20,
+        flexDirection: 'row'
+    },
+    item: {
+        marginLeft: 20,
+        flexDirection: 'column',
         justifyContent: 'space-between',
-        alignItems: 'stretch'
+        flex: 1
+    },
+    textRow: {
+        flexDirection: 'row'
+    },
+    containerSubTitle: {
+        marginTop: 3,
+        marginBottom: 3
+    },
+    textSmall: {
+        fontSize: fontSizeResponsive(2.1),
+        color: white
+    },
+    trace: {
+        marginLeft: 5,
+        marginRight: 5,
+        fontSize: fontSizeResponsive(2.1),
+        color: white
     },
     headertext: {
         color: white,
@@ -21,10 +45,11 @@ export const styles = StyleSheet.create({
         fontWeight: '700',
         padding: 5
     },
-    Images: {
+    photo: {
         height: 250,
         width: 150,
-        borderRadius: 10,
+        borderRadius: 5,
+        display: "flex",
         resizeMode: "stretch"
     }
 })
