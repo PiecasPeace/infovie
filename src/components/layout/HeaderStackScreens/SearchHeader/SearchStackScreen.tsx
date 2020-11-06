@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SearchPageScreen from '../../../Screens/PageScreens/SearchPage/SearchPageScreen';
+import SearchPageScreen from '../../../../PageScreens/SearchPage/SearchPageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const SearchStack = createStackNavigator();

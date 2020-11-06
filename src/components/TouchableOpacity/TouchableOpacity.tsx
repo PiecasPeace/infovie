@@ -1,19 +1,19 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import {ITouchableOpacityProps} from './ITouchableOpacity';
 
-const TouchableOpacityCustom = ({
-  activeOpacity = 0.5,
-  style = {},
+const TouchableOpacityCustom: React.FC<ITouchableOpacityProps> = ({
+  activeOpacity,
+  style,
   onPress,
   children,
-}) => (
-    <TouchableOpacity
-      activeOpacity={activeOpacity}
-      style={style}
-      onPress={onPress}
-    >
-      {children}
-    </TouchableOpacity>
-  );
+}: ITouchableOpacityProps) => (
+  <TouchableOpacity
+    activeOpacity={activeOpacity}
+    style={style}
+    onPress={onPress}>
+    {children}
+  </TouchableOpacity>
+);
 
-export { TouchableOpacityCustom as TouchableOpacity };
+export {TouchableOpacityCustom as TouchableOpacity};

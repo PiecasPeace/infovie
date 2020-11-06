@@ -1,19 +1,29 @@
-import genre from '../../constants/genres.json';
+import {genreMap} from '../../constants/genres';
+import {IGenres} from '../../PageScreens/QRPage/Interfaces/IMovieByIDInterface';
 
-export const convertTypeWithGenre = (arr, type, isSearch) => {
-  if (type === 'normal' || isSearch) {
-    if (arr.length > 1) return `${genre[arr[0]].name}, ${genre[arr[1]].name}`;
-    return arr.length !== 0 ? `${genre[arr[0]].name}` : '';
+export const convertTypeWithGenre = (movieGenres: number[]): string => {
+  if (movieGenres.length > 1) {
+    const firstGenre = genreMap.get(movieGenres[0])
+      ? genreMap.get(movieGenres[0])
+      : `Unknown Genre: ${movieGenres[0]}`;
+    const secondGenre = genreMap.get(movieGenres[1])
+      ? genreMap.get(movieGenres[1])
+      : `Unknown Genre: ${movieGenres[1]}`;
+
+    return `${firstGenre}, ${secondGenre}`;
+  } else if (movieGenres.length === 1) {
+    const firstGenre = genreMap.get(movieGenres[0])
+      ? genreMap.get(movieGenres[0])
+      : `Unknown Genre: ${movieGenres[0]}`;
+    return `${firstGenre}`;
   }
-
-  return arr.length !== 0 && type !== genre[arr[0]].name
-    ? `${type}, ${genre[arr[0]].name}`
-    : type;
+  return 'Unknown Genre';
 };
+export const convertTypeWithGenreByID = (movieGenreIDs: IGenres[]): string => {
+  let genreString = '';
+  for (let i = 0; i < movieGenreIDs.length; i++) {
+    genreString += movieGenreIDs[i].name +", ";
 
-export const convertToGenres = (genre, messageNotFound = 'Uninformed') =>
-  genre.length > 0
-    ? genre.length > 1
-      ? `${genre[0].name}, ${genre[1].name}`
-      : genre[0].name
-    : messageNotFound;
+  }
+  return genreString;
+};
