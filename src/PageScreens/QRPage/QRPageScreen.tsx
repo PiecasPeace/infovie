@@ -149,9 +149,7 @@ const QRPageScreen: React.FC = () => {
         </Text>
         <Image
           source={getImageApi(item.poster_path)}
-          //   defaultSource={
-          //       require('../../../../../../assets/images/not_found.png')
-          //   }
+          defaultSource={require('../../assets/images/not_found.png')}
           style={styles.photo}
           resizeMode="cover"
         />

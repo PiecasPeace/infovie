@@ -24,6 +24,7 @@ export const DARK_BLUE = '#29272e';
 export const GRAY_BLUE = '#47525e';
 //PINK
 export const PINK = '#f95f62';
+export const DARK_PINK = '#cf4c6d';
 //YELLOW
 export const LIGHT_YELLOW = '#eab079';
 

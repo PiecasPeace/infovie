@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {WHITE} from '../../../constants/Colors';
+import {DARK_PINK, GRAY, WHITE} from '../../../constants/Colors';
 import {fontSizeResponsive} from '../../../components/utils/Dimensions';
 
 export const styles = StyleSheet.create({
@@ -37,6 +37,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginRight: 20,
   },
+  favoriteButton: {
+    // backgroundColor: DARK_PINK,
+    tintColor: WHITE,
+  },
   headertext: {
     fontSize: fontSizeResponsive(2.6),
     color: WHITE,
@@ -46,5 +50,11 @@ export const styles = StyleSheet.create({
     height: 250,
     width: 150,
     borderRadius: 5,
+  },
+  nonfav: {
+    backgroundColor: GRAY,
+  },
+  fav: {
+    backgroundColor: DARK_PINK,
   },
 });

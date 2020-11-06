@@ -17,6 +17,8 @@ import {baseTMDBUrl} from '../../../constants/Shortcuts';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
+import {CustomButton} from '../../../components/CustomButton/CustomButton';
+import {DARK_PINK, WHITE} from '../../../constants/Colors';
 
 interface ICustomFlatListProps {
   fetchUrl: string;
@@ -27,6 +29,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
 }: ICustomFlatListProps) => {
   const [movies, setMovies] = useState<tmdbITEM[]>([]);
   const [loading, setLoading] = useState(true);
+  const [Favorised, setFavorite] = useState(false);
+  const [FavorisedColor, setFavorisedColor] = useState(false);
 
   useEffect(() => {
     const fetchData = async (): Promise<tmdbJsonGET> => {
@@ -44,6 +48,11 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     };
     fetchData();
   }, [fetchUrl]);
+
+  const favColor = Favorised ? 'fav' : 'notfav';
+  const handleFav = () => {
+    Favorised ? setFavorite(false) : setFavorite(true);
+  }
 
   const TrendingList: ListRenderItem<tmdbITEM> = ({item}) => (
     <TouchableHighlight key={item.id}>
@@ -73,6 +82,17 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           </View>
           <View style={[styles.textRow, styles.containerReview]}>
             {renderScore(item.vote_average)}
+          </View>
+          <View>
+            <CustomButton
+              key={item.id}
+              Text={Favorised ? 'favorised' : 'add fav'}
+              color="white"
+              mode="outlined"
+              icon="heart"
+              onPress={handleFav}
+              style={[styles.favoriteButton, styles[favColor]]}
+            />
           </View>
         </View>
       </View>

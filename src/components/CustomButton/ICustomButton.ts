@@ -4,4 +4,6 @@ export interface ICustomButtonProps {
   Text: string;
   color: string;
   onPress: () => void;
+  icon?: string;
+  dark?: boolean;
 }
