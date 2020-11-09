@@ -29,8 +29,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
 }: ICustomFlatListProps) => {
   const [movies, setMovies] = useState<tmdbITEM[]>([]);
   const [loading, setLoading] = useState(true);
-  const [Favorised, setFavorite] = useState(false);
-  const [FavorisedColor, setFavorisedColor] = useState(false);
+  const [Favorite, setFavorite] = useState(false);
+  const [ButtonState, setButtonChange] = useState<tmdbITEM[]>([]);
 
   useEffect(() => {
     const fetchData = async (): Promise<tmdbJsonGET> => {
@@ -49,10 +49,11 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     fetchData();
   }, [fetchUrl]);
 
-  const favColor = Favorised ? 'fav' : 'notfav';
+  const favColor = Favorite ? 'fav' : 'notfav';
   const handleFav = () => {
-    Favorised ? setFavorite(false) : setFavorite(true);
-  }
+    Favorite ? setFavorite(false) : setFavorite(true);
+    // setButtonChange(item.id);
+  };
 
   const TrendingList: ListRenderItem<tmdbITEM> = ({item}) => (
     <TouchableHighlight key={item.id}>
@@ -86,7 +87,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           <View>
             <CustomButton
               key={item.id}
-              Text={Favorised ? 'favorised' : 'add fav'}
+              Text={Favorite ? 'favorised' : 'add fav'}
               color="white"
               mode="outlined"
               icon="heart"
