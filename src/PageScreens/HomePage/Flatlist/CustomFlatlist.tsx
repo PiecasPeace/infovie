@@ -11,14 +11,13 @@ import Spinner from '../../../components/Spinner/Spinner';
 import {styles} from './styles';
 import {getImageApi} from '../../../components/utils/Image';
 import {tmdbITEM, tmdbJsonGET} from '../../QRPage/Interfaces/IMovieInterface';
-import {convertToYear} from '../../../components/utils/Dates';
+import {convertToYear} from '../../../components/utils/dates';
 import {convertTypeWithGenre} from '../../../components/utils/genre';
 import {baseTMDBUrl} from '../../../constants/Shortcuts';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {CustomButton} from '../../../components/CustomButton/CustomButton';
-import {DARK_PINK, WHITE} from '../../../constants/Colors';
 
 interface ICustomFlatListProps {
   fetchUrl: string;

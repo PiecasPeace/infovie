@@ -3,7 +3,7 @@ import {Modal, View, Text, Image} from 'react-native';
 import {getImageApi} from '../../../components/utils/Image';
 import {styles} from './styles';
 import {ICustomModalProps} from './ICustomMoviePopup';
-import {convertToYear} from '../../../components/utils/Dates';
+import {convertToYear} from '../../../components/utils/dates';
 import {convertTypeWithGenreByID} from '../../../components/utils/genre';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
