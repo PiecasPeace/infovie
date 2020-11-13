@@ -22,8 +22,7 @@ export const convertTypeWithGenre = (movieGenres: number[]): string => {
 export const convertTypeWithGenreByID = (movieGenreIDs: IGenres[]): string => {
   let genreString = '';
   for (let i = 0; i < movieGenreIDs.length; i++) {
-    genreString += movieGenreIDs[i].name +", ";
-
+    genreString += movieGenreIDs[i].name + ', ';
   }
   return genreString;
 };

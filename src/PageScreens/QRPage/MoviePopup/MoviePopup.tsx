@@ -4,7 +4,7 @@ import {getImageApi} from '../../../components/utils/Image';
 import {styles} from './styles';
 import {ICustomModalProps} from './ICustomMoviePopup';
 import {convertToYear} from '../../../components/utils/dates';
-import {convertTypeWithGenreByID} from '../../../components/utils/genre';
+import {convertTypeWithGenreByID} from '../../../components/utils/genreFunctions';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';

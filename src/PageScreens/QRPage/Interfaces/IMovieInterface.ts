@@ -19,6 +19,7 @@ export interface tmdbITEM {
   vote_average: number;
   overview: string;
   release_date: string;
+  favorite: boolean;
 }
 
 export type tmdbItemForFlatlist = tmdbITEM & {
