@@ -5,9 +5,10 @@ import {LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE} from '../Colors';
 export const styles = StyleSheet.create({
   score: {
     minWidth: '25%',
+    marginTop:20,
     paddingVertical: 2,
     paddingHorizontal: 4,
-    borderRadius: 40,
+    borderRadius: 10,
   },
   textPercent: {
     fontSize: fontSizeResponsive(2.1),

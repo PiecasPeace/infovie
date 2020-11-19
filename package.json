@@ -11,15 +11,19 @@
   },
   "dependencies": {
     "@mdi/js": "^5.5.55",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/drawer": "^5.9.0",
     "@react-navigation/material-bottom-tabs": "^5.2.16",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "@types/lodash": "^4.14.165",
     "@types/react-native-vector-icons": "^6.4.5",
     "axios": "^0.20.0",
     "feather-icons-react": "^0.4.1",
+    "immer": "^7.0.14",
+    "lodash": "^4.17.20",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-camera": "^2.11.1",
@@ -32,7 +36,8 @@
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "^2.10.1",
     "react-native-svg": "^12.1.0",
-    "react-native-vector-icons": "^7.0.0"
+    "react-native-vector-icons": "^7.0.0",
+    "use-immer": "^0.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
