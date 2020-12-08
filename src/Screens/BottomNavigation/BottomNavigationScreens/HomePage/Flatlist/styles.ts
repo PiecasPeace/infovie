@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {DARK_PINK, GRAY, WHITE} from '../../../../../constants/Colors';
+import {DARK_PINK, DARK_PURPLE, GRAY, PINK, WHITE} from '../../../../../constants/Colors';
 import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
 
 export const styles = StyleSheet.create({
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
   },
   nonfav: {
-    backgroundColor: GRAY,
+    backgroundColor: DARK_PURPLE,
   },
   fav: {
     backgroundColor: DARK_PINK,

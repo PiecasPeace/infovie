@@ -3,11 +3,11 @@ import {
   TMDBRequest,
 } from '../../../../../constants/Shortcuts';
 import {IMovieIDItem} from '../Interfaces/IMovieByIDInterface';
-import {tmdbJsonGET} from '../Interfaces/IMovieInterface';
+import {ItmdbJsonGET} from '../Interfaces/IMovieInterface';
 
-export const tmdbGetByTitle = async (title: string): Promise<tmdbJsonGET> => {
+export const tmdbGetByTitle = async (title: string): Promise<ItmdbJsonGET> => {
   const request = await fetch(`${TMDBRequest}${encodeURI(title)}`);
-  const result = (await request.json()) as tmdbJsonGET;
+  const result = (await request.json()) as ItmdbJsonGET;
   console.log(request);
   return result;
 };

@@ -2,11 +2,11 @@ import React, {Fragment} from 'react';
 import {FlatList, ListRenderItem, View} from 'react-native';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import {styles} from '../styles';
-import {tmdbITEM} from '../Interfaces/IMovieInterface';
+import {ItmdbITEM} from '../Interfaces/IMovieInterface';
 
 interface IQRPageMovieListProps {
-  movies: tmdbITEM[];
-  renderItem: ListRenderItem<tmdbITEM>;
+  movies: ItmdbITEM[];
+  renderItem: ListRenderItem<ItmdbITEM>;
   stopScanFunction: () => void;
   scanAgainFunction: () => void;
 }

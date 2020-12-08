@@ -1,10 +1,10 @@
-export interface tmdbJsonGET {
+export interface ItmdbJsonGET {
   page: number;
   total_results: number;
   total_pages: number;
-  results: tmdbITEM[];
+  results: ItmdbITEM[];
 }
-export interface tmdbITEM {
+export interface ItmdbITEM {
   popularity: number;
   vote_count: number;
   video: boolean;
@@ -22,6 +22,6 @@ export interface tmdbITEM {
   favorite: boolean;
 }
 
-export type tmdbItemForFlatlist = tmdbITEM & {
+export type tmdbItemForFlatlist = ItmdbITEM & {
   onPress: (id: number) => void;
 };

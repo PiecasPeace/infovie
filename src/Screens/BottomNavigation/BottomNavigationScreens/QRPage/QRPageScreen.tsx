@@ -14,7 +14,7 @@ import Spinner from '../../../../components/Spinner/Spinner';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
 import RequestMovieTitleByBarcode from './APICalls/RequestMovieTitleByBarcode';
 import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
-import {tmdbITEM} from './Interfaces/IMovieInterface';
+import {ItmdbITEM} from './Interfaces/IMovieInterface';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
 import {MoviePopup} from './MoviePopup/MoviePopup';
 import {getImageApi} from '../../../../components/utils/Image';
@@ -31,7 +31,7 @@ interface IQRState {
 }
 
 const QRPageScreen: React.FC = () => {
-  const [movies, setMovies] = useState<tmdbITEM[]>([]);
+  const [movies, setMovies] = useState<ItmdbITEM[]>([]);
   const [tmdbdataLoaded, settmdbDataLoaded] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [loadedID, setLoadedID] = useState(false);
@@ -142,7 +142,7 @@ const QRPageScreen: React.FC = () => {
     });
     setShowModal(true);
   };
-  const renderItem: ListRenderItem<tmdbITEM> = ({item}) => (
+  const renderItem: ListRenderItem<ItmdbITEM> = ({item}) => (
     <TouchableHighlight key={item.id} onPress={() => openMovieDetails(item.id)}>
       <View style={styles.containerItem}>
         <Text style={styles.headertext}>
