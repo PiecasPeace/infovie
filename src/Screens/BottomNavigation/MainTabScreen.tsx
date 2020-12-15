@@ -1,13 +1,13 @@
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import QRStackScreen from '../layout/HeaderStackScreens/QRHeader/QRStackScreen';
+import {QRStackScreen} from '../layout/HeaderStackScreens/QRHeader/QRStackScreen';
 import {Platform} from 'react-native';
-import SearchStackScreen from '../layout/HeaderStackScreens/SearchHeader/SearchStackScreen';
-import HomeStackScreen from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
+import {SearchStackScreen} from '../layout/HeaderStackScreens/SearchHeader/SearchStackScreen';
+import {HomeStackScreen} from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DARK_BLUE, WHITE} from '../../constants/Colors';
-import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 import {MapContextProvider} from './Context/MapContextProvider';
+import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 
 const Tab = createBottomTabNavigator();
 export const MainTabScreen: React.FC = () => {
@@ -39,7 +39,7 @@ export const MainTabScreen: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="Details"
+          name="Search"
           component={SearchStackScreen}
           options={{
             tabBarLabel: 'Search',

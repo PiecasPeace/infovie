@@ -1,48 +1,14 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
 import QRPageScreen from '../../../BottomNavigation/BottomNavigationScreens/QRPage/QRPageScreen';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Header} from '../../Header/Header';
 
-const QRStack = createStackNavigator();
-
-const QRStackScreen = ({navigation}: any) => {
+export const QRStackScreen: React.FC = ({navigation}: any) => {
   return (
-    <QRStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#29272e',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          justifyContent: 'center',
-          textAlign: 'center',
-          marginRight: 50,
-        },
-      }}>
-      <QRStack.Screen
-        name="QR"
-        component={QRPageScreen}
-        options={{
-          title: 'Scan Movies',
-          headerLeft: () => (
-            <MaterialCommunityIcons.Button
-              name="menu-open"
-              size={25}
-              style={styles.BurgerMenu}
-              onPress={() => navigation.openDrawer()}
-            />
-          ),
-        }}
-      />
-    </QRStack.Navigator>
+    <Header
+      component={QRPageScreen}
+      componentName={'QR'}
+      componentTitle={'Scan Movies'}
+      onPress={() => navigation.openDrawer()}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  BurgerMenu: {
-    backgroundColor: '#29272e',
-  },
-});
-
-export default QRStackScreen;

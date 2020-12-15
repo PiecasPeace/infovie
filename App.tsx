@@ -5,7 +5,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {MainTabScreen} from './src/Screens/BottomNavigation/MainTabScreen';
 import {LeftDrawerMenu} from './src/Screens/LeftDrawer/LeftDrawerMenu';
 import {createStackNavigator} from '@react-navigation/stack';
-import AboutStackScreen from './src/Screens/layout/DrawerHeader/AboutHeader/AboutStackScreen';
+import {AboutStackScreen} from './src/Screens/layout/DrawerHeader/AboutHeader/AboutStackScreen';
 import { FavoritePageScreen } from './src/Screens/BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoritePageScreen';
 
 const Drawer = createDrawerNavigator();
