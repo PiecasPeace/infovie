@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
 import {WHITE} from '../../../../constants/Colors';
-import {styles} from './styles';
 import {CollectionItem} from './CollectionItem/CollectionItem';
+import {styles} from './styles';
 
 export const CollectionScreen: React.FC = ({navigation}: any) => {
   const bruh = () => {
