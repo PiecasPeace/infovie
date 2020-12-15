@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import { styles } from "./styles";
 import Request from '../../../../../constants/RequestPath';
-import axios from '../../../../services/axios';
+// import axios from '../../../../services/axios';
 import { TouchableOpacity } from '../../../../../components/TouchableOpacity/TouchableOpacity';
 import Spinner from '../../../../../components/Spinner/Spinner';
 // import Screen from '../../utils/Screen';
@@ -173,32 +173,32 @@ export const MovieFlatList = ({ navigation }) => {
         )
     }
 
-    const renderFooter = () => {
-        if (isLoadingMore) return <Spinner size={25} />;
+    // const renderFooter = () => {
+    //     if (isLoadingMore) return <Spinner size={25} />;
 
-        if (totalPages !== page && results.length > 0) {
-            return (
-                <View style={styles.loadingMore}>
-                    <TouchableOpacity
-                        style={styles.loadingButton}
-                        onPress={handleLoadMore}
-                    >
-                        <Text style={styles.loadingText}>Load more</Text>
-                    </TouchableOpacity>
-                </View>
-            );
-        }
+    //     if (totalPages !== page && results.length > 0) {
+    //         return (
+    //             <View style={styles.loadingMore}>
+    //                 <TouchableOpacity
+    //                     style={styles.loadingButton}
+    //                     onPress={handleLoadMore}
+    //                 >
+    //                     <Text style={styles.loadingText}>Load more</Text>
+    //                 </TouchableOpacity>
+    //             </View>
+    //         );
+    //     }
 
-        if (results.length > 0) return <View style={styles.loadingMore} />;
+    //     if (results.length > 0) return <View style={styles.loadingMore} />;
 
-        return null;
-    };
-
+    //     return null;
+    
+    
     return (
         <Screen>
             <View style={styles.container}>
                 {/* <InputSearch /> */}
-                <MovieListRow
+                {/* <MovieListRow
                     data={results}
                     type="normal"
                     isSearch={false}
@@ -208,7 +208,7 @@ export const MovieFlatList = ({ navigation }) => {
                     onRefresh={handleRefresh}
                     ListFooterComponent={renderFooter}
                     renderItem={TMDBList}
-                />
+                /> */}
 
                 {/* <FlatList
                     style={styles.results}

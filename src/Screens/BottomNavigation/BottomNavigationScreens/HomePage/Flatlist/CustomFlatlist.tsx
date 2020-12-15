@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment, useContext} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {
   FlatList,
   View,
@@ -20,7 +20,7 @@ import {renderScore} from '../../../../../constants/MovieScore/renderScore';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
-import {MapContext, useFavorites} from '../../../Context/MapContext';
+import {FavAndOwnMapContext, useFavorites} from '../../../Context/MapContextProvider';
 interface ICustomFlatListProps {
   fetchUrl: string;
 }
@@ -34,7 +34,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     new Map<number, ItmdbITEM>(),
   );
 
-  // const favomap = useFavorites;
+  let ContextFavMap = React.useContext(FavAndOwnMapContext)
   
   const fetchData = async () => {
     let MovieMapBody = new Map<number, ItmdbITEM>();
@@ -83,13 +83,13 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
 
   const loadFavorites = async (): Promise<Map<number, ItmdbITEM>> => {
     console.log('load Data...');
-    let favoritesMap = new Map<number, ItmdbITEM>();
+    // let favoritesMap = new Map<number, ItmdbITEM>();
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
-      favoritesMap = new Map<number, ItmdbITEM>(JSON.parse(item));
-      console.log(favoritesMap);
+      ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(item));
+      console.log(ContextFavMap);
     }
-    return favoritesMap;
+    return ContextFavMap;
   };
 
   const deleteFavorite = async (id: number) => {

@@ -6,16 +6,13 @@ import SearchStackScreen from '../layout/HeaderStackScreens/SearchHeader/SearchS
 import HomeStackScreen from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DARK_BLUE, WHITE} from '../../constants/Colors';
-import LibraryStackScreen from '../layout/HeaderStackScreens/LibraryHeader/LibraryStackScreen';
-import {FavAndOwnMapContext} from './Context/MapContext';
-import {ItmdbITEM} from './BottomNavigationScreens/QRPage/Interfaces/IMovieInterface';
+import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
+import {MapContextProvider} from './Context/MapContextProvider';
 
 const Tab = createBottomTabNavigator();
 export const MainTabScreen: React.FC = () => {
-  let FavMap = new Map<number, ItmdbITEM>();
-
   return (
-    <FavAndOwnMapContext.Provider value={FavMap}>
+    <MapContextProvider>
       <Tab.Navigator
         initialRouteName="Home"
         tabBarOptions={{
@@ -66,10 +63,10 @@ export const MainTabScreen: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="Library"
-          component={LibraryStackScreen}
+          name="Collection"
+          component={CollectionStackScreen}
           options={{
-            tabBarLabel: 'Library',
+            tabBarLabel: 'Collection',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
                 name="book-open-page-variant"
@@ -80,6 +77,6 @@ export const MainTabScreen: React.FC = () => {
           }}
         />
       </Tab.Navigator>
-    </FavAndOwnMapContext.Provider>
+    </MapContextProvider>
   );
 };

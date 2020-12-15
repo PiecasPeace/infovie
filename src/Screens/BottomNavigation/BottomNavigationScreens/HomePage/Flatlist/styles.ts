@@ -58,15 +58,3 @@ export const styles = StyleSheet.create({
     backgroundColor: DARK_PINK,
   },
 });
-
-// const handleFavoriteMovie = (id: number) => {
-//   let favoriteMovieValues = _.cloneDeep(movieMap.get(id));
-//   if (favoriteMovieValues !== undefined) {
-//     favoriteMovieValues.favorite === false
-//       ? ((favoriteMovieValues.favorite = true),
-//         updateMap(id, favoriteMovieValues))
-//       : ((favoriteMovieValues.favorite = false),
-//         updateMap(id, favoriteMovieValues));
-//   }
-//   console.log(favoriteMovieValues?.favorite);
-// };

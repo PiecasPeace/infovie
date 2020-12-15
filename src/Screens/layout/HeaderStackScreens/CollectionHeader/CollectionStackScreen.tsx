@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {LibraryScreen} from '../../../BottomNavigation/BottomNavigationScreens/LibraryPage/LibraryScreen';
+import {CollectionScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/CollectionScreen';
 
-const LibraryStack = createStackNavigator();
+const CollectionStack = createStackNavigator();
 
-const LibraryStackScreen = ({navigation}: any) => {
+export const CollectionStackScreen = ({navigation}: any) => {
   return (
-    <LibraryStack.Navigator
+    <CollectionStack.Navigator
       screenOptions={{
         headerStyle: {
           backgroundColor: '#29272e',
@@ -20,9 +20,9 @@ const LibraryStackScreen = ({navigation}: any) => {
           marginRight: 50,
         },
       }}>
-      <LibraryStack.Screen
-        name="Library"
-        component={LibraryScreen}
+      <CollectionStack.Screen
+        name="Collection"
+        component={CollectionScreen}
         options={{
           title: 'Saved Movies and Favorites',
           headerLeft: () => (
@@ -35,7 +35,7 @@ const LibraryStackScreen = ({navigation}: any) => {
           ),
         }}
       />
-    </LibraryStack.Navigator>
+    </CollectionStack.Navigator>
   );
 };
 
@@ -44,5 +44,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#29272e',
   },
 });
-
-export default LibraryStackScreen;

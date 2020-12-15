@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FavoriteScreen} from '../../HeaderStackScreens/LibraryHeader/FavoriteDrawerScreen/FavoriteScreen';
+import {FavoriteScreen} from '../../HeaderStackScreens/CollectionHeader/FavoriteDrawerScreen/FavoriteScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DARK_PURPLE, WHITE} from '../../../../constants/Colors';
 
