@@ -20,7 +20,7 @@ import {renderScore} from '../../../../../constants/MovieScore/renderScore';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
-import {FavAndOwnMapContext, useFavorites} from '../../../Context/MapContextProvider';
+import {FavAndOwnMapContext} from '../../../Context/MapContextProvider';
 interface ICustomFlatListProps {
   fetchUrl: string;
 }
@@ -34,8 +34,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     new Map<number, ItmdbITEM>(),
   );
 
-  let ContextFavMap = React.useContext(FavAndOwnMapContext)
-  
+  let ContextFavMap = React.useContext(FavAndOwnMapContext);
+
   const fetchData = async () => {
     let MovieMapBody = new Map<number, ItmdbITEM>();
     try {

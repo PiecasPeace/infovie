@@ -6,7 +6,7 @@ import {PINK, WHITE} from '../../../../../constants/Colors';
 import {FavAndOwnMapContext} from '../../../Context/MapContextProvider';
 import {styles} from './styles';
 
-export const FavoritePageScreen: React.FC = ({navigation}: any) => {
+export const MyMoviesPageScreen: React.FC = ({navigation}: any) => {
   let ContextFavMap = React.useContext(FavAndOwnMapContext);
 
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,8 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
         <Spinner />
       ) : (
         <View style={styles.collectionItems}>
-          <Text style={{color:WHITE}}>
-            Here in FavoritePageScreen
+            <Text style={{color:WHITE}}>
+            Here in myMoviesPageScreen
           </Text>
           <CustomButton
             Text="Go back to Home"

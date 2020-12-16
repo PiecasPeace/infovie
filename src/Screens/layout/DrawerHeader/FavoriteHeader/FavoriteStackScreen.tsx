@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {Header} from '../../Header/Header';
-import {FavoriteScreen} from '../../HeaderStackScreens/CollectionHeader/FavoriteDrawerScreen/FavoriteScreen';
+import {Header} from '../../../../components/Header/Header';
+import {FavoriteScreen} from '../../HeaderStackScreens/CollectionHeader/FavoriteStackScreen/FavoriteStackScreen';
 
 export const FavoriteStackScreen: React.FC = ({navigation}: any) => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import QRPageScreen from '../../../BottomNavigation/BottomNavigationScreens/QRPage/QRPageScreen';
-import {Header} from '../../Header/Header';
+import {Header} from '../../../../components/Header/Header';
 
 export const QRStackScreen: React.FC = ({navigation}: any) => {
   return (

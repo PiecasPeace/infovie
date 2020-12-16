@@ -1,25 +1,18 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {StyleSheet} from 'react-native';
-import {DARK_PURPLE, WHITE} from '../../../constants/Colors';
+import {DARK_PURPLE, WHITE} from '../../constants/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {styles} from './styles';
+import {IHeaderStackScreenProps} from './IHeader';
 
 const HeaderStack = createStackNavigator();
 
-interface IHeaderStackScreenProps {
-  navigation?: any;
-  component: React.FC<{}>;
-  componentName: string;
-  componentTitle: string;
-  onPress: () => void;
-}
-
 export const Header: React.FC<IHeaderStackScreenProps> = ({
-  navigation,
   component,
   componentName,
   componentTitle,
-  onPress
+  onPress,
+  children,
 }: IHeaderStackScreenProps) => {
   return (
     <HeaderStack.Navigator
@@ -29,8 +22,9 @@ export const Header: React.FC<IHeaderStackScreenProps> = ({
         },
         headerTintColor: WHITE,
         headerTitleStyle: {
-          fontWeight: 'bold',
+          // fontWeight: 'bold',
           justifyContent: 'center',
+          fontFamily: 'roboto',
         },
       }}>
       <HeaderStack.Screen
@@ -48,26 +42,7 @@ export const Header: React.FC<IHeaderStackScreenProps> = ({
           ),
         }}
       />
+      {children}
     </HeaderStack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#c8fadd',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 40,
-  },
-  title: {
-    color: '#FFF',
-    fontSize: 32,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  BurgerMenu: {
-    backgroundColor: '#29272e',
-  },
-});

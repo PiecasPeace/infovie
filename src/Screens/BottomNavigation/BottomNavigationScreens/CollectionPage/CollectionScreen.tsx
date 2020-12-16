@@ -1,9 +1,12 @@
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {View} from 'react-native';
-import {WHITE} from '../../../../constants/Colors';
+import {CustomButton} from '../../../../components/CustomButton/CustomButton';
+import {PINK, WHITE} from '../../../../constants/Colors';
 import {CollectionItem} from './CollectionItem/CollectionItem';
 import {styles} from './styles';
 
+const Stack = createStackNavigator();
 export const CollectionScreen: React.FC = ({navigation}: any) => {
   const bruh = () => {
     return <></>;
@@ -16,28 +19,28 @@ export const CollectionScreen: React.FC = ({navigation}: any) => {
           // iconChildren={}
           iconName={'movie-open-outline'}
           titleName={'My Movies'}
-          onPress={() => bruh}
+          onPress={() => navigation.navigate('MyMoviesCollection')}
           color={WHITE}
           size={45}
         />
         <CollectionItem
           iconName={'folder-heart-outline'}
           titleName={'Favorites'}
-          onPress={() => bruh}
+          onPress={() => navigation.navigate('FavoriteCollection')}
           color={WHITE}
           size={45}
         />
       </View>
 
-      {/* <View>
-        <CustomButton
+      <View>
+        {/* <CustomButton
           Text="Movies I Own"
           color={WHITE}
           mode="outlined"
           icon="heart"
           onPress={() => ''}
           style={styles.moviesIMarkedAsBought}
-        />
+        /> */}
         <CustomButton
           Text="Go back to Home"
           color={PINK}
@@ -46,7 +49,7 @@ export const CollectionScreen: React.FC = ({navigation}: any) => {
           onPress={() => navigation.navigate('Home')}
         />
       </View>
-      <View>
+      {/* <View>
         <CustomButton
           Text="Favorites"
           color={WHITE}

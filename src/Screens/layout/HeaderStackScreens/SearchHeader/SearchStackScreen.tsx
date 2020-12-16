@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchPageScreen from '../../../BottomNavigation/BottomNavigationScreens/SearchPage/SearchPageScreen';
-import {Header} from '../../Header/Header';
+import {Header} from '../../../../components/Header/Header';
 
 export const SearchStackScreen: React.FC = ({navigation}: any) => {
   return (
