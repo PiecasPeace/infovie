@@ -11,14 +11,13 @@ export const MyMoviesPageScreen: React.FC = ({navigation}: any) => {
 
   const [loading, setLoading] = useState(false);
   return (
-    <View style={styles.favoritesContainer}>
+    <View style={styles.myMoviesContainer}>
       {loading ? (
         <Spinner />
       ) : (
         <View style={styles.collectionItems}>
-            <Text style={{color:WHITE}}>
-            Here in myMoviesPageScreen
-          </Text>
+          <Text style={{color: WHITE}}>Here in myMoviesPageScreen</Text>
+
           <CustomButton
             Text="Go back to Home"
             color={PINK}

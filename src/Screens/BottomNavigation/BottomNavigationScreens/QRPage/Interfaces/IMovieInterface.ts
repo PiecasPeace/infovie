@@ -20,6 +20,7 @@ export interface ItmdbITEM {
   overview: string;
   release_date: string;
   favorite: boolean;
+  ownMovie: boolean;
 }
 
 export type tmdbItemForFlatlist = ItmdbITEM & {

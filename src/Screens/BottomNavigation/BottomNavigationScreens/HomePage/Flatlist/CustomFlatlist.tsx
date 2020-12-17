@@ -21,6 +21,8 @@ import {CustomButton} from '../../../../../components/CustomButton/CustomButton'
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
 import {FavAndOwnMapContext} from '../../../Context/MapContextProvider';
+import {PINK, WHITE} from '../../../../../constants/Colors';
+
 interface ICustomFlatListProps {
   fetchUrl: string;
 }
@@ -164,6 +166,19 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           <View style={[styles.textRow, styles.containerReview]}>
             {renderScore(item.vote_average)}
           </View>
+          <View style={{width:1}}>
+            <CustomButton
+              key={item.id}
+              color={item.favorite ? PINK : WHITE}
+              mode="outlined"
+              icon={item.favorite ? 'heart' : 'heart-outline'}
+              onPress={() => ''}
+              style={[
+                styles.favoriteButton,
+                styles[item.favorite ? 'fav' : 'nonfav'],
+              ]}
+            />
+          </View>
           <View>
             <CustomButton
               key={item.id}
@@ -173,8 +188,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
               icon="cart"
               onPress={() => StoreFavoriteMovie(item.id)}
               style={[
-                styles.favoriteButton,
-                styles[item.favorite ? 'fav' : 'nonfav'],
+                styles.ownButton,
+                styles[item.favorite ? 'bought' : 'nonBought'],
               ]}
             />
           </View>

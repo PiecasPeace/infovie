@@ -1,5 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {DARK_PINK, DARK_PURPLE, GRAY, PINK, WHITE} from '../../../../../constants/Colors';
+import {
+  DARK_PINK,
+  DARK_PURPLE,
+  GRAY,
+  PINK,
+  WHITE,
+} from '../../../../../constants/Colors';
 import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
 
 export const styles = StyleSheet.create({
@@ -37,10 +43,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginRight: 20,
   },
-  favoriteButton: {
-    // backgroundColor: DARK_PINK,
-    tintColor: WHITE,
-  },
   headertext: {
     fontSize: fontSizeResponsive(2.6),
     color: WHITE,
@@ -51,10 +53,29 @@ export const styles = StyleSheet.create({
     width: 150,
     borderRadius: 5,
   },
-  nonfav: {
+  //BOUGHT MOVIES
+  nonBought: {
     backgroundColor: DARK_PURPLE,
   },
-  fav: {
+  bought: {
     backgroundColor: DARK_PINK,
+  },
+  ownButton: {
+    // backgroundColor: DARK_PINK,
+    tintColor: WHITE,
+    paddingLeft:13,
+   
+  },
+  //FAVORITES
+  nonfav: {
+    // backgroundColor: DARK_PURPLE,
+    backgroundColor: 'rgba(18, 17, 20, .10)'
+  },
+  fav: {
+    backgroundColor: 'rgba(255, 0, 0, .10)',
+  },
+  favoriteButton: {
+    borderRadius:100,
+    paddingLeft:13
   },
 });

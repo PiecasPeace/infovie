@@ -5,7 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {FavoritePageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoritePageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MyMoviesPageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/MyMoviesPage/MyMoviesPageScreen';
-
 const HeaderStack = createStackNavigator();
 
 export const CollectionStackScreen: React.FC = ({navigation}: any) => {
@@ -14,7 +13,6 @@ export const CollectionStackScreen: React.FC = ({navigation}: any) => {
       component={CollectionScreen}
       componentName={'Collection'}
       componentTitle={'My Movies and Favorites'}
-      
       onPress={() => navigation.openDrawer()}
       children={
         <Fragment>
@@ -23,7 +21,6 @@ export const CollectionStackScreen: React.FC = ({navigation}: any) => {
             component={FavoritePageScreen}
             options={{
               title: 'My Favorites',
-              
               headerLeft: () => (
                 <MaterialCommunityIcons.Button
                   name="menu-open"

@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {DARK_PURPLE} from '../../../../../constants/Colors';
+import {DARK_PURPLE, LIGHT_PURPLE} from '../../../../../constants/Colors';
 
 export const styles = StyleSheet.create({
-  favoritesContainer: {
+  myMoviesContainer: {
     flex: 1,
     backgroundColor: DARK_PURPLE,
   },
