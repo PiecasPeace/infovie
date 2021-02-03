@@ -1,10 +1,10 @@
 import React from 'react';
 import SearchPageScreen from '../../../BottomNavigation/BottomNavigationScreens/SearchPage/SearchPageScreen';
-import {Header} from '../../../../components/Header/Header';
+import {CustomHeader} from '../../../../components/Header/Header';
 
 export const SearchStackScreen: React.FC = ({navigation}: any) => {
   return (
-    <Header
+    <CustomHeader
       component={SearchPageScreen}
       componentName={'Search'}
       componentTitle={'Search Movies'}

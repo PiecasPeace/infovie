@@ -19,8 +19,9 @@ export interface ItmdbITEM {
   vote_average: number;
   overview: string;
   release_date: string;
+  //CUSTOM
   favorite: boolean;
-  ownMovie: boolean;
+  myList: boolean;
 }
 
 export type tmdbItemForFlatlist = ItmdbITEM & {

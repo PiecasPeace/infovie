@@ -1,15 +1,16 @@
 import React, {Fragment} from 'react';
 import {CollectionScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/CollectionScreen';
-import {Header} from '../../../../components/Header/Header';
+import {CustomHeader} from '../../../../components/Header/Header';
 import {createStackNavigator} from '@react-navigation/stack';
 import {FavoritePageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoritePageScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MyMoviesPageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/MyMoviesPage/MyMoviesPageScreen';
+import {DARK_PURPLE} from '../../../../constants/Colors/Colors';
 const HeaderStack = createStackNavigator();
 
 export const CollectionStackScreen: React.FC = ({navigation}: any) => {
   return (
-    <Header
+    <CustomHeader
       component={CollectionScreen}
       componentName={'Collection'}
       componentTitle={'My Movies and Favorites'}
@@ -25,7 +26,7 @@ export const CollectionStackScreen: React.FC = ({navigation}: any) => {
                 <MaterialCommunityIcons.Button
                   name="menu-open"
                   size={25}
-                  style={{backgroundColor: '#29272e'}}
+                  style={{backgroundColor: DARK_PURPLE}}
                   onPress={() => navigation.openDrawer()}
                 />
               ),
@@ -40,7 +41,7 @@ export const CollectionStackScreen: React.FC = ({navigation}: any) => {
                 <MaterialCommunityIcons.Button
                   name="menu-open"
                   size={25}
-                  style={{backgroundColor: '#29272e'}}
+                  style={{backgroundColor: DARK_PURPLE}}
                   onPress={() => navigation.openDrawer()}
                 />
               ),

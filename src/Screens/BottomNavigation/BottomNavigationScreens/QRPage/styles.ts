@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {BLACK, DARK_GREEN, DARK_RED, WHITE} from '../../../../constants/Colors';
+import {BLACK, DARK_GREEN, DARK_RED, WHITE} from '../../../../constants/Colors/Colors';
 
 export const styles = StyleSheet.create({
   QRContainer: {

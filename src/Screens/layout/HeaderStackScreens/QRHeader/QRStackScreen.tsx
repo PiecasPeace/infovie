@@ -1,10 +1,10 @@
 import React from 'react';
 import QRPageScreen from '../../../BottomNavigation/BottomNavigationScreens/QRPage/QRPageScreen';
-import {Header} from '../../../../components/Header/Header';
+import {CustomHeader} from '../../../../components/Header/Header';
 
 export const QRStackScreen: React.FC = ({navigation}: any) => {
   return (
-    <Header
+    <CustomHeader
       component={QRPageScreen}
       componentName={'QR'}
       componentTitle={'Scan Movies'}

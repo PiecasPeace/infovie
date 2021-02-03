@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 import {fontSizeResponsive} from '../utils/Dimensions';
 
-import {DARK_PURPLE, LIGHT_GRAY} from '../../constants/Colors';
+import {DARK_PURPLE, LIGHT_GRAY} from '../../constants/Colors/Colors';
 
 const styles = StyleSheet.create({
   container: {

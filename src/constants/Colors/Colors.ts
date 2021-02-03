@@ -1,6 +1,6 @@
 //BLACK, WHITE
 export const WHITE = '#fff';
-export const BLACK = '#010101'
+export const BLACK = '#010101';
 //GRAY
 export const LIGHT_GRAY = '#f0f0f0';
 export const GRAY = '#e9e9e9';
@@ -17,15 +17,14 @@ export const DARK_RED = '#751012';
 //GREEN
 export const LIGHT_GREEN = '#82c596';
 export const GREEN = '#00ff4c';
-export const DARK_GREEN = '#135927';
+export const DARK_GREEN = '#173d22';
 //BLUE
 export const BLUE = '#8190a5';
-export const DARK_BLUE = '#29272e';
+export const DARK_BLUE = '#132236';
 export const GRAY_BLUE = '#47525e';
 //PINK
+export const LIGHT_PINK = '#cf4c6d';
 export const PINK = '#f95f62';
-export const DARK_PINK = '#cf4c6d';
+export const DARK_PINK = '#631f30';
 //YELLOW
 export const LIGHT_YELLOW = '#eab079';
-
-

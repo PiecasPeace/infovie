@@ -1,5 +1,5 @@
 export interface ICustomButtonProps {
-  style: object;
+  style?: object;
   mode: 'text' | 'outlined' | 'contained' | undefined;
   Text?: string | Element;
   color: string;

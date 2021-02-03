@@ -1,13 +1,9 @@
 import React from 'react';
-import {Image, TouchableHighlight, View} from 'react-native';
+import {TouchableHighlight, View} from 'react-native';
 import {Title} from 'react-native-paper';
 import {styles} from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ICollectionProps} from './ICollectionItem';
-// import e from '../../../../../assets/images/local_movie.png'
-import AntIcons from 'react-native-vector-icons/AntDesign';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const CollectionItem: React.FC<ICollectionProps> = ({
   titleName,

@@ -1,13 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {DARK_PURPLE, WHITE} from '../../constants/Colors';
+import {DARK_PURPLE, WHITE} from '../../constants/Colors/Colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles';
 import {IHeaderStackScreenProps} from './IHeader';
 
 const HeaderStack = createStackNavigator();
 
-export const Header: React.FC<IHeaderStackScreenProps> = ({
+export const CustomHeader: React.FC<IHeaderStackScreenProps> = ({
   component,
   componentName,
   componentTitle,

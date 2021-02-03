@@ -10,7 +10,6 @@ const HomePageScreen: React.FC = () => {
       <View>
         <Text style={styles.trendingText}>Most Popular</Text>
       </View>
-
       <CustomFlatlist fetchUrl={RequestPath.MostPopular} />
     </View>
   );

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {fontSizeResponsive} from '../../components/utils/Dimensions';
-import {LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE} from '../Colors';
+import {LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE} from '../Colors/Colors';
 
 export const styles = StyleSheet.create({
   score: {
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     marginTop:20,
     paddingVertical: 2,
     paddingHorizontal: 4,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   textPercent: {
     fontSize: fontSizeResponsive(2.1),

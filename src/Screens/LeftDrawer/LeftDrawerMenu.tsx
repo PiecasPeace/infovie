@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View} from 'react-native';
 import {DrawerItem, DrawerContentScrollView} from '@react-navigation/drawer';
 import {
@@ -13,7 +13,6 @@ import {
 } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
-
 export const LeftDrawerMenu: React.FC = (props: any) => {
   const [isDarkTheme, setDarkTheme] = useState(false);
 

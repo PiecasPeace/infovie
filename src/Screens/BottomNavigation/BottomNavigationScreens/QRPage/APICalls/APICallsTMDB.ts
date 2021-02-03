@@ -15,6 +15,6 @@ export const tmdbGetByTitle = async (title: string): Promise<ItmdbJsonGET> => {
 export const tmdbGetById = async (id: number): Promise<IMovieIDItem> => {
   const request = await fetch(buildIDUrl(id));
   const result = (await request.json()) as IMovieIDItem;
-  console.log(request);
+  console.log(result);
   return result;
 };

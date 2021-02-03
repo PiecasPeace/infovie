@@ -1,4 +1,10 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useContext,
+  Component,
+} from 'react';
 import {
   FlatList,
   View,
@@ -20,13 +26,12 @@ import {renderScore} from '../../../../../constants/MovieScore/renderScore';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
-import {FavAndOwnMapContext} from '../../../Context/MapContextProvider';
-import {PINK, WHITE} from '../../../../../constants/Colors';
-
-interface ICustomFlatListProps {
-  fetchUrl: string;
-}
-const STORAGE_MOVIE_KEY = '@save_movie';
+import {
+  FavoriteMapContext,
+  STORAGE_MOVIE_KEY,
+} from '../../../Context/ContextProvider';
+import {WHITE} from '../../../../../constants/Colors/Colors';
+import {ICustomFlatListProps} from './ICustomFlatListInterface';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
@@ -35,18 +40,17 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   const [movieMap, setMovieMap] = useState<Map<number, ItmdbITEM>>(
     new Map<number, ItmdbITEM>(),
   );
-
-  let ContextFavMap = React.useContext(FavAndOwnMapContext);
+  let ContextFavMap = useContext(FavoriteMapContext);
 
   const fetchData = async () => {
     let MovieMapBody = new Map<number, ItmdbITEM>();
     try {
       const request = await fetch(`${baseTMDBUrl}${fetchUrl}`);
       const result = (await request.json()) as ItmdbJsonGET;
-      let storedFavoriteMovies = await loadFavorites();
+      ContextFavMap = await loadFavorites();
 
       for (let i = 0; i < result.results.length; i++) {
-        if (storedFavoriteMovies.get(result.results[i].id) !== undefined) {
+        if (ContextFavMap.get(result.results[i].id) !== undefined) {
           result.results[i].favorite = true;
         } else {
           result.results[i].favorite = false;
@@ -66,26 +70,23 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     }
   };
 
-  const saveData = async (myMovies: ItmdbITEM) => {
-    let saveMovies = new Map<number, ItmdbITEM>();
+  const saveFavorite = async (myMovies: ItmdbITEM) => {
     const oldFavorites = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (oldFavorites !== null) {
-      saveMovies = new Map<number, ItmdbITEM>(JSON.parse(oldFavorites));
+      ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(oldFavorites));
     }
-    saveMovies.set(myMovies.id, myMovies);
-    //context funktion,filmdaten,
+    ContextFavMap.set(myMovies.id, myMovies);
     if (myMovies !== null) {
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
-        JSON.stringify([...saveMovies]),
+        JSON.stringify([...ContextFavMap]),
       );
-      console.log('Movie saved: \n ');
+      console.log(`Movie saved: ${myMovies.title} \n `);
     }
   };
 
   const loadFavorites = async (): Promise<Map<number, ItmdbITEM>> => {
-    console.log('load Data...');
-    // let favoritesMap = new Map<number, ItmdbITEM>();
+    console.log('load HomePage Data...');
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
       ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(item));
@@ -97,28 +98,33 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   const deleteFavorite = async (id: number) => {
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
-      let favoritesMap = new Map<number, ItmdbITEM>(JSON.parse(item));
-      favoritesMap.delete(id);
-      console.log(favoritesMap.has(id));
+      ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(item));
+      ContextFavMap.delete(id);
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
-        JSON.stringify([...favoritesMap]),
+        JSON.stringify([...ContextFavMap]),
       );
     }
   };
+  const RefreshFavoriteList = async () => {
+    return ContextFavMap;
+  };
+  useEffect(() => {
+    RefreshFavoriteList();
+  }, [saveFavorite, deleteFavorite]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchUrl]);
+  }, []);
 
-  const StoreFavoriteMovie = async (id: number) => {
+  const StoreOwnMovie = async (id: number) => {
     let favoriteMovieValues = _.cloneDeep(movieMap.get(id));
     if (favoriteMovieValues !== undefined) {
       if (favoriteMovieValues.favorite === false) {
         try {
           favoriteMovieValues.favorite = true;
           updateMap(id, favoriteMovieValues);
-          saveData(favoriteMovieValues);
+          saveFavorite(favoriteMovieValues);
         } catch (err) {
           err.message;
         }
@@ -166,30 +172,17 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           <View style={[styles.textRow, styles.containerReview]}>
             {renderScore(item.vote_average)}
           </View>
-          <View style={{width:1}}>
-            <CustomButton
-              key={item.id}
-              color={item.favorite ? PINK : WHITE}
-              mode="outlined"
-              icon={item.favorite ? 'heart' : 'heart-outline'}
-              onPress={() => ''}
-              style={[
-                styles.favoriteButton,
-                styles[item.favorite ? 'fav' : 'nonfav'],
-              ]}
-            />
-          </View>
           <View>
             <CustomButton
               key={item.id}
-              Text={item.favorite ? 'bought' : 'buy movie'}
-              color="white"
+              Text={item.favorite ? 'Unfavorite' : 'Favorite'}
+              color={item.favorite ? WHITE : WHITE}
               mode="outlined"
-              icon="cart"
-              onPress={() => StoreFavoriteMovie(item.id)}
+              icon={item.favorite ? 'heart-outline' : 'heart'}
+              onPress={() => StoreOwnMovie(item.id)}
               style={[
-                styles.ownButton,
-                styles[item.favorite ? 'bought' : 'nonBought'],
+                styles.favoriteButton,
+                styles[item.favorite ? 'fav' : 'nonfav'],
               ]}
             />
           </View>
@@ -210,6 +203,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
             showsVerticalScrollIndicator={true}
             renderItem={TrendingList}
             keyboardShouldPersistTaps="always"
+            initialNumToRender={4}
+            // horizontal={true}
           />
         </Fragment>
       )}

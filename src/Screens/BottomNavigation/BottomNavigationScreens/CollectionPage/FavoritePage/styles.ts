@@ -1,6 +1,5 @@
-import React from 'react';
 import {StyleSheet} from 'react-native';
-import {DARK_PURPLE} from '../../../../../constants/Colors';
+import {DARK_PURPLE} from '../../../../../constants/Colors/Colors';
 
 export const styles = StyleSheet.create({
   favoritesContainer: {

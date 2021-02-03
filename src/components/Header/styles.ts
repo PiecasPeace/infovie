@@ -1,7 +1,8 @@
 import {StyleSheet} from 'react-native';
+import { DARK_PURPLE } from '../../constants/Colors/Colors';
 
 export const styles = StyleSheet.create({
   BurgerMenu: {
-    backgroundColor: '#29272e',
+    backgroundColor: DARK_PURPLE,
   },
 });

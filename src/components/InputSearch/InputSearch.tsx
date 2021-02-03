@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import Feather from 'feather-icons-react';
 import { TouchableOpacity } from '../TouchableOpacity/TouchableOpacity';
-import { DARK_GRAY } from '../../constants/Colors';
+import { DARK_GRAY } from '../../constants/Colors/Colors';
 // import axios from '../services/axios'
 import styles from './styles';
 import { ItmdbITEM } from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieInterface';

@@ -14,3 +14,6 @@ export const UPCRequest = `${UpcUrl}`;
 export const buildIDUrl = (getId: number): string => {
   return `${IDMovieUrl}/${getId}?${API_KEY2}`;
 };
+
+export const TMDBRequestById = `${TheMovieDBUrl}`
+// https://api.themoviedb.org/3/movie/765123?api_key=94ff60134af5b7bbe6cb00087e37359f

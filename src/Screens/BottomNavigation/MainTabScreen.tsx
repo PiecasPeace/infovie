@@ -5,8 +5,8 @@ import {Platform} from 'react-native';
 import {SearchStackScreen} from '../layout/HeaderStackScreens/SearchHeader/SearchStackScreen';
 import {HomeStackScreen} from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DARK_BLUE, WHITE} from '../../constants/Colors';
-import {MapContextProvider} from './Context/MapContextProvider';
+import {DARK_PURPLE, WHITE} from '../../constants/Colors/Colors';
+import {MapContextProvider} from './Context/ContextProvider';
 import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ export const MainTabScreen: React.FC = () => {
         tabBarOptions={{
           activeTintColor: WHITE,
           style: {
-            backgroundColor: DARK_BLUE,
+            backgroundColor: DARK_PURPLE,
             paddingTop: Platform.OS === 'ios' ? 20 : 0,
           },
         }}>

@@ -1,11 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {
-  DARK_PINK,
+  DARK_BLUE,
   DARK_PURPLE,
-  GRAY,
-  PINK,
   WHITE,
-} from '../../../../../constants/Colors';
+} from '../../../../../constants/Colors/Colors';
 import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
 
 export const styles = StyleSheet.create({
@@ -41,7 +39,7 @@ export const styles = StyleSheet.create({
   },
   containerReview: {
     justifyContent: 'space-between',
-    marginRight: 20,
+    marginTop: 50,
   },
   headertext: {
     fontSize: fontSizeResponsive(2.6),
@@ -53,29 +51,27 @@ export const styles = StyleSheet.create({
     width: 150,
     borderRadius: 5,
   },
-  //BOUGHT MOVIES
-  nonBought: {
+  //OWN MOVIES
+  notOwned: {
     backgroundColor: DARK_PURPLE,
   },
-  bought: {
-    backgroundColor: DARK_PINK,
+  own: {
+    backgroundColor: DARK_BLUE,
   },
   ownButton: {
     // backgroundColor: DARK_PINK,
     tintColor: WHITE,
-    paddingLeft:13,
-   
+    paddingLeft: 5,
   },
   //FAVORITES
   nonfav: {
-    // backgroundColor: DARK_PURPLE,
-    backgroundColor: 'rgba(18, 17, 20, .10)'
+    backgroundColor: DARK_PURPLE,
   },
   fav: {
-    backgroundColor: 'rgba(255, 0, 0, .10)',
+    // backgroundColor: 'rgba(255, 0, 0, .10)',
+    backgroundColor: '#801d36',
   },
   favoriteButton: {
-    borderRadius:100,
-    paddingLeft:13
+    borderRadius: 5,
   },
 });

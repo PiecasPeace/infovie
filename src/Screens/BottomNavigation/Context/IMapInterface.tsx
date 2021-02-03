@@ -1,9 +1,5 @@
 import { ReactElement } from "react";
 
-export interface MapContextProviderProps {
+export interface ContextProps {
   children: ReactElement | ReactElement[];
 }
-
-//KEYS FOR MAPS IN CONTEXT
-export const FAV_KEY = '@fav_key';
-export const OWN_KEY = '@own_key';
