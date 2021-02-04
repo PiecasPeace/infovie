@@ -1,26 +1,51 @@
 import {StyleSheet} from 'react-native';
 import {fontSizeResponsive} from '../../../../../../components/utils/Dimensions';
-import {WHITE} from '../../../../../../constants/Colors/Colors';
+import {
+  BLACK,
+  DARK_GRAY,
+  WHITE,
+} from '../../../../../../constants/Colors/Colors';
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
-    paddingRight: 20,
+    paddingRight: 1,
     paddingLeft: 5,
     paddingTop: 5,
-    marginBottom: 20,
+    marginBottom: 5,
     flexDirection: 'row',
   },
-  BackDropPhoto: {height: 50, width: 250, borderRadius: 5},
+  BackDropPhoto: {
+    height: 100,
+    width: 150,
+    borderRadius: 2,
+    borderColor: BLACK,
+    borderWidth: 1,
+  },
   subContainer: {
     flex: 1,
-    marginLeft: 20,
+    marginLeft: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: fontSizeResponsive(2.6),
+    fontSize: fontSizeResponsive(2.3),
     color: WHITE,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'roboto',
+  },
+  year: {
+    fontSize: fontSizeResponsive(2.1),
+    color: DARK_GRAY,
+  },
+  language: {
+    fontSize: fontSizeResponsive(2.1),
+    color: DARK_GRAY,
+  },
+  textRow: {
+    flexDirection: 'row',
+  },
+  containerSubTitles: {
+    flex: 1,
   },
 });

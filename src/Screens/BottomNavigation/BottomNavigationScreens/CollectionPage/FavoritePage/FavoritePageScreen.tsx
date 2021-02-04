@@ -9,7 +9,7 @@ import {ItmdbITEM} from '../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {FlatList} from 'react-native-gesture-handler';
-import {FavoriteItem} from './FavoriteItem/FavoriteItem';
+import FavoriteItem from './FavoriteItem/FavoriteItem';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import {PINK, WHITE} from '../../../../../constants/Colors/Colors';
 

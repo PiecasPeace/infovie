@@ -32,6 +32,7 @@ import {
 } from '../../../Context/ContextProvider';
 import {WHITE} from '../../../../../constants/Colors/Colors';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
+import FavoritenItem from '../../CollectionPage/FavoritePage/FavoriteItem/FavoriteItem';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
@@ -115,7 +116,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchUrl]);
 
   const StoreOwnMovie = async (id: number) => {
     let favoriteMovieValues = _.cloneDeep(movieMap.get(id));
@@ -169,10 +170,10 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
               {convertTypeWithGenre(item.genre_ids)}
             </Text>
           </View>
-          <View style={[styles.textRow, styles.containerReview]}>
-            {renderScore(item.vote_average)}
-          </View>
           <View>
+            <View style={[styles.textRow, styles.containerReview]}>
+              {renderScore(item.vote_average)}
+            </View>
             <CustomButton
               key={item.id}
               Text={item.favorite ? 'Unfavorite' : 'Favorite'}

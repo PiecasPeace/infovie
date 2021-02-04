@@ -4,7 +4,10 @@ import {styles} from './styles';
 
 export const renderScore = (voteAverage: number) => {
   const color =
-    voteAverage < 5
+  voteAverage == 10 ? "lime" :
+    voteAverage == 0
+      ? 'zero'
+      : voteAverage < 5
       ? 'low'
       : voteAverage >= 5 && voteAverage < 7
       ? 'mid'

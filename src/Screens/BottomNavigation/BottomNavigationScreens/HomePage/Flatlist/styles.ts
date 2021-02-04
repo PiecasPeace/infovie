@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {
+  BLACK,
   DARK_BLUE,
+  DARK_GRAY,
   DARK_PURPLE,
   WHITE,
 } from '../../../../../constants/Colors/Colors';
@@ -34,15 +36,15 @@ export const styles = StyleSheet.create({
     marginBottom: 3,
   },
   textSmall: {
-    fontSize: fontSizeResponsive(2.1),
-    color: WHITE,
+    fontSize: fontSizeResponsive(2.0),
+    color: DARK_GRAY,
   },
   containerReview: {
     justifyContent: 'space-between',
-    marginTop: 50,
+    marginBottom:5
   },
   headertext: {
-    fontSize: fontSizeResponsive(2.6),
+    fontSize: fontSizeResponsive(2.2),
     color: WHITE,
     fontWeight: 'bold',
   },
@@ -50,6 +52,8 @@ export const styles = StyleSheet.create({
     height: 250,
     width: 150,
     borderRadius: 5,
+    borderColor:BLACK,
+    borderWidth:1
   },
   //OWN MOVIES
   notOwned: {
@@ -73,5 +77,7 @@ export const styles = StyleSheet.create({
   },
   favoriteButton: {
     borderRadius: 5,
+    borderColor:BLACK,
+    borderWidth:1
   },
 });
