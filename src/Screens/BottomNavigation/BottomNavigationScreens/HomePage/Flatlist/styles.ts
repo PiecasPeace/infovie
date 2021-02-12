@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
   },
   containerSubTitle: {
     marginTop: 3,
-    marginBottom: 3,
+    marginBottom: 5,
   },
   textSmall: {
     fontSize: fontSizeResponsive(2.0),

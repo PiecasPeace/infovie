@@ -42,7 +42,6 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
       ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(item));
-      console.log(favoriteMap.get(id))
       ContextFavMap.delete(id);
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
@@ -129,8 +128,6 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
             leftOpenValue={0}
             rightOpenValue={-100}
             closeOnScroll={true}
-            // friction={2000}
-            // stopLeftSwipe={1}
             disableRightSwipe={true}
             directionalDistanceChangeThreshold={20}
           />

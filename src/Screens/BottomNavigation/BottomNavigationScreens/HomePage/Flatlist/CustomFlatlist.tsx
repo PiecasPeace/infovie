@@ -71,7 +71,6 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
       ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(oldFavorites));
     }
     ContextFavMap.set(myMovies.id, myMovies);
-
     if (myMovies !== null) {
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
@@ -161,7 +160,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
                 {getLanguage(item.original_language)}
               </Text>
             </View>
-            <Text numberOfLines={1} style={styles.textSmall}>
+            <Text numberOfLines={2} style={styles.textSmall}>
               {convertTypeWithGenre(item.genre_ids)}
             </Text>
           </View>

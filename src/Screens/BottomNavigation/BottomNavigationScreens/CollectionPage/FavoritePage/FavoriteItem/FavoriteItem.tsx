@@ -13,7 +13,7 @@ import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDiv
 import {ItmdbITEM} from '../../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 
-const FavoriteItem: ListRenderItem<ItmdbITEM> = ({item}) => {  
+const FavoriteItem: ListRenderItem<ItmdbITEM> = ({item}) => {
   return (
     <TouchableHighlight key={item.id} style={styles.swipeContainer}>
       <View style={styles.container}>
