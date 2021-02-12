@@ -22,29 +22,29 @@ export const styles = StyleSheet.create({
   //DROPDOWN
   dropDownPicker: {
     backgroundColor: DARK_PURPLE,
-    zIndex:2
+    zIndex: 2,
   },
   dropContainer: {
+    //Changes the height of the DropdownBox
     height: 40,
   },
   dropItem: {
-    justifyContent: 'flex-start',
+    //Changes text Content (Most Popular, Trending...)
+    justifyContent: 'center',
   },
   dropLabel: {
-    fontSize: 14,
-    textAlign: 'left',
+    fontSize: 17,
+    textAlign: 'center',
     color: WHITE,
-    marginTop: 5,
     marginLeft: 10,
+    fontFamily: 'roboto',
   },
   dropSelectedLabel: {
     color: PINK,
   },
   dropListStyle: {
-    backgroundColor: DARK_PURPLE,
-  },
-  dropArrow: {
-    margin: 2,
-    color: WHITE,
+    backgroundColor: '#26232b',
+    borderBottomLeftRadius: 10,
+    justifyContent: 'center',
   },
 });

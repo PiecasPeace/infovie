@@ -26,7 +26,6 @@ import {
 } from '../../../Context/ContextProvider';
 import {WHITE} from '../../../../../constants/Colors/Colors';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
-import {SkeletonLoader} from '../../../../../components/SkeletonUI/SkeletonLoader';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
@@ -36,8 +35,9 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     new Map<number, ItmdbITEM>(),
   );
   let ContextFavMap = useContext(FavoriteMapContext);
-  
+
   const fetchData = async () => {
+    setLoading(true);
     let MovieMapBody = new Map<number, ItmdbITEM>();
     try {
       const request = await fetch(`${baseTMDBUrl}${fetchUrl}`);
@@ -71,7 +71,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
       ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(oldFavorites));
     }
     ContextFavMap.set(myMovies.id, myMovies);
-    
+
     if (myMovies !== null) {
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
@@ -150,7 +150,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
         <View style={styles.item}>
           <View>
             <Text numberOfLines={2} style={styles.headertext}>
-            {item.title !== undefined ? item.title : item.name}
+              {item.title !== undefined ? item.title : item.name}
             </Text>
             <View style={[styles.textRow, styles.containerSubTitle]}>
               <Text style={styles.textSmall}>
@@ -204,6 +204,6 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           />
         </Fragment>
       )}
-     </View>
+    </View>
   );
 };
