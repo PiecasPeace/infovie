@@ -30,7 +30,7 @@ export const MainTabScreen: React.FC = () => {
             tabBarLabel: 'Home',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
-                name="home"
+                name="home-outline"
                 color={color}
                 // style={{ backgroundColor: "#eeeeee" }} hintergrund vom icon ändert sich
                 size={26}

@@ -9,31 +9,30 @@ import {
 import {convertToYear} from '../../../../../../components/utils/dates';
 import {getImageApi} from '../../../../../../components/utils/Image';
 import {getLanguage} from '../../../../../../constants/Language/getLanguageFunction';
-import {renderScore} from '../../../../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDivider';
 import {ItmdbITEM} from '../../../QRPage/Interfaces/IMovieInterface';
-import {style} from './styles';
+import {styles} from './styles';
 
-const FavoriteItem: ListRenderItem<ItmdbITEM> = ({item}) => {
+const FavoriteItem: ListRenderItem<ItmdbITEM> = ({item}) => {  
   return (
-    <TouchableHighlight key={item.id}>
-      <View style={style.container}>
+    <TouchableHighlight key={item.id} style={styles.swipeContainer}>
+      <View style={styles.container}>
         <Image
           source={getImageApi(item.backdrop_path)}
-          style={style.BackDropPhoto}
+          style={styles.BackDropPhoto}
           resizeMode="cover"
         />
-        <View style={style.subContainer}>
-            <Text numberOfLines={2} style={style.title}>
-              {item.title}
+        <View style={styles.subContainer}>
+          <Text numberOfLines={2} style={styles.title}>
+            {item.title !== undefined ? item.title : item.name}
+          </Text>
+          <View style={[styles.textRow, styles.containerSubTitles]}>
+            <Text style={styles.year}>{convertToYear(item.release_date)}</Text>
+            {renderDivider(item.release_date, item.original_language)}
+            <Text numberOfLines={1} style={styles.language}>
+              {getLanguage(item.original_language)}
             </Text>
-            <View style={[style.textRow, style.containerSubTitles]}>
-              <Text style={style.year}>{convertToYear(item.release_date)}</Text>
-              {renderDivider(item.release_date, item.original_language)}
-              <Text numberOfLines={1} style={style.language}>
-                {getLanguage(item.original_language)}
-              </Text>
-            </View>
+          </View>
         </View>
       </View>
     </TouchableHighlight>

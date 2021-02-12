@@ -7,8 +7,6 @@ export const styles = StyleSheet.create({
     minWidth: '25%',
     padding:3,
     borderRadius: 3,
-    borderColor:BLACK,
-    borderWidth:1
   },
   textPercent: {
     fontSize: fontSizeResponsive(2.1),

@@ -6,7 +6,12 @@ import {
   WHITE,
 } from '../../../../../../constants/Colors/Colors';
 
-export const style = StyleSheet.create({
+export const styles = StyleSheet.create({
+  swipeContainer: {
+    alignItems: 'center',
+    backgroundColor: '#29272e',
+    justifyContent: 'center',
+},
   container: {
     flex: 1,
     paddingRight: 1,
@@ -31,7 +36,7 @@ export const style = StyleSheet.create({
   title: {
     fontSize: fontSizeResponsive(2.3),
     color: WHITE,
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
     fontFamily: 'roboto',
   },
   year: {

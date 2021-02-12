@@ -22,6 +22,7 @@ export interface ItmdbITEM {
   //CUSTOM
   favorite: boolean;
   myList: boolean;
+  name:string;
 }
 
 export type tmdbItemForFlatlist = ItmdbITEM & {

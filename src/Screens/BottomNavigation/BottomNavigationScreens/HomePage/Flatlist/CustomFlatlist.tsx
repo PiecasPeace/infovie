@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  Fragment,
-  useContext,
-  Component,
-} from 'react';
+import React, {useState, useEffect, Fragment, useContext} from 'react';
 import {
   FlatList,
   View,
@@ -32,7 +26,7 @@ import {
 } from '../../../Context/ContextProvider';
 import {WHITE} from '../../../../../constants/Colors/Colors';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
-import FavoritenItem from '../../CollectionPage/FavoritePage/FavoriteItem/FavoriteItem';
+import {SkeletonLoader} from '../../../../../components/SkeletonUI/SkeletonLoader';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
@@ -42,7 +36,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     new Map<number, ItmdbITEM>(),
   );
   let ContextFavMap = useContext(FavoriteMapContext);
-
+  
   const fetchData = async () => {
     let MovieMapBody = new Map<number, ItmdbITEM>();
     try {
@@ -77,6 +71,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
       ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(oldFavorites));
     }
     ContextFavMap.set(myMovies.id, myMovies);
+    
     if (myMovies !== null) {
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
@@ -155,7 +150,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
         <View style={styles.item}>
           <View>
             <Text numberOfLines={2} style={styles.headertext}>
-              {item.title}
+            {item.title !== undefined ? item.title : item.name}
             </Text>
             <View style={[styles.textRow, styles.containerSubTitle]}>
               <Text style={styles.textSmall}>
@@ -209,6 +204,6 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
           />
         </Fragment>
       )}
-    </View>
+     </View>
   );
 };
