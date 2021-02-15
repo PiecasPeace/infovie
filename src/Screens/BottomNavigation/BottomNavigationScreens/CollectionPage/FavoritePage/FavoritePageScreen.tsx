@@ -5,7 +5,7 @@ import {
   FavoriteMapContext,
   STORAGE_MOVIE_KEY,
 } from '../../../Context/ContextProvider';
-import {ItmdbITEM} from '../../QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -19,8 +19,8 @@ import _ from 'lodash';
 export const FavoritePageScreen: React.FC = ({navigation}: any) => {
   let ContextFavMap = useContext(FavoriteMapContext);
   const [loading, setLoading] = useState(true);
-  const [favoriteMap, setFavoriteMap] = useState<Map<number, ItmdbITEM>>(
-    new Map<number, ItmdbITEM>(),
+  const [favoriteMap, setFavoriteMap] = useState<Map<number, ItmdbItem>>(
+    new Map<number, ItmdbItem>(),
   );
   const FetchFavoriteData = async () => {
     ContextFavMap = await loadFavoriteData();
@@ -28,11 +28,11 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
     console.log(ContextFavMap);
   };
 
-  const loadFavoriteData = async (): Promise<Map<number, ItmdbITEM>> => {
+  const loadFavoriteData = async (): Promise<Map<number, ItmdbItem>> => {
     console.log('Loading Favorite list...');
     const FavoriteItem = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (FavoriteItem !== null) {
-      ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(FavoriteItem));
+      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(FavoriteItem));
     }
     setLoading(false);
     return ContextFavMap;
@@ -41,7 +41,7 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
   const deleteFavoriteMovie = async (id: number) => {
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
-      ContextFavMap = new Map<number, ItmdbITEM>(JSON.parse(item));
+      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(item));
       ContextFavMap.delete(id);
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
@@ -50,9 +50,9 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
       setFavoriteMap(ContextFavMap);
     }
   };
-  const updateMap = (id: number, movieValues: ItmdbITEM) => {
+  const updateMap = (id: number, movieValues: ItmdbItem) => {
     setFavoriteMap(
-      new Map<number, ItmdbITEM>(favoriteMap.set(id, movieValues)),
+      new Map<number, ItmdbItem>(favoriteMap.set(id, movieValues)),
     );
   };
   const closeRow = (rowMap, keyID) => {
@@ -94,7 +94,7 @@ export const FavoritePageScreen: React.FC = ({navigation}: any) => {
     );
   };
   const renderHiddenItem = (
-    data: ListRenderItemInfo<ItmdbITEM>,
+    data: ListRenderItemInfo<ItmdbItem>,
     rowMap: any,
   ) => {
     return (

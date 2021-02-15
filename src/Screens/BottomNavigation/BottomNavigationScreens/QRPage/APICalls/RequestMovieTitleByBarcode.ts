@@ -7,6 +7,7 @@ const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> =
         //Fetching the URL link
         const request = await fetch(`${UPCRequest}${eanUpc}`)
         const result: IBarcodeJSON = await request.json();
+        console.log("HERE IN RequestMovieTitleByBarcode")
         console.log(result.items)
         //getting the title from the upcDB and passing it to titleList[i]
         for (let i = 0; i < result.items.length; i++) {

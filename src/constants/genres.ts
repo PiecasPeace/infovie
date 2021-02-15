@@ -1,4 +1,4 @@
-export const genre = {
+export const genreObject = {
   '12': {name: 'Adventure'},
   '14': {name: 'Fantasy'},
   '16': {name: 'Animation'},

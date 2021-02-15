@@ -19,10 +19,34 @@ export const convertTypeWithGenre = (movieGenres: number[]): string => {
   }
   return 'Unknown Genre';
 };
-export const convertTypeWithGenreByID = (movieGenreIDs: IGenres[]): string => {
-  let genreString = '';
-  for (let i = 0; i < movieGenreIDs.length; i++) {
-    genreString += movieGenreIDs[i].name + ', ';
+export const moviePopupGenre = (movieGenreIDs: IGenres[]): string => {
+  if (movieGenreIDs !== undefined) {
+    if (movieGenreIDs.length > 1) {
+      const firstGenre = genreMap.get(movieGenreIDs[0].id)
+        ? genreMap.get(movieGenreIDs[0].id)
+        : `Unknown Genre: ${movieGenreIDs[0]}`;
+      const secondGenre = genreMap.get(movieGenreIDs[1].id)
+        ? genreMap.get(movieGenreIDs[1].id)
+        : `Unknown Genre: ${movieGenreIDs[0]}`;
+
+      return `${firstGenre}, ${secondGenre}`;
+    } else if (movieGenreIDs.length === 1) {
+      const firstGenre = genreMap.get(movieGenreIDs[0].id)
+        ? genreMap.get(movieGenreIDs[0].id)
+        : `Unknown Genre: ${movieGenreIDs[0]}`;
+      return `${firstGenre}`;
+    }
   }
-  return genreString;
+
+  return 'Unknown Genre ID!';
+};
+export const convertTypeWithGenreByID = (movieGenreIDs: IGenres[]): string => {
+  if (movieGenreIDs !== undefined) {
+    let genreString = '';
+    for (let i = 0; i < movieGenreIDs.length; i++) {
+      genreString += movieGenreIDs[i].name + ', ';
+    }
+    return `${genreString}`;
+  }
+  return 'Unknown Genres in ID';
 };

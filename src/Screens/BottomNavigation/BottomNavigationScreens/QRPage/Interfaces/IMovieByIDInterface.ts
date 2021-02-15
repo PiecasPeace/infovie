@@ -24,6 +24,7 @@ export interface IMovieIDItem {
     video: boolean,
     vote_average: number,
     vote_count: number,
+    
 }
 export interface ICollection {
     id: number,

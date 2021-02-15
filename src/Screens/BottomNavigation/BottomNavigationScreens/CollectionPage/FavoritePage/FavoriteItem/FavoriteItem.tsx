@@ -10,10 +10,10 @@ import {convertToYear} from '../../../../../../components/utils/dates';
 import {getImageApi} from '../../../../../../components/utils/Image';
 import {getLanguage} from '../../../../../../constants/Language/getLanguageFunction';
 import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDivider';
-import {ItmdbITEM} from '../../../QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 
-const FavoriteItem: ListRenderItem<ItmdbITEM> = ({item}) => {
+const FavoriteItem: ListRenderItem<ItmdbItem> = ({item}) => {
   return (
     <TouchableHighlight key={item.id} style={styles.swipeContainer}>
       <View style={styles.container}>

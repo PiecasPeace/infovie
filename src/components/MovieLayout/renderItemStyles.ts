@@ -1,14 +1,8 @@
-import {StyleSheet} from 'react-native';
-import {
-  BLACK,
-  DARK_BLUE,
-  DARK_GRAY,
-  DARK_PURPLE,
-  WHITE,
-} from '../../../../../constants/Colors/Colors';
-import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
+import { StyleSheet } from "react-native";
+import { fontSizeResponsive } from "../utils/Dimensions";
+import { DARK_GRAY, WHITE, BLACK, DARK_PURPLE, DARK_BLUE } from "../../constants/Colors/Colors";
 
-export const styles = StyleSheet.create({
+export const listStyle = StyleSheet.create({
   FlatlistContainer: {
     flex: 1,
     width: '100%',
