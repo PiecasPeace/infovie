@@ -10,9 +10,13 @@ export const CustomButton: React.FC<ICustomButtonProps> = ({
   Text,
   icon,
   dark,
+  contentStyle,
+  labelStyle,
 }: ICustomButtonProps) => {
   return (
     <Button
+      contentStyle={contentStyle}
+      labelStyle={labelStyle}
       dark={dark}
       style={style}
       mode={mode}

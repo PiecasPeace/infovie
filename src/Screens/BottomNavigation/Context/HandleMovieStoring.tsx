@@ -13,7 +13,10 @@ export const useSaveFavorite = () => {
     }
     ContextFavMap.set(myMovies.id, myMovies);
     if (myMovies !== null) {
-      await AsyncStorage.setItem(STORAGE_MOVIE_KEY, JSON.stringify([...ContextFavMap]));
+      await AsyncStorage.setItem(
+        STORAGE_MOVIE_KEY,
+        JSON.stringify([...ContextFavMap]),
+      );
       console.log(`Movie saved: ${myMovies.title} \n `);
     }
   };
@@ -28,7 +31,10 @@ export const useDeleteFavorite = () => {
     if (item !== null) {
       ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(item));
       ContextFavMap.delete(id);
-      await AsyncStorage.setItem(STORAGE_MOVIE_KEY, JSON.stringify([...ContextFavMap]));
+      await AsyncStorage.setItem(
+        STORAGE_MOVIE_KEY,
+        JSON.stringify([...ContextFavMap]),
+      );
       console.log(`Movie deleted: ${id} \n `);
     }
     return deleteFavorite;

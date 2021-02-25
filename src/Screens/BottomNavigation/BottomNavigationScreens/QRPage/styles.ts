@@ -1,18 +1,22 @@
 import {StyleSheet} from 'react-native';
-import {BLACK, DARK_GREEN, DARK_RED, WHITE} from '../../../../constants/Colors/Colors';
+import {
+  BLACK,
+  DARK_GREEN,
+  DARK_RED,
+  LIGHT_PURPLE,
+  WHITE,
+} from '../../../../constants/Colors/Colors';
 
 export const styles = StyleSheet.create({
-  QRContainer: {
+  barcodeContainer: {
     flex: 1,
-    backgroundColor: '#55505e', //replace for background
+    backgroundColor: LIGHT_PURPLE, //replace for background
     flexDirection: 'column',
   },
-  containerItem: {
-    paddingRight: 20,
-    paddingLeft: 5,
-    paddingTop: 5,
-    marginBottom: 20,
-    flexDirection: 'row',
+  mainContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    flex: 1,
   },
   headertext: {
     color: WHITE,
@@ -20,7 +24,7 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     padding: 5,
   },
-  DescriptionText: {
+  descriptionText: {
     padding: 10,
     fontSize: 14,
     fontWeight: 'bold',
@@ -36,18 +40,21 @@ export const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   activateScan: {
-    padding: 10,
-    width: '100%',
-    alignSelf: 'flex-end',
+    marginBottom: 20,
+    color: BLACK,
+    fontFamily: 'roboto',
+    alignSelf: 'center',
+    width: '95%',
+    bottom: 0,
     position: 'absolute',
-    marginTop: 480,
+    borderRadius: 10,
   },
-  StopScan: {
+  stopScan: {
     borderRadius: 2,
     backgroundColor: DARK_RED,
     width: '50%',
   },
-  ScanAgain: {
+  scanAgain: {
     borderRadius: 2,
     backgroundColor: DARK_GREEN,
     width: '50%',

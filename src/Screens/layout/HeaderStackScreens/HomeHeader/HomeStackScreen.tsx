@@ -1,11 +1,11 @@
 import React from 'react';
-import HomePageScreen from '../../../BottomNavigation/BottomNavigationScreens/HomePage/HomePageScreen';
+import HomeScreen from '../../../BottomNavigation/BottomNavigationScreens/HomePage/HomeScreen';
 import {CustomHeader} from '../../../../components/Header/Header';
 
 export const HomeStackScreen: React.FC = ({navigation}: any) => {
   return (
     <CustomHeader
-      component={HomePageScreen}
+      component={HomeScreen}
       componentName={'HomePage'}
       componentTitle={'Infovie'}
       onPress={() => navigation.openDrawer()}

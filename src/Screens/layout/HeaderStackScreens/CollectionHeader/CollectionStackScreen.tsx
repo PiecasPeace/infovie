@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {CollectionScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/CollectionScreen';
 import {CustomHeader} from '../../../../components/Header/Header';
 import {createStackNavigator} from '@react-navigation/stack';
-import {FavoritePageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoritePageScreen';
+import {FavoriteScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoriteScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MyMoviesPageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/MyMoviesPage/MyMoviesPageScreen';
 import {DARK_PURPLE} from '../../../../constants/Colors/Colors';
@@ -19,7 +19,7 @@ export const CollectionStackScreen: React.FC = ({navigation}: any) => {
         <Fragment>
           <HeaderStack.Screen
             name={'FavoriteCollection'}
-            component={FavoritePageScreen}
+            component={FavoriteScreen}
             options={{
               title: 'My Favorites',
               headerLeft: () => (

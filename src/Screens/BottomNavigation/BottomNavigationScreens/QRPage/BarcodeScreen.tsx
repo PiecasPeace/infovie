@@ -14,14 +14,20 @@ import {tmdbGetById, tmdbGetByTitle} from './APICalls/APICallsTMDB';
 import {extractMovieTitles} from './utils/TitleUtilities';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
-  FavoriteMapContext, STORAGE_MOVIE_KEY
+  FavoriteMapContext,
+  STORAGE_MOVIE_KEY,
 } from '../../Context/ContextProvider';
 import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieLayout';
 import {IUPCItem} from './Interfaces/IupcInterface';
 import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
 import {ItmdbItem} from './Interfaces/IMovieInterface';
-import { useSaveFavorite } from '../../Context/HandleMovieStoring';
+import {useSaveFavorite} from '../../Context/HandleMovieStoring';
+import {
+  BLACK,
+  BORDEAUX_RED,
+  BRIGHT_RED,
+} from '../../../../constants/Colors/Colors';
 
 interface IQRState {
   scan: boolean;
@@ -30,7 +36,7 @@ interface IQRState {
   selected: IMovieIDItem;
 }
 
-const QRPageScreen: React.FC = () => {
+const BarcodeScreen: React.FC = () => {
   let ContextFavMap = useContext(FavoriteMapContext);
   const [barcodeMovie, setBarcodeMovie] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),
@@ -234,28 +240,22 @@ const QRPageScreen: React.FC = () => {
   );
 
   return (
-    <View style={styles.QRContainer}>
-      <Fragment>
+    <View style={styles.barcodeContainer}>
+      <>
         {!scanSuccess.scan && !scanSuccess.scanResult ? (
-          <View>
-            <Text style={styles.DescriptionText}>Please scan a Code !</Text>
-            <View>
-              <Button
-                contentStyle={{
-                  height: 80,
-                  backgroundColor: '#fff0f2',
-                  alignContent: 'center',
-                }}
-                labelStyle={{
-                  fontSize: 25,
-                }}
+          <View style={styles.mainContainer}>
+            <Text style={styles.descriptionText}>Please scan a Code !</Text>
+            <View style={{flex: 1}}>
+              <CustomButton
+                color={BRIGHT_RED}
+                mode={'contained'}
+                Text={'Start Scan'}
                 style={styles.activateScan}
-                icon="barcode"
+                icon={'barcode'}
+                labelStyle={{fontSize: 25}}
+                contentStyle={{height: 80, borderColor: BLACK, borderWidth: 1}}
                 onPress={activeQR}
-                color="#400a13"
-                mode="outlined">
-                <Text>Start Scan</Text>
-              </Button>
+              />
             </View>
           </View>
         ) : (
@@ -288,9 +288,9 @@ const QRPageScreen: React.FC = () => {
             showMarker={true}
             onRead={onSuccess}
             bottomContent={
-              <View>
+              <View style={{height: 150}}>
                 <CustomButton
-                  style={styles.StopScan}
+                  style={styles.stopScan}
                   mode="outlined"
                   color="#fff"
                   onPress={() =>
@@ -306,8 +306,8 @@ const QRPageScreen: React.FC = () => {
         ) : (
           <></>
         )}
-      </Fragment>
+      </>
     </View>
   );
 };
-export default QRPageScreen;
+export default BarcodeScreen;

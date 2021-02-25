@@ -28,14 +28,14 @@ export const QRPageMovieList: React.FC<IQRPageMovieListProps> = ({
       />
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <CustomButton
-          style={styles.StopScan}
+          style={styles.stopScan}
           mode={'outlined'}
           color={'#fff'}
           onPress={stopScanFunction}
           Text={'Stop'}
         />
         <CustomButton
-          style={styles.ScanAgain}
+          style={styles.scanAgain}
           mode={'outlined'}
           color={'#fff'}
           onPress={scanAgainFunction}

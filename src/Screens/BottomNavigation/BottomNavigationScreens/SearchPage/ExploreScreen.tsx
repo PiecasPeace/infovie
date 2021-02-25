@@ -1,13 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Button} from 'react-native';
-import {MovieFlatList} from './MovieLists/MovieFlatList';
+import {View, StyleSheet, Button, Text} from 'react-native';
+import { WHITE } from '../../../../constants/Colors/Colors';
 
-const SearchPageScreen = () => {
+export const ExploreScreen = () => {
   return (
     <View style={styles.container}>
       {/* <MovieFlatList /> */}
-      HAAAAAAAAAAAAA HAAAAAAAAAAAAAhA AHAHAH AHAHAHAHAHAH HAHAHAAHAUAU
-      HAHAHAAHAUAUAHAHAHDAD ADADAd
+      <Text style={{color:WHITE}}>EXPLORE</Text>
     </View>
   );
 };
@@ -22,5 +21,3 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 });
-
-export default SearchPageScreen;

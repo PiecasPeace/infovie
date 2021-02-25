@@ -14,6 +14,7 @@ export const BRIGHT_RED = '#fff0f2';
 export const LIGHT_RED = '#ff7f7f';
 export const RED = '#ff1f1f';
 export const DARK_RED = '#751012';
+export const BORDEAUX_RED = "#400a13";
 //GREEN
 export const LIGHT_GREEN = '#82c596';
 export const GREEN = '#00ff4c';

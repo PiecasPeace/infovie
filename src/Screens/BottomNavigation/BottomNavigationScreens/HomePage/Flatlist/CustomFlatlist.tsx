@@ -6,7 +6,6 @@ import {
   Image,
   TouchableHighlight,
   ListRenderItem,
-  Button,
 } from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {styles} from './styles';
@@ -27,7 +26,10 @@ import {
 } from '../../../Context/ContextProvider';
 import {WHITE} from '../../../../../constants/Colors/Colors';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
-// import { useSaveFavorite } from '../../../Context/HandleMovieStoring';
+import {
+  useSaveFavorite,
+  useDeleteFavorite,
+} from '../../../Context/HandleMovieStoring';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,

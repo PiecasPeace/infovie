@@ -1,11 +1,11 @@
 import React from 'react';
 import {CustomHeader} from '../../../../../components/Header/Header';
-import {FavoritePageScreen} from '../../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoritePageScreen';
+import {FavoriteScreen} from '../../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoriteScreen';
 
 export const FavoriteStackScreen: React.FC = ({navigation}: any) => {
   return (
     <CustomHeader
-      component={FavoritePageScreen}
+      component={FavoriteScreen}
       componentName={'FavoriteCollection'}
       componentTitle={'Favorites'}
       onPress={() => navigation.openDrawer()}

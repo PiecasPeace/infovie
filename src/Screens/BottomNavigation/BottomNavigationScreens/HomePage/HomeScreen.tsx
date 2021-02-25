@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, View} from 'react-native';
+import {View} from 'react-native';
 import {CustomFlatlist} from './Flatlist/CustomFlatlist';
 import RequestPath from '../../../../constants/RequestPath';
 import {styles} from './styles';
@@ -7,7 +7,7 @@ import {WHITE} from '../../../../constants/Colors/Colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const HomePageScreen: React.FC = () => {
+const HomeScreen: React.FC = () => {
   const [dropdownString, setDropdownString] = useState(RequestPath.MostPopular);
   return (
     <View style={styles.container}>
@@ -60,4 +60,4 @@ const HomePageScreen: React.FC = () => {
   );
 };
 
-export default HomePageScreen;
+export default HomeScreen;

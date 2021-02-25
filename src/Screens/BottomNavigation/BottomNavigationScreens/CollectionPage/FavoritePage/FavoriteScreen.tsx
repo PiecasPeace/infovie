@@ -16,7 +16,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {SwipeListView} from 'react-native-swipe-list-view';
 import _ from 'lodash';
 
-export const FavoritePageScreen: React.FC = ({navigation}: any) => {
+export const FavoriteScreen: React.FC = ({navigation}: any) => {
   let ContextFavMap = useContext(FavoriteMapContext);
   const [loading, setLoading] = useState(true);
   const [favoriteMap, setFavoriteMap] = useState<Map<number, ItmdbItem>>(

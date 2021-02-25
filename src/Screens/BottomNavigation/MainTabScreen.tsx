@@ -1,13 +1,13 @@
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {QRStackScreen} from '../layout/HeaderStackScreens/QRHeader/QRStackScreen';
 import {Platform} from 'react-native';
-import {SearchStackScreen} from '../layout/HeaderStackScreens/SearchHeader/SearchStackScreen';
+import {ExploreStackScreen} from '../layout/HeaderStackScreens/SearchHeader/ExploreStackScreen';
 import {HomeStackScreen} from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DARK_PURPLE, WHITE} from '../../constants/Colors/Colors';
 import {MapContextProvider} from './Context/ContextProvider';
 import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
+import {BarcodeStackScreen} from '../layout/HeaderStackScreens/BarcodeHeader/BarcodeStackScreen';
 
 const Tab = createBottomTabNavigator();
 export const MainTabScreen: React.FC = () => {
@@ -39,13 +39,13 @@ export const MainTabScreen: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="Search"
-          component={SearchStackScreen}
+          name="Explore"
+          component={ExploreStackScreen}
           options={{
-            tabBarLabel: 'Search',
+            tabBarLabel: 'Explore',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons
-                name="movie-outline"
+                name="navigation"
                 color={color}
                 size={26}
               />
@@ -53,10 +53,10 @@ export const MainTabScreen: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="QR"
-          component={QRStackScreen}
+          name="Barcode"
+          component={BarcodeStackScreen}
           options={{
-            tabBarLabel: 'QR-Scan',
+            tabBarLabel: 'Barcode',
             tabBarIcon: ({color}) => (
               <MaterialCommunityIcons name="barcode" color={color} size={26} />
             ),
