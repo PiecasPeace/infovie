@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {FavoriteScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/FavoritePage/FavoriteScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MyMoviesPageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/MyMoviesPage/MyMoviesPageScreen';
-import {DARK_PURPLE} from '../../../../constants/Colors/Colors';
+import {DARK_PURPLE} from '../../../../constants/Colors/colorpalette';
 const HeaderStack = createStackNavigator();
 
 export const CollectionStackScreen: React.FC = ({navigation}: any) => {

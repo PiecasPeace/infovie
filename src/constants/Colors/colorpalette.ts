@@ -19,6 +19,7 @@ export const BORDEAUX_RED = "#400a13";
 export const LIGHT_GREEN = '#82c596';
 export const GREEN = '#00ff4c';
 export const DARK_GREEN = '#173d22';
+export const NEUTRAL_GREEN ='#44603f';
 export const LIME = '#00ff00';
 //BLUE
 export const BLUE = '#8190a5';

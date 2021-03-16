@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { WHITE } from '../../../../../constants/Colors/Colors';
+import { WHITE } from '../../../../../constants/Colors/colorpalette';
 
 
 export const styles = StyleSheet.create({

@@ -1,11 +1,14 @@
 import {StyleSheet} from 'react-native';
 import {
   BLACK,
+  BORDEAUX_RED,
+  DARK_GRAY,
   DARK_GREEN,
   DARK_RED,
   LIGHT_PURPLE,
+  NEUTRAL_GREEN,
   WHITE,
-} from '../../../../constants/Colors/Colors';
+} from '../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   barcodeContainer: {
@@ -14,8 +17,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   mainContainer: {
-    justifyContent: 'center',
-    alignContent: 'center',
+    // justifyContent: 'center',
+    // alignContent: 'center',
     flex: 1,
   },
   headertext: {
@@ -50,13 +53,25 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
   stopScan: {
-    borderRadius: 2,
-    backgroundColor: DARK_RED,
+    borderRadius: 5,
+    backgroundColor: BORDEAUX_RED,
     width: '50%',
+  },
+  movieHistory: {
+    flex: 1,
+    padding: 20,
+    marginTop: '10%',
+    borderRadius: 10,
+  },
+  historyText: {
+    color: DARK_GRAY,
+    fontSize: 17,
+    borderRadius:5,
+    marginTop:15
   },
   scanAgain: {
     borderRadius: 2,
-    backgroundColor: DARK_GREEN,
+    backgroundColor: NEUTRAL_GREEN,
     width: '50%',
   },
 });

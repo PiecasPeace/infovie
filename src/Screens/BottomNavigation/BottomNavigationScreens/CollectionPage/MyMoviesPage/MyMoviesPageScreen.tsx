@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import Spinner from '../../../../../components/Spinner/Spinner';
-import {PINK, WHITE} from '../../../../../constants/Colors/Colors';
+import {PINK, WHITE} from '../../../../../constants/Colors/colorpalette';
 import {styles} from './styles';
 
 export const MyMoviesPageScreen: React.FC = ({navigation}: any) => {

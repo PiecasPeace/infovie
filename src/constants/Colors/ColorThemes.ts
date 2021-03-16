@@ -1,4 +1,4 @@
-import { DARK_PURPLE, LIGHT_PURPLE, WHITE } from "./Colors";
+import { DARK_PURPLE, LIGHT_PURPLE, WHITE } from "./colorpalette";
 
 export const getTheme = {
     DarkTheme: {

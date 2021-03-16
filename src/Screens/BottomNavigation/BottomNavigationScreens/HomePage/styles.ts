@@ -5,7 +5,7 @@ import {
   DARK_PURPLE,
   PINK,
   RED,
-} from '../../../../constants/Colors/Colors';
+} from '../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   container: {

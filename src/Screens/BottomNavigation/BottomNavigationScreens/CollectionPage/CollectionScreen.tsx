@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {View} from 'react-native';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
-import {PINK, WHITE} from '../../../../constants/Colors/Colors';
+import {PINK, WHITE} from '../../../../constants/Colors/colorpalette';
 import {CollectionItem} from './CollectionItem/CollectionItem';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';

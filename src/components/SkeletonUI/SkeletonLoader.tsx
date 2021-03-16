@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import {DARK_GRAY, LIGHT_GRAY} from '../../constants/Colors/Colors';
+import {DARK_GRAY, LIGHT_GRAY} from '../../constants/Colors/colorpalette';
 import {styles} from './styles';
 
 export const SkeletonLoader: React.FC = () => {

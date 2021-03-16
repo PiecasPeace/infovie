@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {CustomFlatlist} from './Flatlist/CustomFlatlist';
 import RequestPath from '../../../../constants/RequestPath';
 import {styles} from './styles';
-import {WHITE} from '../../../../constants/Colors/Colors';
+import {WHITE} from '../../../../constants/Colors/colorpalette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

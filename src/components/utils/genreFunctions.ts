@@ -17,7 +17,7 @@ export const convertTypeWithGenre = (movieGenres: number[]): string => {
       : `Unknown Genre: ${movieGenres[0]}`;
     return `${firstGenre}`;
   }
-  return 'Unknown Genre';
+  return 'No genre found.';
 };
 export const moviePopupGenre = (movieGenreIDs: IGenres[]): string => {
   if (movieGenreIDs !== undefined) {
@@ -37,8 +37,7 @@ export const moviePopupGenre = (movieGenreIDs: IGenres[]): string => {
       return `${firstGenre}`;
     }
   }
-
-  return 'Unknown Genre ID!';
+  return 'No genre id found.';
 };
 export const convertTypeWithGenreByID = (movieGenreIDs: IGenres[]): string => {
   if (movieGenreIDs !== undefined) {

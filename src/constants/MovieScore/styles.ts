@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {fontSizeResponsive} from '../../components/utils/Dimensions';
-import {LIME,DARK_GRAY, LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE, BLACK} from '../Colors/Colors';
+import {LIME,DARK_GRAY, LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE, BLACK} from '../Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   score: {

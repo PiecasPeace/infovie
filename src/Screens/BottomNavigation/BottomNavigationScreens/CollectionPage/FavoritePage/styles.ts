@@ -3,7 +3,7 @@ import {
   DARK_PURPLE,
   DARK_RED,
   LIGHT_PURPLE,
-} from '../../../../../constants/Colors/Colors';
+} from '../../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   favoritesContainer: {

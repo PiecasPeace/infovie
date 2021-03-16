@@ -1,44 +1,42 @@
-import React, {useState, useEffect, Fragment, useContext} from 'react';
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  TouchableHighlight,
-  ListRenderItem,
-} from 'react-native';
+import React, {useState, useEffect, Fragment} from 'react';
+import {FlatList, View, ListRenderItem} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {styles} from './styles';
-import {getImageApi} from '../../../../../components/utils/Image';
 import {ItmdbItem, ItmdbJsonGET} from '../../QRPage/Interfaces/IMovieInterface';
-import {convertToYear} from '../../../../../components/utils/dates';
-import {convertTypeWithGenre} from '../../../../../components/utils/genreFunctions';
 import {baseTMDBUrl} from '../../../../../constants/Shortcuts';
-import {renderDivider} from '../../../../../constants/RenderDivider/RenderDivider';
-import {getLanguage} from '../../../../../constants/Language/getLanguageFunction';
-import {renderScore} from '../../../../../constants/MovieScore/renderScore';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import _ from 'lodash';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  FavoriteMapContext,
-  STORAGE_MOVIE_KEY,
-} from '../../../Context/ContextProvider';
-import {WHITE} from '../../../../../constants/Colors/Colors';
+import {STORAGE_MOVIE_KEY} from '../../../Context/ContextProvider';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
 import {
   useSaveFavorite,
   useDeleteFavorite,
 } from '../../../Context/HandleMovieStoring';
+import {MovieLayout} from '../../../../../components/MovieLayout/MovieLayout';
+import {tmdbGetById} from '../../../../../constants/APICalls/APICallsTMDB';
+import {IMovieIDItem} from '../../QRPage/Interfaces/IMovieByIDInterface';
+import {MoviePopup} from '../../QRPage/MoviePopup/MoviePopup';
+import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {BORDEAUX_RED} from '../../../../../constants/Colors/colorpalette';
+
+interface MapState {
+  selected: IMovieIDItem;
+}
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
 }: ICustomFlatListProps) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [loadingID, setLoadingID] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [detailMovie, setDetailMovie] = useState<MapState>({
+    selected: {} as IMovieIDItem,
+  });
+
   const [movieMap, setMovieMap] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),
   );
-  let ContextFavMap = useContext(FavoriteMapContext);
+  let flatlistMap = new Map<number, ItmdbItem>();
 
   const fetchData = async () => {
     setLoading(true);
@@ -46,10 +44,10 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     try {
       const request = await fetch(`${baseTMDBUrl}${fetchUrl}`);
       const result = (await request.json()) as ItmdbJsonGET;
-      ContextFavMap = await loadFavorites();
+      flatlistMap = await loadFavorites();
 
       for (let i = 0; i < result.results.length; i++) {
-        if (ContextFavMap.get(result.results[i].id) !== undefined) {
+        if (flatlistMap.get(result.results[i].id) !== undefined) {
           result.results[i].favorite = true;
         } else {
           result.results[i].favorite = false;
@@ -72,13 +70,13 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   const saveFavorite = async (myMovies: ItmdbItem) => {
     const oldFavorites = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (oldFavorites !== null) {
-      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(oldFavorites));
+      flatlistMap = new Map<number, ItmdbItem>(JSON.parse(oldFavorites));
     }
-    ContextFavMap.set(myMovies.id, myMovies);
+    flatlistMap.set(myMovies.id, myMovies);
     if (myMovies !== null) {
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
-        JSON.stringify([...ContextFavMap]),
+        JSON.stringify([...flatlistMap]),
       );
       console.log(`Movie saved: ${myMovies.title} \n `);
     }
@@ -88,25 +86,25 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     console.log('load HomePage Data...');
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
-      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(item));
-      console.log(ContextFavMap);
+      flatlistMap = new Map<number, ItmdbItem>(JSON.parse(item));
+      console.log(flatlistMap);
     }
-    return ContextFavMap;
+    return flatlistMap;
   };
 
   const deleteFavorite = async (id: number) => {
     const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (item !== null) {
-      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(item));
-      ContextFavMap.delete(id);
+      flatlistMap = new Map<number, ItmdbItem>(JSON.parse(item));
+      flatlistMap.delete(id);
       await AsyncStorage.setItem(
         STORAGE_MOVIE_KEY,
-        JSON.stringify([...ContextFavMap]),
+        JSON.stringify([...flatlistMap]),
       );
     }
   };
   const RefreshFavoriteList = async () => {
-    return ContextFavMap;
+    return flatlistMap;
   };
   useEffect(() => {
     RefreshFavoriteList();
@@ -119,77 +117,46 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   const StoreOwnMovie = async (id: number) => {
     let favoriteMovieValues = _.cloneDeep(movieMap.get(id));
     if (favoriteMovieValues !== undefined) {
-      if (favoriteMovieValues.favorite === false) {
-        try {
-          favoriteMovieValues.favorite = true;
-          updateMap(id, favoriteMovieValues);
+      favoriteMovieValues.favorite = !favoriteMovieValues.favorite;
+      try {
+        updateMap(id, favoriteMovieValues);
+        if (favoriteMovieValues.favorite) {
           saveFavorite(favoriteMovieValues);
-        } catch (err) {
-          err.message;
-        }
-      } else {
-        try {
-          favoriteMovieValues.favorite = false;
-          updateMap(id, favoriteMovieValues);
+        } else {
           deleteFavorite(favoriteMovieValues.id);
-        } catch (err) {
-          err.message;
         }
+      } catch (err) {
+        err.message;
       }
     }
   };
-
   const updateMap = (id: number, movieValues: ItmdbItem) => {
     setMovieMap(new Map<number, ItmdbItem>(movieMap.set(id, movieValues)));
   };
-  const TrendingList: ListRenderItem<ItmdbItem> = ({item}) => (
-    <TouchableHighlight key={item.id}>
-      <View style={styles.containerItem}>
-        <Image
-          source={getImageApi(item.poster_path)}
-          style={styles.photo}
-          resizeMode="cover"
-        />
-        <View style={styles.item}>
-          <View>
-            <Text numberOfLines={2} style={styles.headertext}>
-              {item.title !== undefined ? item.title : item.name}
-            </Text>
-            <View style={[styles.textRow, styles.containerSubTitle]}>
-              <Text style={styles.textSmall}>
-                {convertToYear(item.release_date)}
-              </Text>
-              {renderDivider(item.release_date, item.original_language)}
-              <Text numberOfLines={1} style={styles.textSmall}>
-                {getLanguage(item.original_language)}
-              </Text>
-            </View>
-            <Text numberOfLines={2} style={styles.textSmall}>
-              {convertTypeWithGenre(item.genre_ids)}
-            </Text>
-          </View>
-          <View>
-            <View style={[styles.textRow, styles.containerReview]}>
-              {renderScore(item.vote_average)}
-            </View>
-            <CustomButton
-              key={item.id}
-              Text={item.favorite ? 'Unfavorite' : 'Favorite'}
-              color={item.favorite ? WHITE : WHITE}
-              mode="outlined"
-              icon={item.favorite ? 'heart-outline' : 'heart'}
-              onPress={() => StoreOwnMovie(item.id)}
-              style={[
-                styles.favoriteButton,
-                styles[item.favorite ? 'fav' : 'nonfav'],
-              ]}
-            />
-          </View>
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
 
+  const closeModal = () => {
+    setShowDetails(false);
+  };
+
+  const openMovieDetails = async (movieID: number) => {
+    setLoadingID(false);
+    await tmdbGetById(movieID).then(async (result) => {
+      await handleMovieDetails(result);
+    });
+    setLoadingID(true);
+  };
+  const handleMovieDetails = async (result: IMovieIDItem) => {
+    setDetailMovie({selected: result});
+    setShowDetails(true);
+  };
+
+  const TrendingList: ListRenderItem<ItmdbItem> = ({item}) => (
+    <MovieLayout
+      openDetails={() => openMovieDetails(item.id)}
+      StoreFavoriteMovies={() => StoreOwnMovie(item.id)}
+      item={item}
+    />
+  );
   return (
     <View style={styles.FlatlistContainer}>
       {loading ? (
@@ -203,8 +170,16 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
             renderItem={TrendingList}
             keyboardShouldPersistTaps="always"
             initialNumToRender={4}
-            // horizontal={true}
           />
+          {loadingID ? (
+            <MoviePopup
+              item={detailMovie.selected}
+              onPress={closeModal}
+              visible={showDetails}
+            />
+          ) : (
+            <></>
+          )}
         </Fragment>
       )}
     </View>

@@ -4,7 +4,7 @@ import {
   BLACK,
   DARK_GRAY,
   WHITE,
-} from '../../../../../../constants/Colors/Colors';
+} from '../../../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   swipeContainer: {

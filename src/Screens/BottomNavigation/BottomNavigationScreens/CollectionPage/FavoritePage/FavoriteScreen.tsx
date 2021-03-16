@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FavoriteItem from './FavoriteItem/FavoriteItem';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
-import {WHITE} from '../../../../../constants/Colors/Colors';
+import {WHITE} from '../../../../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import _ from 'lodash';

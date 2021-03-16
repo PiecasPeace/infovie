@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {LIGHT_GRAY} from '../../constants/Colors/Colors';
+import {LIGHT_GRAY} from '../../constants/Colors/colorpalette';
 
 const styles = StyleSheet.create({
   drawerContent: {

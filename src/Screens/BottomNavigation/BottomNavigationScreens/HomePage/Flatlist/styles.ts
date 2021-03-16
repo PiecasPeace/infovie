@@ -5,7 +5,7 @@ import {
   DARK_GRAY,
   DARK_PURPLE,
   WHITE,
-} from '../../../../../constants/Colors/Colors';
+} from '../../../../../constants/Colors/colorpalette';
 import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
 
 export const styles = StyleSheet.create({

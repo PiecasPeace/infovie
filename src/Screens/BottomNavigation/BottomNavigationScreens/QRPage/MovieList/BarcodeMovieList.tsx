@@ -4,19 +4,19 @@ import {CustomButton} from '../../../../../components/CustomButton/CustomButton'
 import {styles} from '../styles';
 import {ItmdbItem} from '../Interfaces/IMovieInterface';
 
-interface IQRPageMovieListProps {
+interface BarcodeMovieListProps {
   movies: ItmdbItem[];
   renderItem: ListRenderItem<ItmdbItem>;
   stopScanFunction: () => void;
   scanAgainFunction: () => void;
 }
 
-export const QRPageMovieList: React.FC<IQRPageMovieListProps> = ({
+export const BarcodeMovieList: React.FC<BarcodeMovieListProps> = ({
   movies,
   renderItem,
   stopScanFunction,
   scanAgainFunction,
-}: IQRPageMovieListProps) => {
+}: BarcodeMovieListProps) => {
   return (
     <Fragment>
       <FlatList

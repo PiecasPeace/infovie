@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {DARK_PURPLE, WHITE} from '../../constants/Colors/Colors';
+import {DARK_PURPLE, WHITE} from '../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles';
 import {IHeaderStackScreenProps} from './IHeader';

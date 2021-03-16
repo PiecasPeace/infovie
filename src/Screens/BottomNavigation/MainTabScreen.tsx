@@ -4,7 +4,7 @@ import {Platform} from 'react-native';
 import {ExploreStackScreen} from '../layout/HeaderStackScreens/SearchHeader/ExploreStackScreen';
 import {HomeStackScreen} from '../layout/HeaderStackScreens/HomeHeader/HomeStackScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DARK_PURPLE, WHITE} from '../../constants/Colors/Colors';
+import {DARK_PURPLE, WHITE} from '../../constants/Colors/colorpalette';
 import {MapContextProvider} from './Context/ContextProvider';
 import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 import {BarcodeStackScreen} from '../layout/HeaderStackScreens/BarcodeHeader/BarcodeStackScreen';
