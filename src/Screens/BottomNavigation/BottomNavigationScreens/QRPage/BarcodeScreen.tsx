@@ -94,8 +94,8 @@ const BarcodeScreen: React.FC = () => {
     }
     setBarcodeMovie(MovieMapBody);
   };
- 
-   const requestByHistoryTitle = async (index:number) => {
+
+  const requestByHistoryTitle = async (index: number) => {
     try {
       setBarcodeMovie(new Map<number, ItmdbItem>());
       await tmdbGetByTitle(`${history[index]}`).then((result) => {
@@ -115,7 +115,7 @@ const BarcodeScreen: React.FC = () => {
       new Map<number, ItmdbItem>(barcodeMovie.set(id, movieValues)),
     );
   };
- 
+
   const requestByBarcodeTitle = async (title: string[]) => {
     let titleWithoutSpecialSigns = extractMovieTitles(
       title,

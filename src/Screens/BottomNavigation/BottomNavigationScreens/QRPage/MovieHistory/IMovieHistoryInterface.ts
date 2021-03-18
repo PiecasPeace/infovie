@@ -1,7 +1,6 @@
 export interface HistoryItemProps {
   history: String[];
   index: number;
-  buttonStyle: {};
   onPress: (index:number) => Promise<void>;
 }
 export interface HistoryProps {

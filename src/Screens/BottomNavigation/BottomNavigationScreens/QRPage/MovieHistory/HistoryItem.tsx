@@ -8,12 +8,7 @@ import {
 import {styles} from './styles';
 import {HistoryProps, HistoryItemProps} from './IMovieHistoryInterface';
 
-const HistoryItem = ({
-  history,
-  index,
-  buttonStyle,
-  onPress,
-}: HistoryItemProps) => {
+const HistoryItem = ({history, index, onPress}: HistoryItemProps) => {
   const MovieTitleIndex = () => {
     if (history[index] !== undefined) {
       return `${history[index]}`;
@@ -29,7 +24,7 @@ const HistoryItem = ({
           mode={'contained'}
           color={WHITE}
           Text="Search"
-          style={buttonStyle}
+          style={styles.buttonLabel}
           labelStyle={styles.buttonLabel}
           key={`${history[index]}`}
         />
@@ -40,14 +35,13 @@ const HistoryItem = ({
 export const ShowHistory = ({history, onPress}: HistoryProps) => {
   return (
     <Fragment>
-      {history.map((item, index) => {
+      {history.map((v, i) => {
         return (
           <HistoryItem
-            index={index}
+            index={i}
             history={history}
-            onPress={() => onPress(index)}
-            buttonStyle={styles.buttonLabel}
-            key={index}
+            onPress={() => onPress(i)}
+            key={i}
           />
         );
       })}
