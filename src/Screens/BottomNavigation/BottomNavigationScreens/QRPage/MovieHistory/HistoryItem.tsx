@@ -11,7 +11,7 @@ import {HistoryProps, HistoryItemProps} from './IMovieHistoryInterface';
 const HistoryItem = ({history, index, onPress}: HistoryItemProps) => {
   const MovieTitleIndex = () => {
     if (history[index] !== undefined) {
-      return `${history[index]}`;
+        return `${history[index]}`;
     }
   };
   return (
