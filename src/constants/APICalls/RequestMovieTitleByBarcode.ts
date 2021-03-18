@@ -1,7 +1,7 @@
 import { UPCRequest } from '../Shortcuts';
 import { IBarcodeJSON } from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IBarcodeInterface';
 
-const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
+export const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
     const titleList: string[] = [];
     try {
         //Fetching the URL link
@@ -20,4 +20,3 @@ const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> =
     }
     return titleList;
 }
-export default RequestMovieTitleByBarcode;

@@ -3,7 +3,7 @@ import {View, Text, Linking, ListRenderItem} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
-import RequestMovieTitleByBarcode from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
+import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
 import {MoviePopup} from './MoviePopup/MoviePopup';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
