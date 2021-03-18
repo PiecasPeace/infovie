@@ -24,74 +24,33 @@ const HistoryItem = ({
       <Text style={styles.movieText}>{MovieTitleIndex()}</Text>
       <View style={styles.buttonView}>
         <CustomButton
-          onPress={onPress}
+          onPress={() => onPress(index)}
           contentStyle={{backgroundColor: BORDEAUX_RED}}
           mode={'contained'}
           color={WHITE}
           Text="Search"
           style={buttonStyle}
           labelStyle={styles.buttonLabel}
+          key={`${history[index]}`}
         />
       </View>
     </View>
   );
 };
-
-const TwoHistory = ({history, onPress}: HistoryProps) => {
-  return (
-    <Fragment>
-      <HistoryItem
-        index={0}
-        buttonStyle={styles.buttonLabel}
-        history={history}
-        onPress={onPress}
-      />
-      <HistoryItem
-        index={1}
-        buttonStyle={styles.buttonLabel}
-        history={history}
-        onPress={onPress}
-      />
-    </Fragment>
-  );
-};
-const ThreeHistory = ({history, onPress}: HistoryProps) => {
-  return (
-    <View>
-      <TwoHistory history={history} onPress={onPress} />
-      <HistoryItem
-        index={2}
-        buttonStyle={styles.buttonLabel}
-        history={history}
-        onPress={onPress}
-      />
-    </View>
-  );
-};
-
 export const ShowHistory = ({history, onPress}: HistoryProps) => {
   return (
-    <View style={styles.historyContainer}>
-      {history.length === 1 ? (
-        <HistoryItem
-          index={0}
-          buttonStyle={styles.buttonLabel}
-          history={history}
-          onPress={onPress}
-        />
-      ) : (
-        <></>
-      )}
-      {history.length === 2 ? (
-        <TwoHistory history={history} onPress={onPress} />
-      ) : (
-        <></>
-      )}
-      {history.length >= 3 ? (
-        <ThreeHistory history={history} onPress={onPress} />
-      ) : (
-        <></>
-      )}
-    </View>
+    <Fragment>
+      {history.map((item, index) => {
+        return (
+          <HistoryItem
+            index={index}
+            history={history}
+            onPress={() => onPress(index)}
+            buttonStyle={styles.buttonLabel}
+            key={index}
+          />
+        );
+      })}
+    </Fragment>
   );
 };

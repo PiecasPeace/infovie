@@ -1,10 +1,10 @@
-export interface HistoryProps {
-  history: String[];
-  onPress: () => void;
-}
 export interface HistoryItemProps {
   history: String[];
   index: number;
   buttonStyle: {};
-  onPress: () => void;
+  onPress: (index:number) => Promise<void>;
+}
+export interface HistoryProps {
+  history: String[];
+  onPress: (index:number) => Promise<void>;
 }

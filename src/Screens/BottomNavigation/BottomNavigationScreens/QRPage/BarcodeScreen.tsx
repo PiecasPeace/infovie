@@ -19,8 +19,7 @@ import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieLayout';
 import {IUPCItem} from './Interfaces/IupcInterface';
 import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
-import {ItmdbItem} from './Interfaces/IMovieInterface';
-import {useSaveFavorite} from '../../Context/HandleMovieStoring';
+import {ItmdbItem, ItmdbJsonGET} from './Interfaces/IMovieInterface';
 import {
   DARK_GRAY,
   NEUTRAL_GREEN,
@@ -29,6 +28,7 @@ import {
 } from '../../../../constants/Colors/colorpalette';
 import {IBarcodeState} from './IBarcodeState';
 import {ShowHistory} from './MovieHistory/HistoryItem';
+import {handleHistoryOrder} from './MovieHistory/handleHistoryOrder';
 
 const BarcodeScreen: React.FC = () => {
   let FavoritenMap = new Map<number, ItmdbItem>();
@@ -70,7 +70,6 @@ const BarcodeScreen: React.FC = () => {
         selected: {} as IMovieIDItem,
       });
     }
-    console.log('WE ARE CONSOLE LOGGING EVENT FOR THE INTERFACE');
     console.log(event);
     //api call upc DB (passing event.data, which is the barcode, titleList will be the title for the tmdb)
     await RequestMovieTitleByBarcode(event.data)
@@ -83,27 +82,24 @@ const BarcodeScreen: React.FC = () => {
       });
   };
 
-  const requestByHistoryTitle = async () => {
-    try {
-      let historyResult = '';
-      for (let i = 0; i < history.length; i++) {
-        historyResult = `${history[i]}`;
+  const handleFavoriteLoop = (result: ItmdbJsonGET) => {
+    for (let i = 0; i < result.results.length; i++) {
+      if (FavoritenMap.get(result.results[i].id) !== undefined) {
+        result.results[i].favorite = true;
+      } else {
+        result.results[i].favorite = false;
       }
+      MovieMapBody = MovieMapBody.set(result.results[i].id, result.results[i]);
+      updateMap(result.results[i].id, result.results[i]);
+    }
+    setBarcodeMovie(MovieMapBody);
+  };
+ 
+   const requestByHistoryTitle = async (index:number) => {
+    try {
       setBarcodeMovie(new Map<number, ItmdbItem>());
-      await tmdbGetByTitle(historyResult).then((result) => {
-        for (let i = 0; i < result.results.length; i++) {
-          if (FavoritenMap.get(result.results[i].id) !== undefined) {
-            result.results[i].favorite = true;
-          } else {
-            result.results[i].favorite = false;
-          }
-          MovieMapBody = MovieMapBody.set(
-            result.results[i].id,
-            result.results[i],
-          );
-          updateMap(result.results[i].id, result.results[i]);
-        }
-        setBarcodeMovie(MovieMapBody);
+      await tmdbGetByTitle(`${history[index]}`).then((result) => {
+        handleFavoriteLoop(result);
         settmdbDataLoaded(true);
         setScanSuccess((prevState) => {
           return {...prevState, scanResult: true};
@@ -119,15 +115,7 @@ const BarcodeScreen: React.FC = () => {
       new Map<number, ItmdbItem>(barcodeMovie.set(id, movieValues)),
     );
   };
-  const handleHistoryMovies = (regex: string) => {
-    history.push(regex);
-    if (history.length > 1) {
-      for (let i = history.length - 1; i > 0; i--) {
-        history[i] = history[i - 1];
-      }
-      history[0] = regex;
-    }
-  };
+ 
   const requestByBarcodeTitle = async (title: string[]) => {
     let titleWithoutSpecialSigns = extractMovieTitles(
       title,
@@ -148,20 +136,8 @@ const BarcodeScreen: React.FC = () => {
             () => continueScanning(firstWordOfTitle[0]),
           );
         } else {
-          for (let i = 0; i < result.results.length; i++) {
-            if (FavoritenMap.get(result.results[i].id) !== undefined) {
-              result.results[i].favorite = true;
-            } else {
-              result.results[i].favorite = false;
-            }
-            MovieMapBody = MovieMapBody.set(
-              result.results[i].id,
-              result.results[i],
-            );
-            updateMap(result.results[i].id, result.results[i]);
-          }
-          setBarcodeMovie(MovieMapBody);
-          handleHistoryMovies(titleWithoutSpecialSigns[0]);
+          handleFavoriteLoop(result);
+          handleHistoryOrder(titleWithoutSpecialSigns[0], history);
           console.log(history);
           settmdbDataLoaded(true);
         }
@@ -171,7 +147,6 @@ const BarcodeScreen: React.FC = () => {
       throw error;
     }
   };
-
   const activeQR = () => {
     setScanSuccess((prevState) => {
       return {...prevState, scan: true};
@@ -192,20 +167,8 @@ const BarcodeScreen: React.FC = () => {
   };
   const continueScanning = async (strongTitle: string) => {
     await tmdbGetByTitle(strongTitle).then((betterResult) => {
-      for (let i = 0; i < betterResult.results.length; i++) {
-        if (FavoritenMap.get(betterResult.results[i].id) !== undefined) {
-          betterResult.results[i].favorite = true;
-        } else {
-          betterResult.results[i].favorite = false;
-        }
-        MovieMapBody = MovieMapBody.set(
-          betterResult.results[i].id,
-          betterResult.results[i],
-        );
-        updateMap(betterResult.results[i].id, betterResult.results[i]);
-      }
-      setBarcodeMovie(MovieMapBody);
-      handleHistoryMovies(strongTitle);
+      handleFavoriteLoop(betterResult);
+      handleHistoryOrder(strongTitle, history);
       settmdbDataLoaded(true);
     });
   };
