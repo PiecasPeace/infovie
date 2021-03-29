@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 
-export const QRPageNoTitleAlert = (
+export const NoTitleFoundAlert = (
   lightTitle: string,
   strongTitle: string,
   onPressCancel: () => void,

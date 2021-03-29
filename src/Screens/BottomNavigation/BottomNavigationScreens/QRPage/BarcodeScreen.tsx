@@ -7,7 +7,7 @@ import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/Request
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
 import {MoviePopup} from './MoviePopup/MoviePopup';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
-import {QRPageNoTitleAlert} from './MovieNoTitleAlert/QRPageNoTitleAlert';
+import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';
 import {
   tmdbGetById,
   tmdbGetByTitle,
@@ -23,7 +23,6 @@ import {ItmdbItem, ItmdbJsonGET} from './Interfaces/IMovieInterface';
 import {
   DARK_GRAY,
   NEUTRAL_GREEN,
-  PINK,
   WHITE,
 } from '../../../../constants/Colors/colorpalette';
 import {IBarcodeState} from './IBarcodeState';
@@ -129,7 +128,7 @@ const BarcodeScreen: React.FC = () => {
       tmdbGetByTitle(titleWithoutSpecialSigns[0]).then((result) => {
         //IF total_results are 0, open alert which asks to search with the stronger Regex.
         if (result.total_results === 0) {
-          QRPageNoTitleAlert(
+          NoTitleFoundAlert(
             titleWithoutSpecialSigns[0],
             firstWordOfTitle[0],
             () => scanStop(),
@@ -196,6 +195,7 @@ const BarcodeScreen: React.FC = () => {
       );
     }
   };
+
   const saveFavorite = async (myMovies: ItmdbItem) => {
     const oldFavorites = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
     if (oldFavorites !== null) {
@@ -324,3 +324,6 @@ const BarcodeScreen: React.FC = () => {
   );
 };
 export default BarcodeScreen;
+function deleteFavoriteMovie(id: number, FavoritenMap: Map<number, ItmdbItem>) {
+  throw new Error('Function not implemented.');
+}

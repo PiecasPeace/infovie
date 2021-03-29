@@ -11,7 +11,7 @@ import {ICustomFlatListProps} from './ICustomFlatListInterface';
 import {
   useSaveFavorite,
   useDeleteFavorite,
-} from '../../../Context/HandleMovieStoring';
+} from '../../../../../components/HandleMovieStoring/HandleMovieStoring';
 import {MovieLayout} from '../../../../../components/MovieLayout/MovieLayout';
 import {tmdbGetById} from '../../../../../constants/APICalls/APICallsTMDB';
 import {IMovieIDItem} from '../../QRPage/Interfaces/IMovieByIDInterface';

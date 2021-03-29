@@ -13,8 +13,8 @@ import {listStyle} from './renderItemStyles';
 
 export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
   openDetails,
-  item,
   StoreFavoriteMovies,
+  item
 }) => {
   return (
     <TouchableHighlight key={item.id} onPress={() => openDetails(item.id)}>
