@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Platform} from 'react-native';
 import {ExploreStackScreen} from '../layout/HeaderStackScreens/SearchHeader/ExploreStackScreen';
@@ -8,8 +8,9 @@ import {DARK_PURPLE, WHITE} from '../../constants/Colors/colorpalette';
 import {MapContextProvider} from './Context/ContextProvider';
 import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 import {BarcodeStackScreen} from '../layout/HeaderStackScreens/BarcodeHeader/BarcodeStackScreen';
+import { RootStackParamList } from '../../constants/types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 export const MainTabScreen: React.FC = () => {
   return (
     <MapContextProvider>

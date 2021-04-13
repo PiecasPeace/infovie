@@ -14,16 +14,18 @@ import {listStyle} from './renderItemStyles';
 export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
   openDetails,
   StoreFavoriteMovies,
-  item
+  item,
 }) => {
   return (
-    <TouchableHighlight key={item.id} onPress={() => openDetails(item.id)}>
+    <TouchableHighlight key={item.id}>
       <View style={listStyle.containerItem}>
-        <Image
-          source={getImageApi(item.poster_path)}
-          style={listStyle.photo}
-          resizeMode="cover"
-        />
+        <TouchableHighlight onPress={() => openDetails(item.id)}>
+          <Image
+            source={getImageApi(item.poster_path)}
+            style={listStyle.photo}
+            resizeMode="cover"
+          />
+        </TouchableHighlight>
         <View style={listStyle.item}>
           <View>
             <Text numberOfLines={2} style={listStyle.headertext}>

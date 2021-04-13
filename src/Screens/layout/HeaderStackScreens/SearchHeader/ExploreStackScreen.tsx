@@ -1,8 +1,11 @@
 import React from 'react';
 import {ExploreScreen} from '../../../BottomNavigation/BottomNavigationScreens/SearchPage/ExploreScreen';
 import {CustomHeader} from '../../../../components/Header/Header';
+import {ExploreProps} from '../../../../constants/types';
 
-export const ExploreStackScreen: React.FC = ({navigation}: any) => {
+export const ExploreStackScreen: React.FC<ExploreProps> = ({
+  navigation,
+}: ExploreProps) => {
   return (
     <CustomHeader
       component={ExploreScreen}

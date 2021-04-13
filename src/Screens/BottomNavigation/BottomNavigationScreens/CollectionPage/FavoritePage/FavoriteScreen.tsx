@@ -1,10 +1,6 @@
 import React, {Fragment, useEffect, useState, useContext} from 'react';
 import {ListRenderItemInfo, Text, View} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
-import {
-  FavoriteMapContext,
-  STORAGE_MOVIE_KEY,
-} from '../../../Context/ContextProvider';
 import {ItmdbItem} from '../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -15,51 +11,44 @@ import {WHITE} from '../../../../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import _ from 'lodash';
+import {
+  loadFavorites,
+  deleteFavorite,
+} from '../../../../../constants/HandleAsyncStorage/HandleAS';
 
 export const FavoriteScreen: React.FC = ({navigation}: any) => {
-  let ContextFavMap = useContext(FavoriteMapContext);
   const [loading, setLoading] = useState(true);
   const [favoriteMap, setFavoriteMap] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),
   );
+  let flatlistMap = new Map<number, ItmdbItem>();
   const FetchFavoriteData = async () => {
-    ContextFavMap = await loadFavoriteData();
-    setFavoriteMap(ContextFavMap);
-    console.log(ContextFavMap);
-  };
-
-  const loadFavoriteData = async (): Promise<Map<number, ItmdbItem>> => {
-    console.log('Loading Favorite list...');
-    const FavoriteItem = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
-    if (FavoriteItem !== null) {
-      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(FavoriteItem));
-    }
+    flatlistMap = await loadFavorites(flatlistMap);
+    setFavoriteMap(flatlistMap);
+    console.log(flatlistMap);
     setLoading(false);
-    return ContextFavMap;
   };
 
-  const deleteFavoriteMovie = async (id: number) => {
-    const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
-    if (item !== null) {
-      ContextFavMap = new Map<number, ItmdbItem>(JSON.parse(item));
-      ContextFavMap.delete(id);
-      await AsyncStorage.setItem(
-        STORAGE_MOVIE_KEY,
-        JSON.stringify([...ContextFavMap]),
-      );
-      setFavoriteMap(ContextFavMap);
-    }
-  };
+  useEffect(() => {
+    FetchFavoriteData();
+  }, []);
+
   const updateMap = (id: number, movieValues: ItmdbItem) => {
     setFavoriteMap(
       new Map<number, ItmdbItem>(favoriteMap.set(id, movieValues)),
     );
   };
-  const closeRow = (rowMap, keyID) => {
+  const closeRow = (rowMap, keyID: number) => {
     if (rowMap[keyID]) {
       rowMap[keyID].closeRow();
     }
   };
+
+  const deleteMovie = async (id: number) => {
+    flatlistMap = await deleteFavorite(id, flatlistMap);
+    setFavoriteMap(flatlistMap);
+  };
+
   const handleDeleteMovie = async (rowMap: any, keyID: number) => {
     closeRow(rowMap, keyID);
     let favoriteMovieValues = _.cloneDeep(favoriteMap.get(keyID));
@@ -67,16 +56,12 @@ export const FavoriteScreen: React.FC = ({navigation}: any) => {
       try {
         favoriteMovieValues.favorite = false;
         updateMap(keyID, favoriteMovieValues);
-        deleteFavoriteMovie(favoriteMovieValues.id);
+        deleteMovie(favoriteMovieValues.id);
       } catch (err) {
         err.message;
       }
     }
   };
-
-  useEffect(() => {
-    FetchFavoriteData();
-  }, [ContextFavMap, FavoriteMapContext]);
 
   const HiddenItemWithActions = (props) => {
     const {onDelete} = props;

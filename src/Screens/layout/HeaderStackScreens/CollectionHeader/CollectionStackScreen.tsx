@@ -6,9 +6,12 @@ import {FavoriteScreen} from '../../../BottomNavigation/BottomNavigationScreens/
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {MyMoviesPageScreen} from '../../../BottomNavigation/BottomNavigationScreens/CollectionPage/MyMoviesPage/MyMoviesPageScreen';
 import {DARK_PURPLE} from '../../../../constants/Colors/colorpalette';
-const HeaderStack = createStackNavigator();
+import {CollectionProps} from '../../../../constants/types';
 
-export const CollectionStackScreen: React.FC = ({navigation}: any) => {
+const HeaderStack = createStackNavigator();
+export const CollectionStackScreen: React.FC<CollectionProps> = ({
+  navigation,
+}: CollectionProps) => {
   return (
     <CustomHeader
       component={CollectionScreen}

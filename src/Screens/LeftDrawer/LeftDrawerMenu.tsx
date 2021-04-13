@@ -21,7 +21,7 @@ export const LeftDrawerMenu: React.FC = (props: any) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor:"#fff"}}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -29,13 +29,13 @@ export const LeftDrawerMenu: React.FC = (props: any) => {
               <Avatar.Image
                 source={{
                   uri:
-                    'https://static.wikia.nocookie.net/haus-des-geldes/images/a/a4/Professor.jpg/revision/latest/scale-to-width-down/310?cb=20200402194020&path-prefix=de',
+                    'https://i.pinimg.com/originals/da/a2/4a/daa24abfa69dab5aa84f99283bb57d74.jpg',
                 }}
                 size={50}
               />
               <View style={{marginLeft: 15, flexDirection: 'column'}}>
-                <Title style={styles.title}>Sergio Marvana</Title>
-                <Caption style={styles.caption}>@Bruh</Caption>
+                <Title style={styles.title}>R. Reddington</Title>
+                <Caption style={styles.caption}>@Reddington</Caption>
               </View>
             </View>
             <View style={styles.row}>

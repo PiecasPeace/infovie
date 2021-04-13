@@ -13,8 +13,6 @@ import {
   tmdbGetByTitle,
 } from '../../../../constants/APICalls/APICallsTMDB';
 import {extractMovieTitles} from './utils/TitleUtilities';
-import AsyncStorage from '@react-native-community/async-storage';
-import {STORAGE_MOVIE_KEY} from '../../Context/ContextProvider';
 import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieLayout';
 import {IUPCItem} from './Interfaces/IupcInterface';
@@ -28,9 +26,13 @@ import {
 import {IBarcodeState} from './IBarcodeState';
 import {ShowHistory} from './MovieHistory/HistoryItem';
 import {handleHistoryOrder} from './MovieHistory/handleHistoryOrder';
+import {
+  handleMovies,
+  loadFavorites,
+} from '../../../../constants/HandleAsyncStorage/HandleAS';
 
-const BarcodeScreen: React.FC = () => {
-  let FavoritenMap = new Map<number, ItmdbItem>();
+export const BarcodeScreen: React.FC = () => {
+  let favoriteMap = new Map<number, ItmdbItem>();
   let MovieMapBody = new Map<number, ItmdbItem>();
 
   const [barcodeMovie, setBarcodeMovie] = useState<Map<number, ItmdbItem>>(
@@ -81,9 +83,10 @@ const BarcodeScreen: React.FC = () => {
       });
   };
 
-  const handleFavoriteLoop = (result: ItmdbJsonGET) => {
+  const handleFavoriteLoop = async (result: ItmdbJsonGET) => {
+    favoriteMap = await loadFavorites(favoriteMap);
     for (let i = 0; i < result.results.length; i++) {
-      if (FavoritenMap.get(result.results[i].id) !== undefined) {
+      if (favoriteMap.get(result.results[i].id) !== undefined) {
         result.results[i].favorite = true;
       } else {
         result.results[i].favorite = false;
@@ -184,53 +187,13 @@ const BarcodeScreen: React.FC = () => {
     });
     setMovieDetail(true);
   };
-  const deleteFavorite = async (id: number) => {
-    const item = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
-    if (item !== null) {
-      FavoritenMap = new Map<number, ItmdbItem>(JSON.parse(item));
-      FavoritenMap.delete(id);
-      await AsyncStorage.setItem(
-        STORAGE_MOVIE_KEY,
-        JSON.stringify([...FavoritenMap]),
-      );
-    }
-  };
 
-  const saveFavorite = async (myMovies: ItmdbItem) => {
-    const oldFavorites = await AsyncStorage.getItem(STORAGE_MOVIE_KEY);
-    if (oldFavorites !== null) {
-      FavoritenMap = new Map<number, ItmdbItem>(JSON.parse(oldFavorites));
-    }
-    FavoritenMap.set(myMovies.id, myMovies);
-    if (myMovies !== null) {
-      await AsyncStorage.setItem(
-        STORAGE_MOVIE_KEY,
-        JSON.stringify([...FavoritenMap]),
-      );
-      console.log(`Movie saved: ${myMovies.title} \n `);
-    }
-  };
-
-  const StoreOwnMovie = async (id: number) => {
-    let favoriteMovieValues = _.cloneDeep(barcodeMovie.get(id));
-    if (favoriteMovieValues !== undefined) {
-      favoriteMovieValues.favorite = !favoriteMovieValues.favorite;
-      try {
-        updateMap(id, favoriteMovieValues);
-        if (favoriteMovieValues.favorite) {
-          saveFavorite(favoriteMovieValues);
-        } else {
-          deleteFavorite(favoriteMovieValues.id);
-        }
-      } catch (err) {
-        err.message;
-      }
-    }
-  };
   const TrendingList: ListRenderItem<ItmdbItem> = ({item}) => (
     <MovieLayout
       openDetails={() => openMovieDetails(item.id)}
-      StoreFavoriteMovies={() => StoreOwnMovie(item.id)}
+      StoreFavoriteMovies={() =>
+        handleMovies(item.id, barcodeMovie, favoriteMap, updateMap)
+      }
       item={item}
     />
   );
@@ -323,7 +286,3 @@ const BarcodeScreen: React.FC = () => {
     </View>
   );
 };
-export default BarcodeScreen;
-function deleteFavoriteMovie(id: number, FavoritenMap: Map<number, ItmdbItem>) {
-  throw new Error('Function not implemented.');
-}
