@@ -1,9 +1,8 @@
-import React, {Fragment, useEffect, useState, useContext} from 'react';
+import React, {Fragment, useState} from 'react';
 import {ListRenderItemInfo, Text, View} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {ItmdbItem} from '../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
-import AsyncStorage from '@react-native-community/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FavoriteItem from './FavoriteItem/FavoriteItem';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
@@ -15,8 +14,9 @@ import {
   loadFavorites,
   deleteFavorite,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
+import {useFocusEffect} from '@react-navigation/native';
 
-export const FavoriteScreen: React.FC = ({navigation}: any) => {
+export const FavoriteScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [favoriteMap, setFavoriteMap] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),
@@ -29,16 +29,18 @@ export const FavoriteScreen: React.FC = ({navigation}: any) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    FetchFavoriteData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      FetchFavoriteData();
+    }, []),
+  );
 
   const updateMap = (id: number, movieValues: ItmdbItem) => {
     setFavoriteMap(
       new Map<number, ItmdbItem>(favoriteMap.set(id, movieValues)),
     );
   };
-  const closeRow = (rowMap, keyID: number) => {
+  const closeRow = (rowMap: number, keyID: number) => {
     if (rowMap[keyID]) {
       rowMap[keyID].closeRow();
     }
@@ -62,9 +64,13 @@ export const FavoriteScreen: React.FC = ({navigation}: any) => {
       }
     }
   };
+  interface IDelete {
+    onDelete: () => void;
+    data: ListRenderItemInfo<ItmdbItem>;
+    rowMap: number;
+  }
 
-  const HiddenItemWithActions = (props) => {
-    const {onDelete} = props;
+  const HiddenItemWithActions = ({onDelete}: IDelete) => {
     return (
       <View style={styles.rowBack}>
         <Text>Left</Text>

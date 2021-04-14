@@ -1,4 +1,5 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, Fragment} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {FlatList, View, ListRenderItem} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {styles} from './styles';
@@ -14,7 +15,6 @@ import {
   loadFavorites,
   handleMovies,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
-import { useFocusEffect } from '@react-navigation/native';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
@@ -59,18 +59,11 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     }
   };
 
-  
-
-  // const RefreshFavoriteList = async () => {
-  //   return favoriteMap;
-  // };
-  // useEffect(() => {
-  //   RefreshFavoriteList();
-  // }, [saveFavorite, deleteFavorite]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchUrl]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [fetchUrl]),
+  );
 
   const updateMap = (id: number, movieValues: ItmdbItem) => {
     setMovieMap(new Map<number, ItmdbItem>(movieMap.set(id, movieValues)));

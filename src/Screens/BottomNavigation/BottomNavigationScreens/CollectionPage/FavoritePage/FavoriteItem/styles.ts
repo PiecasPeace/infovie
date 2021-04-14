@@ -3,15 +3,16 @@ import {fontSizeResponsive} from '../../../../../../components/utils/Dimensions'
 import {
   BLACK,
   DARK_GRAY,
+  DARK_PURPLE,
   WHITE,
 } from '../../../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   swipeContainer: {
     alignItems: 'center',
-    backgroundColor: '#29272e',
+    backgroundColor: DARK_PURPLE,
     justifyContent: 'center',
-},
+  },
   container: {
     flex: 1,
     paddingRight: 1,
@@ -34,17 +35,17 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: fontSizeResponsive(2.3),
+    fontSize: fontSizeResponsive(1.9),
     color: WHITE,
     fontWeight: 'bold',
     fontFamily: 'roboto',
   },
   year: {
-    fontSize: fontSizeResponsive(2.1),
+    fontSize: fontSizeResponsive(1.7),
     color: DARK_GRAY,
   },
   language: {
-    fontSize: fontSizeResponsive(2.1),
+    fontSize: fontSizeResponsive(1.7),
     color: DARK_GRAY,
   },
   textRow: {
