@@ -38,12 +38,11 @@ export const styles = StyleSheet.create({
   },
   deleteOpacity: {
     backgroundColor: '#c92e2c',
-    // right:17,
     width:100,
     height:100,
     alignItems:'center',
     justifyContent:'center',
-    borderRadius:5,
+    borderRadius:1,
 
   },
   backRightBtn: {

@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Image, Text, TouchableHighlight} from 'react-native';
-import {WHITE} from '../../constants/Colors/colorpalette';
-import {getLanguage} from '../../constants/Language/getLanguageFunction';
-import {renderScore} from '../../constants/MovieScore/renderScore';
-import {renderDivider} from '../../constants/RenderDivider/RenderDivider';
-import {CustomButton} from '../CustomButton/CustomButton';
-import {convertToYear} from '../utils/dates';
-import {convertTypeWithGenre} from '../utils/genreFunctions';
-import {getImageApi} from '../utils/Image';
+import {WHITE} from '../../../constants/Colors/colorpalette';
+import {getLanguage} from '../../../constants/Language/getLanguageFunction';
+import {renderScore} from '../../../constants/MovieScore/renderScore';
+import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
+import {CustomButton} from '../../CustomButton/CustomButton';
+import {convertToYear} from '../../utils/dates';
+import {convertTypeWithGenre} from '../../utils/genreFunctions';
+import {getImageApi} from '../../utils/Image';
 import {IMovieLayoutInterface} from './IMovieLayoutInterface';
 import {listStyle} from './renderItemStyles';
 
@@ -15,7 +15,7 @@ export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
   openDetails,
   StoreFavoriteMovies,
   item,
-}) => {
+}: IMovieLayoutInterface) => {
   return (
     <TouchableHighlight key={item.id}>
       <View style={listStyle.containerItem}>

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {ListRenderItemInfo, Text, View} from 'react-native';
+import {ListRenderItem, ListRenderItemInfo, Text, View} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {ItmdbItem} from '../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
@@ -15,6 +15,11 @@ import {
   deleteFavorite,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
 import {useFocusEffect} from '@react-navigation/native';
+import {tmdbGetById} from '../../../../../constants/APICalls/APICallsTMDB';
+import {IMovieIDItem} from '../../QRPage/Interfaces/IMovieByIDInterface';
+import {MapState} from '../../HomePage/Flatlist/ICustomFlatListInterface';
+import {MoviePopup} from '../../../../../components/MovieLayout/MoviePopup/MoviePopup';
+import { IMovieByIDTVItem } from '../../QRPage/Interfaces/IMovieByIDTVInterface';
 
 export const FavoriteScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -22,6 +27,13 @@ export const FavoriteScreen: React.FC = () => {
     new Map<number, ItmdbItem>(),
   );
   let flatlistMap = new Map<number, ItmdbItem>();
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [loadingID, setLoadingID] = useState(false);
+  const [detailMovie, setDetailMovie] = useState<MapState>({
+    selected: {} as IMovieIDItem
+  });
+
   const FetchFavoriteData = async () => {
     flatlistMap = await loadFavorites(flatlistMap);
     setFavoriteMap(flatlistMap);
@@ -84,6 +96,7 @@ export const FavoriteScreen: React.FC = () => {
       </View>
     );
   };
+
   const renderHiddenItem = (
     data: ListRenderItemInfo<ItmdbItem>,
     rowMap: any,
@@ -96,6 +109,24 @@ export const FavoriteScreen: React.FC = () => {
       />
     );
   };
+  const closeModal = () => {
+    setShowDetails(false);
+  };
+  const openMovieDetails = async (movieID: number) => {
+    setLoadingID(false);
+    await tmdbGetById(movieID).then(async (result) => {
+      await handleMovieDetails(result);
+    });
+    setLoadingID(true);
+  };
+  const handleMovieDetails = async (result: IMovieIDItem) => {
+    setDetailMovie({selectedTV: result});
+    setShowDetails(true);
+  };
+
+  const TrendingList: ListRenderItem<ItmdbItem> = ({item}) => (
+    <FavoriteItem openDetails={() => openMovieDetails(item.id)} item={item} />
+  );
 
   return (
     <View style={styles.favoritesContainer}>
@@ -103,17 +134,10 @@ export const FavoriteScreen: React.FC = () => {
         <Spinner />
       ) : (
         <Fragment>
-          <CustomButton
-            color={WHITE}
-            icon={'autorenew'}
-            mode={'outlined'}
-            onPress={() => FetchFavoriteData()}
-            Text={'Refresh List'}
-          />
           <SwipeListView
             useFlatList={true}
             data={Array.from(favoriteMap.values())}
-            renderItem={FavoriteItem}
+            renderItem={TrendingList}
             keyExtractor={(movie, index) => `${movie.id}-${index}`}
             renderHiddenItem={renderHiddenItem}
             leftOpenValue={0}
@@ -122,6 +146,15 @@ export const FavoriteScreen: React.FC = () => {
             disableRightSwipe={true}
             directionalDistanceChangeThreshold={20}
           />
+          {loadingID ? (
+            <MoviePopup
+              item={detailMovie.selected}
+              onPress={closeModal}
+              visible={showDetails}
+            />
+          ) : (
+            <></>
+          )}
         </Fragment>
       )}
     </View>

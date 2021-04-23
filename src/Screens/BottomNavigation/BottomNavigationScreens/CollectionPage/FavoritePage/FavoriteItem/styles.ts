@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     paddingRight: 1,
     paddingLeft: 5,
     paddingTop: 5,
-    marginBottom: 5,
+    marginBottom: 0,
     flexDirection: 'row',
   },
   BackDropPhoto: {

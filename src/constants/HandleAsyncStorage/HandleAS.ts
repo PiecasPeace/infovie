@@ -18,7 +18,11 @@ export const saveFavorite = async (
       STORAGE_MOVIE_KEY,
       JSON.stringify([...movieMap]),
     );
-    console.log(`Movie saved: ${myMovies.title} \n `);
+    console.log(
+      `Movie saved: ${
+        myMovies.title !== undefined ? myMovies.title : myMovies.name
+      } \n `,
+    );
   }
 };
 

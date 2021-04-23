@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Image,
-  ListRenderItem,
   Text,
   TouchableHighlight,
   View,
@@ -13,9 +12,17 @@ import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDiv
 import {ItmdbItem} from '../../../QRPage/Interfaces/IMovieInterface';
 import {styles} from './styles';
 
-const FavoriteItem: ListRenderItem<ItmdbItem> = ({item}) => {
+export interface IFavoriteItem {
+  openDetails: (id: number) => void;
+  item: ItmdbItem;
+}
+
+const FavoriteItem = ({item, openDetails}: IFavoriteItem) => {
   return (
-    <TouchableHighlight key={item.id} style={styles.swipeContainer}>
+    <TouchableHighlight
+      key={item.id}
+      style={styles.swipeContainer}
+      onPress={() => openDetails(item.id)}>
       <View style={styles.container}>
         <Image
           source={getImageApi(item.backdrop_path)}

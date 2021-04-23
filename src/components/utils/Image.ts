@@ -1,5 +1,7 @@
+import {View, Image} from 'react-native';
+
 /* eslint-disable global-require */
 export const notFound = require('../../assets/images/not_found.png');
 
-export const getImageApi = (path: string, key = 'uri', width = 'w500') =>
+export const getImageApi = (path: string |null, key = 'uri', width = 'w500') =>
   path ? {[key]: `https://image.tmdb.org/t/p/${width}${path}`} : notFound;

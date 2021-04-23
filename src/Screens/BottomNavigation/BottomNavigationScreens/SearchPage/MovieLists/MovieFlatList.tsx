@@ -142,9 +142,9 @@ export const MovieFlatList = ({ navigation }) => {
                     </Text>
                     <Image
                         source={getImageApi(movie.poster_path)}
-                        // defaultSource={
-                        //     require('../../../../assets/images/not_found.png')
-                        // }
+                        defaultSource={
+                            require('../../../../assets/images/not_found.png')
+                        }
                         style={styles.Images}
                         resizeMode="cover"
                     />

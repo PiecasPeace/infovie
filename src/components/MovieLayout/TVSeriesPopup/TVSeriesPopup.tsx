@@ -1,20 +1,20 @@
 import React from 'react';
 import {Modal, View, Text, Image} from 'react-native';
-import {getImageApi} from '../../../../../components/utils/Image';
+import {getImageApi} from '../../utils/Image';
 import {styles} from './styles';
-import {ICustomModalProps} from './ICustomMoviePopup';
-import {convertToYear} from '../../../../../components/utils/dates';
-import {moviePopupGenre} from '../../../../../components/utils/genreFunctions';
-import {getLanguage} from '../../../../../constants/Language/getLanguageFunction';
-import {renderScore} from '../../../../../constants/MovieScore/renderScore';
-import {renderDivider} from '../../../../../constants/RenderDivider/RenderDivider';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {convertToYear} from '../../utils/dates';
+import {moviePopupGenre} from '../../utils/genreFunctions';
+import {getLanguage} from '../../../constants/Language/getLanguageFunction';
+import {renderScore} from '../../../constants/MovieScore/renderScore';
+import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
+import {CustomButton} from '../../CustomButton/CustomButton';
+import {TVSeriesProps} from './TVSeriesPropsInterface';
 
-export const MoviePopup: React.FC<ICustomModalProps> = ({
+export const TVSeriesPopup: React.FC<TVSeriesProps> = ({
   item,
   onPress,
   visible,
-}: ICustomModalProps) => {
+}: TVSeriesProps) => {
   return (
     <Modal animationType="fade" transparent={false} visible={visible}>
       <View style={styles.containerItem}>
@@ -26,7 +26,7 @@ export const MoviePopup: React.FC<ICustomModalProps> = ({
         <View style={styles.item}>
           <View>
             <Text numberOfLines={2} style={styles.headertext}>
-              {item.title}
+              {item.title !== undefined ? item.title : item.name}
             </Text>
             <View style={[styles.textRow, styles.containerSubTitle]}>
               <Text style={styles.textSmall}>
@@ -52,6 +52,19 @@ export const MoviePopup: React.FC<ICustomModalProps> = ({
         color="#010101"
         onPress={onPress}
         mode="outlined"
+      />
+      <Text>{item.homepage}</Text>
+      <Text style={{paddingTop: 20}}>{item.overview}</Text>
+      <Text>{item.last_air_date}</Text>
+      <Image
+        source={getImageApi(item.poster_path)}
+        style={styles.photo}
+        resizeMode="cover"
+      />
+      <Image
+        source={getImageApi(item.poster_path)}
+        style={styles.photo}
+        resizeMode="cover"
       />
     </Modal>
   );

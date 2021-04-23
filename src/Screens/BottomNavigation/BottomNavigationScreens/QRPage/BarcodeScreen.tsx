@@ -5,7 +5,7 @@ import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
 import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
-import {MoviePopup} from './MoviePopup/MoviePopup';
+import {MoviePopup} from '../../../../components/MovieLayout/MoviePopup/MoviePopup';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
 import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../../../constants/APICalls/APICallsTMDB';
 import {extractMovieTitles} from './utils/TitleUtilities';
 import _ from 'lodash';
-import {MovieLayout} from '../../../../components/MovieLayout/MovieLayout';
+import {MovieLayout} from '../../../../components/MovieLayout/MovieItem/MovieLayout';
 import {IUPCItem} from './Interfaces/IupcInterface';
 import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
 import {ItmdbItem, ItmdbJsonGET} from './Interfaces/IMovieInterface';
@@ -59,9 +59,10 @@ export const BarcodeScreen: React.FC = () => {
     });
     //For QR-Scan
     const check = event.data.substring(0, 4);
-    if (check === 'http') {
+    const checkIP = event.data.substring(0, 11);
+    if (check === 'http' || checkIP === '192.168.0.1') {
       Linking.openURL(event.data).catch((err) =>
-        console.error('Error at QRCode HTTP check', err),
+        console.error('Error at QRCode HTTP/IP check', err),
       );
     } else {
       setScanSuccess({
