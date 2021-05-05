@@ -9,7 +9,7 @@ import {convertToYear} from '../../utils/dates';
 import {convertTypeWithGenre} from '../../utils/genreFunctions';
 import {getImageApi} from '../../utils/Image';
 import {IMovieLayoutInterface} from './IMovieLayoutInterface';
-import {listStyle} from './renderItemStyles';
+import {styles} from './styles';
 
 export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
   openDetails,
@@ -18,34 +18,34 @@ export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
 }: IMovieLayoutInterface) => {
   return (
     <TouchableHighlight key={item.id}>
-      <View style={listStyle.containerItem}>
+      <View style={styles.containerItem}>
         <TouchableHighlight onPress={() => openDetails(item.id)}>
           <Image
             source={getImageApi(item.poster_path)}
-            style={listStyle.photo}
+            style={styles.photo}
             resizeMode="cover"
           />
         </TouchableHighlight>
-        <View style={listStyle.item}>
+        <View style={styles.item}>
           <View>
-            <Text numberOfLines={2} style={listStyle.headertext}>
+            <Text numberOfLines={2} style={styles.headertext}>
               {item.title !== undefined ? item.title : item.name}
             </Text>
-            <View style={[listStyle.textRow, listStyle.containerSubTitle]}>
-              <Text style={listStyle.textSmall}>
+            <View style={[styles.textRow, styles.containerSubTitle]}>
+              <Text style={styles.textSmall}>
                 {convertToYear(item.release_date)}
               </Text>
               {renderDivider(item.release_date, item.original_language)}
-              <Text numberOfLines={1} style={listStyle.textSmall}>
+              <Text numberOfLines={1} style={styles.textSmall}>
                 {getLanguage(item.original_language)}
               </Text>
             </View>
-            <Text numberOfLines={2} style={listStyle.textSmall}>
+            <Text numberOfLines={2} style={styles.textSmall}>
               {convertTypeWithGenre(item.genre_ids)}
             </Text>
           </View>
           <View>
-            <View style={[listStyle.textRow, listStyle.containerReview]}>
+            <View style={[styles.textRow, styles.containerReview]}>
               {renderScore(item.vote_average)}
             </View>
             <CustomButton
@@ -56,8 +56,8 @@ export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
               icon={item.favorite ? 'heart-outline' : 'heart'}
               onPress={() => StoreFavoriteMovies(item.id)}
               style={[
-                listStyle.favoriteButton,
-                listStyle[item.favorite ? 'fav' : 'nonfav'],
+                styles.favoriteButton,
+                styles[item.favorite ? 'fav' : 'nonfav'],
               ]}
             />
           </View>

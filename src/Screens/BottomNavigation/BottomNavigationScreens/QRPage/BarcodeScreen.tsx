@@ -15,8 +15,8 @@ import {
 import {extractMovieTitles} from './utils/TitleUtilities';
 import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieItem/MovieLayout';
-import {IUPCItem} from './Interfaces/IupcInterface';
-import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
+import {IUPCInterface} from './Interfaces/IupcInterface';
+import {IMovieIDInterface} from './Interfaces/IMovieByIDInterface';
 import {ItmdbItem, ItmdbJsonGET} from './Interfaces/IMovieInterface';
 import {
   DARK_GRAY,
@@ -45,17 +45,17 @@ export const BarcodeScreen: React.FC = () => {
   const [scanSuccess, setScanSuccess] = useState<IBarcodeState>({
     scan: false,
     scanResult: false,
-    result: null,
-    selected: {} as IMovieIDItem,
+    result: {} as IUPCInterface,
+    selected: {} as IMovieIDInterface,
   });
 
   //After scan, onSuccess starts
-  const onSuccess = async (event: IUPCItem) => {
+  const onSuccess = async (event: IUPCInterface) => {
     setScanSuccess({
       result: event,
       scan: false,
       scanResult: true,
-      selected: {} as IMovieIDItem,
+      selected: {} as IMovieIDInterface,
     });
     //For QR-Scan
     const check = event.data.substring(0, 4);
@@ -69,7 +69,7 @@ export const BarcodeScreen: React.FC = () => {
         result: event,
         scan: false,
         scanResult: true,
-        selected: {} as IMovieIDItem,
+        selected: {} as IMovieIDInterface,
       });
     }
     console.log(event);
@@ -182,7 +182,7 @@ export const BarcodeScreen: React.FC = () => {
     });
     setLoadedID(true);
   };
-  const handleMovieDetails = async (result: IMovieIDItem) => {
+  const handleMovieDetails = async (result: IMovieIDInterface) => {
     setScanSuccess((prevState) => {
       return {...prevState, selected: result};
     });

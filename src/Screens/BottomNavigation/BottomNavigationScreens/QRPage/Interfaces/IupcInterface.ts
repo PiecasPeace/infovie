@@ -1,4 +1,4 @@
-export interface IUPCItem {
+export interface IUPCInterface {
   bounds: {
     height: number;
     origin: [[{}], [{}]];

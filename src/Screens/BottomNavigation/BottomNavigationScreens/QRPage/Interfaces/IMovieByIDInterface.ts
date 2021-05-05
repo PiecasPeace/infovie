@@ -1,6 +1,4 @@
-import {ItmdbItem} from './IMovieInterface';
-
-export interface IMovieIDItem {
+export interface IMovieIDInterface {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: ICollection[];
@@ -28,6 +26,8 @@ export interface IMovieIDItem {
   vote_count: number;
   //APPEND TO PATH
   credits: cast;
+  images: backdrops;
+  videos: results;
   //NO RESULT
   status_code: number;
   status_message: string;
@@ -93,4 +93,32 @@ export interface ICrewItem {
   job: string;
   //FROM ICASTITEM
   order: number;
+}
+
+export interface backdrops {
+  backdrops: IBackDropItem[];
+}
+export interface IBackDropItem {
+  aspect_ratio: number;
+  file_path: string;
+  height: number;
+  iso_639_1: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+}
+
+export interface results {
+  results: IResultItem[];
+}
+
+export interface IResultItem {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  site: string;
+  size: number;
+  type: string;
 }

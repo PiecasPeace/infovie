@@ -1,36 +1,72 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Modal, View, Text, Image, ListRenderItem} from 'react-native';
 import {getImageApi} from '../../utils/Image';
 import {styles} from './styles';
-import {IMoviePopupProps} from './ICustomMoviePopup';
+import {IMoviePopupProps} from './IMoviePopupProps';
 import {convertToYear} from '../../utils/dates';
 import {moviePopupGenre} from '../../utils/genreFunctions';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
 import {CustomButton} from '../../CustomButton/CustomButton';
-import {CompanyRowList, CrewRowList, PersonRowList} from '../Cast/PersonRowList';
+import {
+  CompanyRowList,
+  CrewRowList,
+  PersonRowList,
+} from '../Cast/PersonRowList';
 import {PeopleItem} from '../Cast/PersonItem';
 import {
   ICastItem,
   ICrewItem,
-  IMovieIDItem,
+  IMovieIDInterface,
   IProductionCompanies,
 } from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
 import {sliceArrayLength} from '../../utils/array';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SelectionRow} from '../Cast/SelectionRow/SelectionRow';
+import {IMovieIDTVInterface} from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDTVInterface';
+import {PosterImages} from '../PosterImages/PosterImages';
 
-export const MoviePopup: React.FC<IMoviePopupProps> = ({
+export interface MoviePopupProps {
+  onPress: () => void;
+  item: IMovieIDInterface;
+  visible: boolean;
+}
+
+export interface TVSeriesPopupProps {
+  onPress: () => void;
+  TVitem: IMovieIDTVInterface;
+  visible: boolean;
+}
+type MovieProps = MoviePopupProps & TVSeriesPopupProps;
+
+export const MoviePopup: React.FC<MovieProps> = ({
   item,
   onPress,
   visible,
-}: IMoviePopupProps) => {
+  TVitem,
+}: MovieProps) => {
+  const [showImage, setShowImage] = useState(false);
+
+  const handleImage = () => {
+    setShowImage(!showImage);
+  };
   return (
-    <Modal animationType="fade" transparent={false} visible={visible}>
+    <Modal animationType="slide" transparent={false} visible={visible}>
       <ScrollView>
+        <PosterImages
+          title={item.title}
+          backdropPath={item.backdrop_path}
+          vote_average={item.vote_average}
+          images={item.images.backdrops}
+          video={item.videos}
+          // navigate={navigate}
+          showImage={showImage}
+          onPress={handleImage}
+          // handlePlayVideo={handlePlayVideo}
+        />
         <View style={{marginLeft: 2, marginRight: 2}}>
-          <View style={styles.containerItem}>
+          {/* <View style={styles.containerItem}>
             <Image
               source={getImageApi(item.poster_path)}
               style={styles.photo}
@@ -58,7 +94,7 @@ export const MoviePopup: React.FC<IMoviePopupProps> = ({
                 {renderScore(item.vote_average)}
               </View>
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.grayHeader}></View>
           <SelectionRow title={'Main Cast'}>

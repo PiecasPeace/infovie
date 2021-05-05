@@ -16,13 +16,13 @@ import {
   tmdbGetById,
   tmdbGetByIdTV,
 } from '../../../../../constants/APICalls/APICallsTMDB';
-import {IMovieIDItem} from '../../QRPage/Interfaces/IMovieByIDInterface';
+import {IMovieIDInterface} from '../../QRPage/Interfaces/IMovieByIDInterface';
 import {MoviePopup} from '../../../../../components/MovieLayout/MoviePopup/MoviePopup';
 import {
   loadFavorites,
   handleMovies,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
-import {IMovieByIDTVItem} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {IMovieIDTVInterface} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
 import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
@@ -33,10 +33,10 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   const [loadingTVSeries, setloadingTVSeries] = useState(false);
   const [loading, setLoading] = useState(true);
   const [detailMovie, setDetailMovie] = useState<MapState>({
-    selected: {} as IMovieIDItem,
+    selected: {} as IMovieIDInterface,
   });
   const [detailMovieTV, setDetailMovieTV] = useState<MapStateTV>({
-    selected: {} as IMovieByIDTVItem,
+    selected: {} as IMovieIDTVInterface,
   });
 
   const [movieMap, setMovieMap] = useState<Map<number, ItmdbItem>>(
@@ -107,11 +107,11 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
       throw err;
     }
   };
-  const handleMovieDetails = async (result: IMovieIDItem) => {
+  const handleMovieDetails = async (result: IMovieIDInterface) => {
     setDetailMovie({selected: result});
     setShowDetails(true);
   };
-  const handleTVDetails = async (result: IMovieByIDTVItem) => {
+  const handleTVDetails = async (result: IMovieIDTVInterface) => {
     setDetailMovieTV({selected: result});
     setShowDetails(true);
   };
@@ -144,6 +144,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
               item={detailMovie.selected}
               onPress={closeModal}
               visible={showDetails}
+              TVitem={detailMovieTV.selected}
             />
           ) : (
             <></>

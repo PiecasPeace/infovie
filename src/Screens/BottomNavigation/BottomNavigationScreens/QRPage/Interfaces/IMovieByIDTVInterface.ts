@@ -1,4 +1,4 @@
-export interface IMovieByIDTVItem {
+export interface IMovieIDTVInterface {
   backdrop_path: string;
   created_by: ICreated_by[];
   episode_run_time: IEpisode_run_time[];
@@ -30,7 +30,7 @@ export interface IMovieByIDTVItem {
   vote_average: number;
   vote_count: number;
   //CUSTOM
-  selected: IMovieByIDTVItem;
+  selected: IMovieIDTVInterface;
   //STOLEN FROM MOVIE SEARCH
   release_date: string
   title:string;

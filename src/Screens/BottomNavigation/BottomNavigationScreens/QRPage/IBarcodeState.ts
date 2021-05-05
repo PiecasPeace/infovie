@@ -1,8 +1,9 @@
-import {IMovieIDItem} from './Interfaces/IMovieByIDInterface';
+import {IMovieIDInterface} from './Interfaces/IMovieByIDInterface';
+import { IUPCInterface } from './Interfaces/IupcInterface';
 
 export interface IBarcodeState {
   scan: boolean;
   scanResult: boolean;
-  result: any;
-  selected: IMovieIDItem;
+  result: IUPCInterface;
+  selected: IMovieIDInterface;
 }

@@ -8,18 +8,25 @@ import FavoriteItem from './FavoriteItem/FavoriteItem';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import {WHITE} from '../../../../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {SwipeListView} from 'react-native-swipe-list-view';
+import {RowMap, SwipeListView} from 'react-native-swipe-list-view';
 import _ from 'lodash';
 import {
   loadFavorites,
   deleteFavorite,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
 import {useFocusEffect} from '@react-navigation/native';
-import {tmdbGetById} from '../../../../../constants/APICalls/APICallsTMDB';
-import {IMovieIDItem} from '../../QRPage/Interfaces/IMovieByIDInterface';
-import {MapState} from '../../HomePage/Flatlist/ICustomFlatListInterface';
+import {
+  tmdbGetById,
+  tmdbGetByIdTV,
+} from '../../../../../constants/APICalls/APICallsTMDB';
+import {IMovieIDInterface} from '../../QRPage/Interfaces/IMovieByIDInterface';
+import {
+  MapState,
+  MapStateTV,
+} from '../../HomePage/Flatlist/ICustomFlatListInterface';
 import {MoviePopup} from '../../../../../components/MovieLayout/MoviePopup/MoviePopup';
-import { IMovieByIDTVItem } from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {IMovieIDTVInterface} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';
 
 export const FavoriteScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -30,14 +37,18 @@ export const FavoriteScreen: React.FC = () => {
 
   const [showDetails, setShowDetails] = useState(false);
   const [loadingID, setLoadingID] = useState(false);
+  const [loadingTV, setLoadingTV] = useState(false);
   const [detailMovie, setDetailMovie] = useState<MapState>({
-    selected: {} as IMovieIDItem
+    selected: {} as IMovieIDInterface,
+  });
+  const [detailMovieTV, setDetailMovieTV] = useState<MapStateTV>({
+    selected: {} as IMovieIDTVInterface,
   });
 
   const FetchFavoriteData = async () => {
     flatlistMap = await loadFavorites(flatlistMap);
     setFavoriteMap(flatlistMap);
-    console.log(flatlistMap);
+    // console.log(flatlistMap);
     setLoading(false);
   };
 
@@ -52,7 +63,7 @@ export const FavoriteScreen: React.FC = () => {
       new Map<number, ItmdbItem>(favoriteMap.set(id, movieValues)),
     );
   };
-  const closeRow = (rowMap: number, keyID: number) => {
+  const closeRow = (rowMap: RowMap<ItmdbItem>, keyID: number) => {
     if (rowMap[keyID]) {
       rowMap[keyID].closeRow();
     }
@@ -63,7 +74,7 @@ export const FavoriteScreen: React.FC = () => {
     setFavoriteMap(flatlistMap);
   };
 
-  const handleDeleteMovie = async (rowMap: any, keyID: number) => {
+  const handleDeleteMovie = async (rowMap: RowMap<ItmdbItem>, keyID: number) => {
     closeRow(rowMap, keyID);
     let favoriteMovieValues = _.cloneDeep(favoriteMap.get(keyID));
     if (favoriteMovieValues !== undefined) {
@@ -79,7 +90,7 @@ export const FavoriteScreen: React.FC = () => {
   interface IDelete {
     onDelete: () => void;
     data: ListRenderItemInfo<ItmdbItem>;
-    rowMap: number;
+    rowMap: RowMap<ItmdbItem>;
   }
 
   const HiddenItemWithActions = ({onDelete}: IDelete) => {
@@ -99,7 +110,7 @@ export const FavoriteScreen: React.FC = () => {
 
   const renderHiddenItem = (
     data: ListRenderItemInfo<ItmdbItem>,
-    rowMap: any,
+    rowMap: RowMap<ItmdbItem>,
   ) => {
     return (
       <HiddenItemWithActions
@@ -114,13 +125,31 @@ export const FavoriteScreen: React.FC = () => {
   };
   const openMovieDetails = async (movieID: number) => {
     setLoadingID(false);
-    await tmdbGetById(movieID).then(async (result) => {
-      await handleMovieDetails(result);
-    });
-    setLoadingID(true);
+    setLoadingTV(false);
+    try {
+      await tmdbGetById(movieID).then(async (result) => {
+        if (result.success === false) {
+          await tmdbGetByIdTV(movieID).then(async (result) => {
+            await handleTVDetails(result);
+            setLoadingTV(true);
+          });
+        } else {
+          await handleMovieDetails(result);
+          setLoadingID(true);
+        }
+      });
+    } catch (err) {
+      console.log('Error at MovieDetailOpen');
+      throw err;
+    }
   };
-  const handleMovieDetails = async (result: IMovieIDItem) => {
-    setDetailMovie({selectedTV: result});
+
+  const handleMovieDetails = async (result: IMovieIDInterface) => {
+    setDetailMovie({selected: result});
+    setShowDetails(true);
+  };
+  const handleTVDetails = async (result: IMovieIDTVInterface) => {
+    setDetailMovieTV({selected: result});
     setShowDetails(true);
   };
 
@@ -146,9 +175,18 @@ export const FavoriteScreen: React.FC = () => {
             disableRightSwipe={true}
             directionalDistanceChangeThreshold={20}
           />
-          {loadingID ? (
+          {/* {loadingID ? (
             <MoviePopup
               item={detailMovie.selected}
+              onPress={closeModal}
+              visible={showDetails}
+            />
+          ) : (
+            <></>
+          )} */}
+          {loadingTV ? (
+            <TVSeriesPopup
+              item={detailMovieTV.selected}
               onPress={closeModal}
               visible={showDetails}
             />
