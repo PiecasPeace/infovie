@@ -17,7 +17,7 @@ export const buildIDUrl = (getId: number): string => {
   return `${IDMovieUrl}/${getId}?${API_KEY2}${APP_TO_RESULT}${appendMovies.credits},${appendMovies.videos},${appendMovies.images}`;
 };
 export const buildIDUrlforTV = (getId: number): string => {
-  return `${IDMovieUrlTV}/${getId}?${API_KEY2}${APP_TO_RESULT}`;
+  return `${IDMovieUrlTV}/${getId}?${API_KEY2}${APP_TO_RESULT}${appendMovies.credits},${appendMovies.videos},${appendMovies.images}`;
 };
 
 const APP_TO_RESULT = `&append_to_response=`;

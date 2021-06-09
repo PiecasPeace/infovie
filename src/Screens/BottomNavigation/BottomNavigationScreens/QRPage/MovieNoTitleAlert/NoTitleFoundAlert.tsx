@@ -1,5 +1,5 @@
 import {Alert, Image, View} from 'react-native';
-import { width, height } from '../../../../../components/utils/Dimensions';
+import { width, height } from '../../../../../components/utils/dimensions';
 // import e from "../../../../../assets"
 
 const noFoundImage = () => require('../../../../../assets/images/not_found.png');

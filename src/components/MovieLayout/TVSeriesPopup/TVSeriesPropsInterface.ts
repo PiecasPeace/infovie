@@ -1,4 +1,4 @@
-import { IMovieIDTVInterface } from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDTVInterface';
+import { IMovieIDTVInterface } from '../../../constants/Interfaces/IMovieByIDTVInterface';
 
 export interface TVSeriesProps {
   onPress: () => void;

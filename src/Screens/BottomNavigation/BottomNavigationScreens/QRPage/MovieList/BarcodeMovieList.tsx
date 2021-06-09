@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {FlatList, ListRenderItem, View} from 'react-native';
 import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
 import {styles} from '../styles';
-import {ItmdbItem} from '../Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../../../../constants/Interfaces/IMovieInterface';
 
 interface BarcodeMovieListProps {
   movies: ItmdbItem[];

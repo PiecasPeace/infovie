@@ -1,5 +1,3 @@
-import {View, Image} from 'react-native';
-
 /* eslint-disable global-require */
 export const notFound = require('../../assets/images/not_found.png');
 

@@ -1,5 +1,5 @@
 export interface IMovieIDInterface {
-  adult: boolean;
+  adult: string;
   backdrop_path: string;
   belongs_to_collection: ICollection[];
   budget: number;

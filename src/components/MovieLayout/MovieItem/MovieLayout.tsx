@@ -1,11 +1,11 @@
 import React from 'react';
 import {View, Image, Text, TouchableHighlight} from 'react-native';
 import {WHITE} from '../../../constants/Colors/colorpalette';
+import { convertToYear } from '../../../constants/convert/convertToDates';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
 import {CustomButton} from '../../CustomButton/CustomButton';
-import {convertToYear} from '../../utils/dates';
 import {convertTypeWithGenre} from '../../utils/genreFunctions';
 import {getImageApi} from '../../utils/Image';
 import {IMovieLayoutInterface} from './IMovieLayoutInterface';

@@ -10,7 +10,7 @@ import {
     Button
 } from 'react-native'
 import { styles } from "./styles";
-import Request from '../../../../../constants/RequestPath';
+import Request from '../../../../../constants/requestPath';
 // import axios from '../../../../services/axios';
 import { TouchableOpacity } from '../../../../../components/TouchableOpacity/TouchableOpacity';
 import Spinner from '../../../../../components/Spinner/Spinner';
@@ -18,7 +18,7 @@ import Spinner from '../../../../../components/Spinner/Spinner';
 import MovieListRow from '../MovieListRow/MovieListRow';
 // import InputSearch from '../InputSearch/InputSearch';
 import { getImageApi } from '../../../../../components/utils/Image';
-import RequestPath from '../../../../../constants/RequestPath';
+import requestPath from '../../../../../constants/requestPath';
 import Screen from '../../../../../components/utils/Screen';
 
 export const MovieFlatList = ({ navigation }) => {

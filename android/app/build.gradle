@@ -78,7 +78,7 @@ import com.android.build.OutputFile
  */
 
  project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialCommunityIcons.ttf', 'EvilIcons.ttf', 'AntDesign.ttf', 'Ionicons.ttf','MaterialIcons.ttf', 'Entypo.ttf', 'Feather.ttf' ] // Name of the font files you want to copy
+    iconFontNames: [ 'MaterialCommunityIcons.ttf', 'Foundation.ttf', 'AwesomeFonts.ttf', 'EvilIcons.ttf', 'AntDesign.ttf', 'Ionicons.ttf','MaterialIcons.ttf', 'Entypo.ttf', 'Feather.ttf' ] // Name of the font files you want to copy
 ]
 
 project.ext.react = [

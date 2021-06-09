@@ -2,13 +2,13 @@ import React from 'react';
 import {Modal, View, Text, Image} from 'react-native';
 import {getImageApi} from '../../utils/Image';
 import {styles} from './styles';
-import {convertToYear} from '../../utils/dates';
 import {moviePopupGenre} from '../../utils/genreFunctions';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';
 import {CustomButton} from '../../CustomButton/CustomButton';
 import {TVSeriesProps} from './TVSeriesPropsInterface';
+import { convertToYear } from '../../../constants/convert/convertToDates';
 
 export const TVSeriesPopup: React.FC<TVSeriesProps> = ({
   item,

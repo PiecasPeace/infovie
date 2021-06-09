@@ -5,7 +5,7 @@ import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
 import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
-import {MoviePopup} from '../../../../components/MovieLayout/MoviePopup/MoviePopup';
+import {MovieDetails} from '../../../../components/MovieLayout/MoviePopup/MovieDetails';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
 import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';
 import {
@@ -15,9 +15,9 @@ import {
 import {extractMovieTitles} from './utils/TitleUtilities';
 import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieItem/MovieLayout';
-import {IUPCInterface} from './Interfaces/IupcInterface';
-import {IMovieIDInterface} from './Interfaces/IMovieByIDInterface';
-import {ItmdbItem, ItmdbJsonGET} from './Interfaces/IMovieInterface';
+import {IUPCInterface} from '../../../../constants/Interfaces/IupcInterface';
+import {IMovieIDInterface} from '../../../../constants/Interfaces/IMovieByIDInterface';
+import {ItmdbItem, ItmdbJsonGET} from '../../../../constants/Interfaces/IMovieInterface';
 import {
   DARK_GRAY,
   NEUTRAL_GREEN,
@@ -271,7 +271,7 @@ export const BarcodeScreen: React.FC = () => {
               stopScanFunction={scanStop}
             />
             {loadedID ? (
-              <MoviePopup
+              <MovieDetails
                 item={scanSuccess.selected}
                 onPress={closeModal}
                 visible={movieDetail}

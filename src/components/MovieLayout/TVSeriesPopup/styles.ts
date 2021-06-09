@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {fontSizeResponsive} from '../../utils/Dimensions';
+import {fontSizeResponsive} from '../../utils/dimensions';
 import {
   BLACK,
   LIGHT_PURPLE,

@@ -1,13 +1,14 @@
 import React from 'react';
 import {Modal} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {WHITE} from '../../../constants/Colors/colorpalette';
+
 import Spinner from '../../Spinner/Spinner';
+import {WHITE} from '../../../constants/Colors/colorpalette';
 
 interface ImageModalProps {
   showImage: boolean;
   images: [];
-  onClose: () => void;
+  onClose: () => null;
 }
 
 const ImagesModal: React.FC<ImageModalProps> = ({

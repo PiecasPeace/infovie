@@ -1,6 +1,6 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import {IMovieIDInterface} from '../../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
+import {IMovieIDInterface} from '../../../../constants/Interfaces/IMovieByIDInterface';
 import Screen from '../../../Screen/Screen';
 import Spinner from '../../../Spinner/Spinner';
 

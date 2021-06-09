@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {ListRenderItem, ListRenderItemInfo, Text, View} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
-import {ItmdbItem} from '../../QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../../../../constants/Interfaces/IMovieInterface';
 import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FavoriteItem from './FavoriteItem/FavoriteItem';
@@ -19,13 +19,13 @@ import {
   tmdbGetById,
   tmdbGetByIdTV,
 } from '../../../../../constants/APICalls/APICallsTMDB';
-import {IMovieIDInterface} from '../../QRPage/Interfaces/IMovieByIDInterface';
+import {IMovieIDInterface} from '../../../../../constants/Interfaces/IMovieByIDInterface';
 import {
   MapState,
   MapStateTV,
 } from '../../HomePage/Flatlist/ICustomFlatListInterface';
-import {MoviePopup} from '../../../../../components/MovieLayout/MoviePopup/MoviePopup';
-import {IMovieIDTVInterface} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {MovieDetails} from '../../../../../components/MovieLayout/MoviePopup/MovieDetails';
+import {IMovieIDTVInterface} from '../../../../../constants/Interfaces/IMovieByIDTVInterface';
 import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';
 
 export const FavoriteScreen: React.FC = () => {

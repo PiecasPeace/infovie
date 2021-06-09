@@ -3,8 +3,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {FlatList, View, ListRenderItem} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {styles} from './styles';
-import {ItmdbItem, ItmdbJsonGET} from '../../QRPage/Interfaces/IMovieInterface';
-import {baseTMDBUrl} from '../../../../../constants/Shortcuts';
+import {ItmdbItem, ItmdbJsonGET} from '../../../../../constants/Interfaces/IMovieInterface';
+import {baseTMDBUrl} from '../../../../../constants/shortcuts';
 import _ from 'lodash';
 import {
   ICustomFlatListProps,
@@ -16,17 +16,21 @@ import {
   tmdbGetById,
   tmdbGetByIdTV,
 } from '../../../../../constants/APICalls/APICallsTMDB';
-import {IMovieIDInterface} from '../../QRPage/Interfaces/IMovieByIDInterface';
-import {MoviePopup} from '../../../../../components/MovieLayout/MoviePopup/MoviePopup';
+import {IMovieIDInterface} from '../../../../../constants/Interfaces/IMovieByIDInterface';
+import {MovieDetails} from '../../../../../components/MovieLayout/MoviePopup/MovieDetails';
 import {
   loadFavorites,
   handleMovies,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
-import {IMovieIDTVInterface} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {IMovieIDTVInterface} from '../../../../../constants/Interfaces/IMovieByIDTVInterface';
 import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';
+import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {WHITE} from '../../../../../constants/Colors/colorpalette';
+import { Item } from 'react-native-paper/lib/typescript/src/components/List/List';
 
 export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
+  navigation,
 }: ICustomFlatListProps) => {
   const [showDetails, setShowDetails] = useState(false);
   const [loadingID, setLoadingID] = useState(false);
@@ -92,45 +96,58 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
     setloadingTVSeries(false);
     try {
       await tmdbGetById(movieID).then(async (result) => {
-        if (result.success === false) {
-          await tmdbGetByIdTV(movieID).then(async (result) => {
-            await handleTVDetails(result);
-            setloadingTVSeries(true);
-          });
-        } else {
-          await handleMovieDetails(result);
-          setLoadingID(true);
-        }
+        await navigation.navigate('MovieDetailScreen', {id: movieID})
+        setLoadingID(true);
+        // if (result.success === false) {
+        //   await tmdbGetByIdTV(movieID).then(async (result) => {
+        //     await navigation.navigate('MovieDetailScreen', {id: movieID})
+        //     setloadingTVSeries(true);
+        //   });
+        // } else {
+        //   // await handleMovieDetails(result);
+        // }
       });
     } catch (err) {
       console.log('Error at MovieDetailOpen');
       throw err;
     }
   };
-  const handleMovieDetails = async (result: IMovieIDInterface) => {
-    setDetailMovie({selected: result});
-    setShowDetails(true);
-  };
-  const handleTVDetails = async (result: IMovieIDTVInterface) => {
-    setDetailMovieTV({selected: result});
-    setShowDetails(true);
-  };
+  // const handleMovieDetails = async (result: IMovieIDInterface) => {
+  //   setDetailMovie({selected: result});
+  //   setShowDetails(true);
+  // };
+  // const handleTVDetails = async (result: IMovieIDTVInterface) => {
+  //   setDetailMovieTV({selected: result});
+  //   setShowDetails(true);
+  // };
 
   const TrendingList: ListRenderItem<ItmdbItem> = ({item}) => (
     <MovieLayout
-      openDetails={() => openMovieDetails(item.id)}
+      openDetails={() => navigation.navigate('MovieDetailScreen', {id: item.id})}
       StoreFavoriteMovies={() =>
         handleMovies(item.id, movieMap, favoriteMap, updateMap)
       }
       item={item}
     />
   );
+  // const Getroute = () => {
+  //   return (
+  //     <View>
+  //       <CustomButton
+  //         color={WHITE}
+  //         mode={'outlined'}
+  //         onPress={() => navigation.navigate('TestRouteNavigater', {id: 80})}
+  //         Text={'NAVIGATE!'}></CustomButton>
+  //     </View>
+  //   );
+  // };
   return (
     <View style={styles.FlatlistContainer}>
       {loading ? (
         <Spinner />
       ) : (
         <Fragment>
+          {/* <Getroute /> */}
           <FlatList
             data={Array.from(movieMap.values())}
             keyExtractor={(movie, index) => `${movie.id}-${index}`}
@@ -139,12 +156,11 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
             keyboardShouldPersistTaps="always"
             initialNumToRender={4}
           />
-          {loadingID ? (
-            <MoviePopup
+          {/* {loadingID ? (
+            <MovieDetails
               item={detailMovie.selected}
               onPress={closeModal}
               visible={showDetails}
-              TVitem={detailMovieTV.selected}
             />
           ) : (
             <></>
@@ -157,7 +173,7 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
             />
           ) : (
             <></>
-          )}
+          )} */}
         </Fragment>
       )}
     </View>

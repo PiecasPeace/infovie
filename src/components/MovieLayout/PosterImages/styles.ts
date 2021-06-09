@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {PINK, WHITE} from '../../../constants/Colors/colorpalette';
-import {fontSizeResponsive, width} from '../../utils/Dimensions';
+import {
+  DARK_RED,
+  WHITE,
+} from '../../../constants/Colors/colorpalette';
+import {fontSizeResponsive, width} from '../../utils/dimensions';
 
 export const styles = StyleSheet.create({
   PosterImageContainer: {flex: 1},
@@ -17,9 +20,9 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     bottom: -20,
-    right: 15,
-    borderRadius: width * 0.32,
-    backgroundColor: PINK,
+    right: 20,
+    borderRadius: 50,
+    backgroundColor: DARK_RED,
     width: width * 0.16,
     height: width * 0.16,
     justifyContent: 'center',
@@ -47,7 +50,7 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonPlay: {
-    marginLeft: 5,
+    marginLeft: 0,
   },
   star: {
     marginRight: 5,

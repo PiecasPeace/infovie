@@ -1,15 +1,10 @@
 import React from 'react';
-import {
-  Image,
-  Text,
-  TouchableHighlight,
-  View,
-} from 'react-native';
-import {convertToYear} from '../../../../../../components/utils/dates';
+import {Image, Text, TouchableHighlight, View} from 'react-native';
 import {getImageApi} from '../../../../../../components/utils/Image';
+import {convertToYear} from '../../../../../../constants/convert/convertToDates';
 import {getLanguage} from '../../../../../../constants/Language/getLanguageFunction';
 import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDivider';
-import {ItmdbItem} from '../../../QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../../../../../constants/Interfaces/IMovieInterface';
 import {styles} from './styles';
 
 export interface IFavoriteItem {

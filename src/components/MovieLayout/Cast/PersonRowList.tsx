@@ -3,7 +3,7 @@ import {
   ICastItem,
   ICrewItem,
   IProductionCompanies,
-} from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
+} from '../../../constants/Interfaces/IMovieByIDInterface';
 import {FlatList, ListRenderItem} from 'react-native';
 
 interface IPersonRowListProps {

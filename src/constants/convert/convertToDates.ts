@@ -1,7 +1,7 @@
-export const convertToYear = (date: string) =>
+export const convertToYear = (date: string | number | Date) =>
   new Date(date).getFullYear() || '';
 
-export const convertToDate = (date: string) => {
+export const convertToDate = (date: string | number | Date) => {
   const newDate = new Date(date);
 
   return (

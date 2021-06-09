@@ -3,6 +3,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 export type RootStackParamList = {
   Home: undefined;
+  //FROM HOME
+  MovieDetail: undefined;
+  MovieVideo: undefined;
+  //
   Explore: undefined;
   Barcode: undefined;
   Collection: undefined;
@@ -17,8 +21,13 @@ export type HomeStackNavigationProp = DrawerNavigationProp<
   RootStackParamList,
   'Home'
 >;
+export type HomeStackNavigationDetailProp = DrawerNavigationProp<
+  RootStackParamList,
+  'MovieDetail'
+>;
 export type HomeProps = {
   navigation: HomeStackNavigationProp;
+  navigationDetails: HomeStackNavigationDetailProp;
 };
 
 //EXPLORE

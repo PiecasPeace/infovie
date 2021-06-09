@@ -1,7 +1,7 @@
-import {buildIDUrl, buildIDUrlforTV, TMDBRequest} from '../Shortcuts';
-import {IMovieIDInterface} from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
-import {ItmdbJsonGET} from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieInterface';
-import {IMovieIDTVInterface} from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDTVInterface';
+import {buildIDUrl, buildIDUrlforTV, TMDBRequest} from '../shortcuts';
+import {IMovieIDInterface} from '../Interfaces/IMovieByIDInterface';
+import {ItmdbJsonGET} from '../Interfaces/IMovieInterface';
+import {IMovieIDTVInterface} from '../Interfaces/IMovieByIDTVInterface';
 
 export const tmdbGetByTitle = async (title: string): Promise<ItmdbJsonGET> => {
   const request = await fetch(`${TMDBRequest}${encodeURI(title)}`);

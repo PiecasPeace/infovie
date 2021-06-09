@@ -1,8 +1,10 @@
-import {IMovieIDInterface} from '../../QRPage/Interfaces/IMovieByIDInterface';
-import {IMovieIDTVInterface} from '../../QRPage/Interfaces/IMovieByIDTVInterface';
+import {HomeProps} from '../../../../../constants/Navigation/navigation';
+import {IMovieIDInterface} from '../../../../../constants/Interfaces/IMovieByIDInterface';
+import {IMovieIDTVInterface} from '../../../../../constants/Interfaces/IMovieByIDTVInterface';
 
 export interface ICustomFlatListProps {
   fetchUrl: string;
+  navigation?: any;
 }
 
 export interface MapState {

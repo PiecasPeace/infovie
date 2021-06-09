@@ -6,7 +6,7 @@ import {
   DARK_PURPLE,
   WHITE,
 } from '../../../../../constants/Colors/colorpalette';
-import {fontSizeResponsive} from '../../../../../components/utils/Dimensions';
+import {fontSizeResponsive} from '../../../../../components/utils/dimensions';
 
 export const styles = StyleSheet.create({
   FlatlistContainer: {

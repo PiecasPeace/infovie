@@ -4,7 +4,7 @@ import React, {
   createContext,
   useContext,
 } from 'react';
-import {ItmdbItem} from '../BottomNavigationScreens/QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../../../constants/Interfaces/IMovieInterface';
 import AsyncStorage from '@react-native-community/async-storage';
 import {ContextProps} from './IMapInterface';
 

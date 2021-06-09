@@ -1,7 +1,7 @@
 import React from 'react';
 import {BarcodeScreen} from '../../../BottomNavigation/BottomNavigationScreens/QRPage/BarcodeScreen';
 import {CustomHeader} from '../../../../components/Header/Header';
-import {BarcodeProps} from '../../../../constants/types';
+import {BarcodeProps} from '../../../../constants/Navigation/navigation';
 
 export const BarcodeStackScreen: React.FC<BarcodeProps> = ({
   navigation,

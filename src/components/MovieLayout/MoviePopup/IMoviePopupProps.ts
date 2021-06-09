@@ -1,8 +1,7 @@
-import {IMovieIDInterface} from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
-import {IMovieIDTVInterface} from '../../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDTVInterface';
-
+import {IMovieIDInterface} from '../../../constants/Interfaces/IMovieByIDInterface';
 export interface IMoviePopupProps {
   onPress: () => void;
   item: IMovieIDInterface;
-  visible: boolean;
+  route: any;
+  navigation: any;
 }

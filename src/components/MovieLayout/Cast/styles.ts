@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {height} from '../../utils/Dimensions';
+import {height} from '../../utils/dimensions';
 
 export const styles = StyleSheet.create({
   castContainer: {padding: 10, height: height * 0.2},

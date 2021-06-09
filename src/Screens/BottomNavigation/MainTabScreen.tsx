@@ -8,7 +8,7 @@ import {DARK_PURPLE, WHITE} from '../../constants/Colors/colorpalette';
 import {MapContextProvider} from './Context/ContextProvider';
 import {CollectionStackScreen} from '../layout/HeaderStackScreens/CollectionHeader/CollectionStackScreen';
 import {BarcodeStackScreen} from '../layout/HeaderStackScreens/BarcodeHeader/BarcodeStackScreen';
-import { RootStackParamList } from '../../constants/types';
+import { RootStackParamList } from '../../constants/Navigation/navigation';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 export const MainTabScreen: React.FC = () => {

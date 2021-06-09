@@ -1,5 +1,5 @@
 import {genreMap} from '../../constants/genres';
-import {IGenres} from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieByIDInterface';
+import {IGenres} from '../../constants/Interfaces/IMovieByIDInterface';
 
 export const convertTypeWithGenre = (movieGenres: number[]): string => {
   if (movieGenres.length > 1) {

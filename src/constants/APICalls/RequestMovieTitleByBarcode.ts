@@ -1,5 +1,5 @@
-import { UPCRequest } from '../Shortcuts';
-import { IBarcodeJSON } from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IBarcodeInterface';
+import { UPCRequest } from '../shortcuts';
+import { IBarcodeJSON } from '../Interfaces/IBarcodeInterface';
 
 export const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
     const titleList: string[] = [];

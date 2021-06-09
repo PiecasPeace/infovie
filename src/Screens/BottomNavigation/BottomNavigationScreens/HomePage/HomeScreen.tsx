@@ -1,14 +1,15 @@
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {CustomFlatlist} from './Flatlist/CustomFlatlist';
-import RequestPath from '../../../../constants/RequestPath';
+import requestPath from '../../../../constants/requestPath';
 import {styles} from './styles';
 import {WHITE} from '../../../../constants/Colors/colorpalette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {HomeProps} from '../../../../constants/Navigation/navigation';
 
-const HomeScreen: React.FC = () => {
-  const [dropdownString, setDropdownString] = useState(RequestPath.MostPopular);
+const HomeScreen: React.FC = ({navigation}: any) => {
+  const [dropdownString, setDropdownString] = useState(requestPath.MostPopular);
   return (
     <View style={styles.container}>
       <Fragment>
@@ -25,14 +26,14 @@ const HomeScreen: React.FC = () => {
           items={[
             {
               label: 'Most Popular',
-              value: RequestPath.MostPopular,
+              value: requestPath.MostPopular,
               icon: () => (
                 <MaterialCommunityIcons name="podium" size={25} color={WHITE} />
               ),
             },
             {
               label: 'Top Rated',
-              value: RequestPath.TopRated,
+              value: requestPath.TopRated,
               icon: () => (
                 <MaterialCommunityIcons
                   name="chart-bar"
@@ -43,7 +44,7 @@ const HomeScreen: React.FC = () => {
             },
             {
               label: 'Trending',
-              value: RequestPath.Trending,
+              value: requestPath.Trending,
               icon: () => (
                 <MaterialCommunityIcons
                   name="trending-up"
@@ -54,7 +55,7 @@ const HomeScreen: React.FC = () => {
             },
           ]}
         />
-        <CustomFlatlist fetchUrl={dropdownString} />
+        <CustomFlatlist fetchUrl={dropdownString} navigation={navigation} />
       </Fragment>
     </View>
   );

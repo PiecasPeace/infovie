@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
-import {ItmdbItem} from '../../Screens/BottomNavigation/BottomNavigationScreens/QRPage/Interfaces/IMovieInterface';
+import {ItmdbItem} from '../Interfaces/IMovieInterface';
 
 export const STORAGE_MOVIE_KEY = '@save_movie';
 

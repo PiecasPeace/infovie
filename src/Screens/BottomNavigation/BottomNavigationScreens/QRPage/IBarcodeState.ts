@@ -1,5 +1,5 @@
-import {IMovieIDInterface} from './Interfaces/IMovieByIDInterface';
-import { IUPCInterface } from './Interfaces/IupcInterface';
+import {IMovieIDInterface} from '../../../../constants/Interfaces/IMovieByIDInterface';
+import { IUPCInterface } from '../../../../constants/Interfaces/IupcInterface';
 
 export interface IBarcodeState {
   scan: boolean;
