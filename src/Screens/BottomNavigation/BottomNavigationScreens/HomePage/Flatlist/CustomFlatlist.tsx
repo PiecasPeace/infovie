@@ -4,7 +4,7 @@ import {FlatList, View, ListRenderItem} from 'react-native';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {styles} from './styles';
 import {ItmdbItem, ItmdbJsonGET} from '../../../../../constants/Interfaces/IMovieInterface';
-import {baseTMDBUrl} from '../../../../../constants/shortcuts';
+import {baseTMDBUrl} from '../../../../../constants/Shortcuts';
 import _ from 'lodash';
 import {
   ICustomFlatListProps,

@@ -1,12 +1,12 @@
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
 import {CustomFlatlist} from './Flatlist/CustomFlatlist';
-import requestPath from '../../../../constants/requestPath';
 import {styles} from './styles';
 import {WHITE} from '../../../../constants/Colors/colorpalette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {HomeProps} from '../../../../constants/Navigation/navigation';
+import { requestPath } from '../../../../constants/RequestPath';
+
 
 const HomeScreen: React.FC = ({navigation}: any) => {
   const [dropdownString, setDropdownString] = useState(requestPath.MostPopular);

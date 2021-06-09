@@ -1,4 +1,4 @@
-import { UPCRequest } from '../shortcuts';
+import { UPCRequest } from '../Shortcuts';
 import { IBarcodeJSON } from '../Interfaces/IBarcodeInterface';
 
 export const RequestMovieTitleByBarcode = async (eanUpc: string[]): Promise<string[]> => {
