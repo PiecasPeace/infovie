@@ -5,7 +5,7 @@ import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
 import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
-import {MovieDetails} from '../../../../components/MovieLayout/MoviePopup/MovieDetails';
+import {MovieDetails} from '../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
 import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';
 import {

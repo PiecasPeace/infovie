@@ -1,4 +1,4 @@
-import {convertToUpperCaseFirstLetter} from '../../components/utils/letters';
+import {convertToUpperCaseFirstLetter} from '../utils/letters';
 import {isoLanguage} from '../isoLanguage';
 
 export const getLanguage = (value: string) => {

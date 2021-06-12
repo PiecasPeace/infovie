@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import { fontSizeResponsive } from '../../../../../components/utils/dimensions';
+import { fontSizeResponsive } from '../../../../../constants/utils/dimensions';
 import {DARK_BLUE, DARK_PURPLE, LIGHT_PURPLE, WHITE} from '../../../../../constants/Colors/colorpalette';
 
 export const styles = StyleSheet.create({

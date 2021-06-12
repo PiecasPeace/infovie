@@ -1,11 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {BORDEAUX_RED} from '../../../../constants/Colors/colorpalette';
-
-interface ISelectionRowProp {
-  title: string;
-  children: Element;
-}
+import {View, Text} from 'react-native';
+import {ISelectionRowProp} from './ISelectionRowProps';
+import {styles} from './styles';
 
 export const SelectionRow: React.FC<ISelectionRowProp> = ({
   title,
@@ -20,15 +16,3 @@ export const SelectionRow: React.FC<ISelectionRowProp> = ({
     </View>
   );
 };
-export const styles = StyleSheet.create({
-  textHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 5,
-    color: BORDEAUX_RED,
-  },
-  sectionHeader: {
-    marginLeft: 5,
-    marginRight: 5,
-  },
-});

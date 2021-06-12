@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {height} from '../../utils/dimensions';
+import {height} from '../../../constants/utils/dimensions';
 
 export const styles = StyleSheet.create({
   castContainer: {padding: 10, height: height * 0.2},
@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 35,
-    marginBottom:3,
-    marginTop:3
+    marginBottom: 3,
+    marginTop: 3,
   },
   name: {
     fontFamily: 'Roboto',

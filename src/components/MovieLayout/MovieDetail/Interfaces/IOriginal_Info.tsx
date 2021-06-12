@@ -1,12 +1,13 @@
-import {IResultItem} from '../../../constants/Interfaces/IMovieByIDInterface';
+import {IResultItem} from '../../../../constants/Interfaces/IMovieByIDInterface';
 
+export const UNINFORMED = 'Uninformed';
 export const ADULT_RATE = {
   true: 'No',
   false: 'Yes',
 };
 
-export interface IInitialInfo {
-  id: string;
+export interface IOriginalInfo {
+  id: number;
   backdrop_path: string;
   title: string;
   vote_average: number;
@@ -26,9 +27,8 @@ export interface IInitialInfo {
     Adult: string;
   };
 }
-export const UNINFORMED = 'Uninformed';
-export const INITIAL_INFO: IInitialInfo = {
-  id: '',
+export const IOriginal_Info: IOriginalInfo = {
+  id: 0,
   backdrop_path: '',
   title: '',
   vote_average: 0,
@@ -36,7 +36,7 @@ export const INITIAL_INFO: IInitialInfo = {
   overview: UNINFORMED,
   cast: [],
   crew: [],
-  production_companies: [] = [],
+  production_companies: [],
   images: [],
   infosDetail: {
     Duration: UNINFORMED,

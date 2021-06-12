@@ -24,7 +24,7 @@ import {
   MapState,
   MapStateTV,
 } from '../../HomePage/Flatlist/ICustomFlatListInterface';
-import {MovieDetails} from '../../../../../components/MovieLayout/MoviePopup/MovieDetails';
+import {MovieDetails} from '../../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {IMovieIDTVInterface} from '../../../../../constants/Interfaces/IMovieByIDTVInterface';
 import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';
 

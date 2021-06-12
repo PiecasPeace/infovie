@@ -1,24 +1,20 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import {IMovieIDInterface} from '../../../../constants/Interfaces/IMovieByIDInterface';
 import Screen from '../../../Screen/Screen';
 import Spinner from '../../../Spinner/Spinner';
+import { IMovieVideoProps } from './IMovieVideoProps';
 
-import styles from './styles';
+const Loading = () => <Spinner />;
 
-const Loading = () => <Spinner style={styles.container} />;
-interface MovieDataProps {
-  item: IMovieIDInterface;
-}
-
-export const MovieVideo: React.FC<MovieDataProps> = ({
-  item,
-}: MovieDataProps) => {
+export const MovieVideo: React.FC<IMovieVideoProps> = ({
+  route
+}: IMovieVideoProps) => {
+  const {key} = route.params;
   return (
     <Screen>
       <WebView
         source={{
-          uri: `https://www.youtube.com/embed/${item.videos.results[0].key}?start=0`,
+          uri: `https://www.youtube.com/embed/${key}?start=0`,
         }}
         startInLoadingState
         renderLoading={Loading}

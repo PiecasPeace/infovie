@@ -1,33 +1,49 @@
 import {DrawerNavigationProp} from '@react-navigation/drawer';
+import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 export type RootStackParamList = {
   Home: undefined;
   //FROM HOME
-  MovieDetail: undefined;
-  MovieVideo: undefined;
+  MovieDetails: {id: number};
+  MovieVideo: {key: string};
   //
   Explore: undefined;
   Barcode: undefined;
   Collection: undefined;
   //FROM COLLECTION
-  Favorite: undefined;
+  FavoriteCollection: undefined;
+  MyMoviesCollection: undefined;
   //DRAWER
   About: undefined;
 };
 
+export type RootNavProps<T extends keyof RootStackParamList> = {
+  navigation: StackNavigationProp<RootStackParamList, T>;
+  route: RouteProp<RootStackParamList, T>;
+};
+
+// ------------------------------------------------------
+
 //HOME
+type HomeScreenRouteProp = RouteProp<RootStackParamList, 'Home'>;
 export type HomeStackNavigationProp = DrawerNavigationProp<
   RootStackParamList,
   'Home'
 >;
-export type HomeStackNavigationDetailProp = DrawerNavigationProp<
-  RootStackParamList,
-  'MovieDetail'
->;
 export type HomeProps = {
   navigation: HomeStackNavigationProp;
-  navigationDetails: HomeStackNavigationDetailProp;
+  route: HomeScreenRouteProp;
+};
+//HOME - MUSIC VIDEO
+type MovieVideoRouteProp = RouteProp<RootStackParamList, 'MovieVideo'>;
+type MovieVideoNavigationProp = DrawerNavigationProp<
+  RootStackParamList,
+  'MovieVideo'
+>;
+export type MovieVideoProps = {
+  navigate: MovieVideoNavigationProp;
+  route: MovieVideoRouteProp;
 };
 
 //EXPLORE
@@ -53,17 +69,27 @@ export type CollectionStackNavigationProp = DrawerNavigationProp<
   RootStackParamList,
   'Collection'
 >;
+export type CollectionStackNavigationFavoriteProp = DrawerNavigationProp<
+  RootStackParamList,
+  'FavoriteCollection'
+>;
+export type CollectionStackNavigationMyMoviesProp = DrawerNavigationProp<
+  RootStackParamList,
+  'MyMoviesCollection'
+>;
 export type CollectionProps = {
   navigation: CollectionStackNavigationProp;
 };
-//---DRAWER------DRAWER------DRAWER------DRAWER------DRAWER------DRAWER---
-export type DrawerParamList = {
-  Home: undefined;
-  About: undefined;
+export type CollectionFavoriteProps = {
+  navigationFavorites: CollectionStackNavigationFavoriteProp;
 };
+export type CollectionMyMoviesProps = {
+  navigationMyMovies: CollectionStackNavigationMyMoviesProp;
+};
+
 //HOME
 export type HomeScreenNavigationProp = DrawerNavigationProp<
-  DrawerParamList,
+  RootStackParamList,
   'Home'
 >;
 export type HomeDrawerProps = {
@@ -71,7 +97,7 @@ export type HomeDrawerProps = {
 };
 //ABOUT
 export type AboutScreenNavigationProp = DrawerNavigationProp<
-  DrawerParamList,
+  RootStackParamList,
   'About'
 >;
 export type AboutDrawerProps = {

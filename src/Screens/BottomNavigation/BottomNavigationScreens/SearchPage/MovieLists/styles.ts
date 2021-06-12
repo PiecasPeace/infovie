@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { DARK_PURPLE, LIGHT_PURPLE } from '../../../../../constants/Colors/colorpalette';
-import { fontSizeResponsive } from '../../../../../components/utils/dimensions';
+import { fontSizeResponsive } from '../../../../../constants/utils/dimensions';
 
 export const styles = StyleSheet.create({
     ContainerPopup: {

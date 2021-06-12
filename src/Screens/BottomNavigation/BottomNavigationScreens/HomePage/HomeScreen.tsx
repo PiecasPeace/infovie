@@ -5,10 +5,18 @@ import {styles} from './styles';
 import {WHITE} from '../../../../constants/Colors/colorpalette';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { requestPath } from '../../../../constants/RequestPath';
+import {requestPath} from '../../../../constants/RequestPath';
+import {
+  HomeProps,
+  RootStackParamList,
+} from '../../../../constants/Navigation/navigation';
+import {StackNavigationProp} from '@react-navigation/stack';
 
+interface IHomeProps {
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+}
 
-const HomeScreen: React.FC = ({navigation}: any) => {
+const HomeScreen: React.FC<IHomeProps> = ({navigation}: IHomeProps) => {
   const [dropdownString, setDropdownString] = useState(requestPath.MostPopular);
   return (
     <View style={styles.container}>

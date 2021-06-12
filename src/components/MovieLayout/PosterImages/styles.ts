@@ -3,7 +3,7 @@ import {
   DARK_RED,
   WHITE,
 } from '../../../constants/Colors/colorpalette';
-import {fontSizeResponsive, width} from '../../utils/dimensions';
+import {fontSizeResponsive, width} from '../../../constants/utils/dimensions';
 
 export const styles = StyleSheet.create({
   PosterImageContainer: {flex: 1},

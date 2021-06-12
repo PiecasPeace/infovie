@@ -2,10 +2,13 @@ import React from 'react';
 import {View} from 'react-native';
 import {CustomButton} from '../../../../components/CustomButton/CustomButton';
 import {PINK, WHITE} from '../../../../constants/Colors/colorpalette';
+import {CollectionProps} from '../../../../constants/Navigation/navigation';
 import {CollectionItem} from './CollectionItem/CollectionItem';
 import {styles} from './styles';
 
-export const CollectionScreen: React.FC = ({navigation}: any) => {
+export const CollectionScreen: React.FC<CollectionProps> = ({
+  navigation,
+}: CollectionProps) => {
   return (
     <View style={styles.collectionContainer}>
       <View style={styles.collectionItems}>

@@ -17,9 +17,9 @@ import Spinner from '../../../../../components/Spinner/Spinner';
 // import Screen from '../../utils/Screen';
 import MovieListRow from '../MovieListRow/MovieListRow';
 // import InputSearch from '../InputSearch/InputSearch';
-import { getImageApi } from '../../../../../components/utils/Image';
+import { getImageApi } from '../../../../../constants/utils/Image';
 import requestPath from '../../../../../constants/requestPath';
-import Screen from '../../../../../components/utils/Screen';
+import Screen from '../../../../../constants/utils/Screen';
 
 export const MovieFlatList = ({ navigation }) => {
     const apiurl = "http://omdbapi.com/?apikey=9ebc6b68";

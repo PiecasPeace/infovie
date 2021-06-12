@@ -1,33 +1,16 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {getImageApi} from '../../utils/Image';
+import {getImageApi} from '../../../constants/utils/Image';
 import {styles} from './styles';
 import {getAvarageRating} from '../../../constants/MovieScore/getAverageRating';
-import ImagesModal from './ImageModal';
-import {RED, WHITE} from '../../../constants/Colors/colorpalette';
-import {width} from '../../utils/dimensions';
+import ImagesModal from './ImageDetails/ImageViewer';
+import {WHITE} from '../../../constants/Colors/colorpalette';
+import {width} from '../../../constants/utils/dimensions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  IMovieIDInterface,
-  IResultItem,
-  results,
-} from '../../../constants/Interfaces/IMovieByIDInterface';
 import {TouchableOpacity} from '../../TouchableOpacity/TouchableOpacity';
+import {IPosterImageProps} from './IPosterImageProps';
 
-interface PosterImageProps {
-  backdropPath: string;
-  title: string;
-  vote_average: number;
-  images: any;
-  item: IMovieIDInterface;
-  showImage: boolean;
-  onPress: any;
-  video: IResultItem[];
-  // navigation: any;
-}
-
-
-export const PosterImages: React.FC<PosterImageProps> = ({
+export const PosterImages: React.FC<IPosterImageProps> = ({
   backdropPath,
   title,
   vote_average,
@@ -35,7 +18,8 @@ export const PosterImages: React.FC<PosterImageProps> = ({
   showImage,
   onPress,
   video,
-}: PosterImageProps) => {
+  navigation,
+}: IPosterImageProps) => {
   return (
     <View style={styles.containerMainPhoto}>
       <Image
@@ -47,7 +31,9 @@ export const PosterImages: React.FC<PosterImageProps> = ({
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.play}
-          onPress={() => console.log('B')}>
+          onPress={() =>
+            navigation.navigate('MovieVideo', {key: video[0].key})
+          }>
           <MaterialCommunityIcons
             name="youtube"
             size={width * 0.09}
@@ -59,7 +45,7 @@ export const PosterImages: React.FC<PosterImageProps> = ({
       <TouchableOpacity
         style={styles.containerMainPhotoInfo}
         activeOpacity={images.length ? 0.5 : 1}
-        onPress={images.length ? onPress : null}>
+        onPress={images.length ? onPress : () => null}>
         <View style={styles.containerBackgroundPhotoInfo}>
           <Text numberOfLines={2} style={styles.photoInfo}>
             {title}

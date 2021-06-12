@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import {ITouchableOpacityProps} from './ITouchableOpacity';
+import {ITouchableOpacityProps} from './ITouchableOpacityProps';
 
 const TouchableOpacityCustom: React.FC<ITouchableOpacityProps> = ({
   activeOpacity,

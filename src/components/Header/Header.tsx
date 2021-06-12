@@ -3,17 +3,17 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {DARK_PURPLE, WHITE} from '../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles';
-import {IHeaderStackScreenProps} from './IHeader';
+import {IHeaderProps} from './IHeaderProps';
 
 const HeaderStack = createStackNavigator();
 
-export const CustomHeader: React.FC<IHeaderStackScreenProps> = ({
+export const CustomHeader: React.FC<IHeaderProps> = ({
   component,
   componentName,
   componentTitle,
   onPress,
   children,
-}: IHeaderStackScreenProps) => {
+}: IHeaderProps) => {
   return (
     <HeaderStack.Navigator
       screenOptions={{

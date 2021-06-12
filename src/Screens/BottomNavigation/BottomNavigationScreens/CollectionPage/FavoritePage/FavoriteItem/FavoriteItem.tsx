@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Text, TouchableHighlight, View} from 'react-native';
-import {getImageApi} from '../../../../../../components/utils/Image';
+import {getImageApi} from '../../../../../../constants/utils/Image';
 import {convertToYear} from '../../../../../../constants/convert/convertToDates';
 import {getLanguage} from '../../../../../../constants/Language/getLanguageFunction';
 import {renderDivider} from '../../../../../../constants/RenderDivider/RenderDivider';

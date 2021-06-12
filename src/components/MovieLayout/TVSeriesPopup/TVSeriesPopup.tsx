@@ -1,8 +1,8 @@
 import React from 'react';
 import {Modal, View, Text, Image} from 'react-native';
-import {getImageApi} from '../../utils/Image';
+import {getImageApi} from '../../../constants/utils/Image';
 import {styles} from './styles';
-import {moviePopupGenre} from '../../utils/genreFunctions';
+import {moviePopupGenre} from '../../../constants/utils/genreFunctions';
 import {getLanguage} from '../../../constants/Language/getLanguageFunction';
 import {renderScore} from '../../../constants/MovieScore/renderScore';
 import {renderDivider} from '../../../constants/RenderDivider/RenderDivider';

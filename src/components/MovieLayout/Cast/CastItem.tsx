@@ -1,22 +1,16 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
 import {TouchableHighlight} from 'react-native-gesture-handler';
-import {getImageApi} from '../../utils/Image';
+import {getImageApi} from '../../../constants/utils/Image';
+import {ICastProps} from './ICastProps';
 import {styles} from './styles';
 
-interface ICastInterface {
-  name: string;
-  image: string | null;
-  original_name: string;
-  credit_id: string;
-}
-
-export const PeopleItem: React.FC<ICastInterface> = ({
+export const CastItem: React.FC<ICastProps> = ({
   credit_id,
   name,
   image,
   original_name,
-}: ICastInterface) => {
+}: ICastProps) => {
   return (
     <TouchableHighlight key={credit_id}>
       <View style={styles.castContainer}>
