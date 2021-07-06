@@ -11,7 +11,6 @@ import {baseTMDBUrl} from '../../../../../constants/Shortcuts';
 import _ from 'lodash';
 import {ICustomFlatListProps} from './ICustomFlatListInterface';
 import {MovieLayout} from '../../../../../components/MovieLayout/MovieItem/MovieLayout';
-import {tmdbGetById} from '../../../../../constants/APICalls/APICallsTMDB';
 import {
   loadFavorites,
   handleMovies,
@@ -21,14 +20,10 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
   fetchUrl,
   navigation,
 }: ICustomFlatListProps) => {
-  const [loadingID, setLoadingID] = useState(false);
-  const [loadingTVSeries, setloadingTVSeries] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const [movieMap, setMovieMap] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),
   );
-
   let favoriteMap = new Map<number, ItmdbItem>();
 
   const fetchData = async () => {

@@ -1,3 +1,5 @@
+import { ITVProductionCompanies } from "./IMovieByIDTVInterface";
+
 export interface IMovieIDInterface {
   adult: string;
   backdrop_path: string;

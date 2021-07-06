@@ -33,9 +33,13 @@ export const MovieLayout: React.FC<IMovieLayoutInterface> = ({
             </Text>
             <View style={[styles.textRow, styles.containerSubTitle]}>
               <Text style={styles.textSmall}>
-                {convertToYear(item.release_date)}
+                {item.release_date
+                  ? convertToYear(item.release_date)
+                  : convertToYear(item.first_air_date)}
               </Text>
-              {renderDivider(item.release_date, item.original_language)}
+              {item.release_date
+                ? renderDivider(item.release_date, item.original_language)
+                : renderDivider(item.first_air_date, item.original_language)}
               <Text numberOfLines={1} style={styles.textSmall}>
                 {getLanguage(item.original_language)}
               </Text>

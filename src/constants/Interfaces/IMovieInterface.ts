@@ -22,7 +22,9 @@ export interface ItmdbItem {
   //CUSTOM
   favorite: boolean;
   myList: boolean;
-  name:string;
+  name: string;
+  //TV-SERIES
+  first_air_date: string;
 }
 
 export type tmdbItemForFlatlist = ItmdbItem & {

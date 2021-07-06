@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import {View, ListRenderItem} from 'react-native';
-import {getImageApi} from '../../../constants/utils/Image';
+import {View, ListRenderItem, Text} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import {CastItem} from '../Cast/CastItem';
 import {
-  IBackDropItem,
   ICastItem,
   ICrewItem,
   IMovieIDInterface,
@@ -15,22 +14,26 @@ import {SelectionRow} from '../Cast/SelectionRow/SelectionRow';
 import {PosterImages} from '../PosterImages/PosterImages';
 import Screen from '../../Screen/Screen';
 import {tmdbGetById} from '../../../constants/APICalls/APICallsTMDB';
-import {RouteProp, useFocusEffect} from '@react-navigation/native';
 import {convertMinsToHrs} from '../../../constants/convert/convertMinToHour';
 import {convertTypeWithGenre} from '../../../constants/utils/genreFunctions';
 import {convertToDate} from '../../../constants/convert/convertToDates';
 import {convertToDollar} from '../../../constants/convert/convertToDollar';
-// import {IMovieDetailProps} from './IMovieDetailProps';
 import Spinner from '../../Spinner/Spinner';
-import {ADULT_RATE, IOriginal_Info, UNINFORMED} from './Interfaces/IOriginal_Info';
+import {
+  ADULT_RATE,
+  IOriginal_Info,
+  UNINFORMED,
+} from './Interfaces/IOriginal_Info';
 import {convertToUpperCase} from '../../../constants/convert/convertToUpperCase';
 import {isoLanguage} from '../../../constants/isoLanguage';
 import {CompanyRowList} from '../Cast/SelectionRow/DetailRowList/CompanyRow/ComapanyRowList';
 import {CrewRowList} from '../Cast/SelectionRow/DetailRowList/CrewRow/CrewRowList';
 import {PersonRowList} from '../Cast/SelectionRow/DetailRowList/PersonRow/PersonRowList';
 import {IMovieDetailProps} from './Interfaces/IMovieDetailProps';
-import {RootStackParamList} from '../../../constants/Navigation/navigation';
 import {formatImageUrl} from '../../../constants/utils/formatImageFormat';
+import ReadMore from 'react-native-read-more-text';
+import {styles} from './styles';
+import {ReadMoreFooter} from './HandleReadMore/ReadMoreFooter';
 
 export const MovieDetails: React.FC<IMovieDetailProps> = ({
   item,
@@ -73,6 +76,23 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     try {
       const {id} = route.params;
       await tmdbGetById(id).then(async (item) => {
+        // if (return.result === 0) {
+        //   await tmdbGetByIdTV(id).then(async (item) => {
+        //     setDetailInfo({
+        //       id,
+        //       backdrop_path: item.backdrop_path || IOriginal_Info.backdrop_path,
+        //       title: item.title || IOriginal_Info.title,
+        //       vote_average: item.vote_average || IOriginal_Info.vote_average,
+        //       video: item.videos.results || IOriginal_Info.video,
+        //       overview: item.overview || IOriginal_Info.overview,
+        //       cast: sliceArrayLength(item.credits.cast, 15),
+        //       crew: sliceArrayLength(item.credits.crew, 15),
+        //       production_companies: sliceArrayLength(item.production_companies, 10),
+        //       images: formatImageUrl(item.images.backdrops),
+        //       infosDetail: getInfosDetail(item),
+        //     });
+        //   })
+        // }
         setLoading(false);
         setDetailInfo({
           id,
@@ -97,12 +117,27 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     }
   };
 
+  // const handleReadMoreOverview = (text: string, handlePress: () => void) => (
+  //   <TouchableOpacity activeOpacity={0.5} onPress={() => handlePress()}>
+  //     <Text
+  //       style={{
+  //         color: PINK,
+  //         marginTop: 5,
+  //         textAlign: 'right',
+  //         marginRight: 25,
+  //       }}>
+  //       {text}
+  //     </Text>
+  //   </TouchableOpacity>
+  // );
+
   const {
     backdrop_path,
     vote_average,
     title,
     images,
     video,
+    overview,
     cast,
     crew,
     production_companies,
@@ -124,9 +159,21 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
             onPress={handleImage}
             item={item}
           />
-          <View style={{marginLeft: 2, marginRight: 2}}>
+          <View style={{marginLeft: 10}}>
             {/* <View style={styles.grayHeader}></View> */}
-            
+            <SelectionRow title={'Overview'}>
+              <ReadMore
+                numberOfLines={3}
+                renderTruncatedFooter={(handlePress: () => void) =>
+                  ReadMoreFooter({text: 'Read more', handlePress})
+                }
+                renderRevealedFooter={(handlePress: () => void) =>
+                  ReadMoreFooter({text: 'Read less', handlePress})
+                }>
+                <Text style={styles.readMoreFooter}>{overview}</Text>
+              </ReadMore>
+            </SelectionRow>
+
             <SelectionRow title={'Main Cast'}>
               <PersonRowList data={cast} renderItem={PersonList} />
             </SelectionRow>

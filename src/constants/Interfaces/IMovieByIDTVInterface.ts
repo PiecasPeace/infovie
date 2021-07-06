@@ -20,7 +20,7 @@ export interface IMovieIDTVInterface {
   overview: string;
   popularity: number;
   poster_path: string;
-  production_companies: IProduction_companies[];
+  production_companies: IProductionCompanies[];
   production_countries: IProduction_countries[];
   seasons: ISeasons[];
   spoken_languages: ISpoken_languages[];
@@ -31,9 +31,6 @@ export interface IMovieIDTVInterface {
   vote_count: number;
   //CUSTOM
   selected: IMovieIDTVInterface;
-  //STOLEN FROM MOVIE SEARCH
-  release_date: string
-  title:string;
   //NO RESULT 
   success: boolean;
 
@@ -98,7 +95,7 @@ interface IOrigin_country {
   origin_country: string;
 }
 
-interface IProduction_companies {
+interface IProductionCompanies {
   id: number;
   logo_path: string;
   name: string;

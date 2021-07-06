@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {fontSizeResponsive} from '../../../constants/utils/dimensions';
 import {
   BLACK,
+  BLUE,
   BORDEAUX_RED,
   DARK_GRAY,
   GRAY,
@@ -96,7 +97,11 @@ export const styles = StyleSheet.create({
     borderTopColor: DARK_GRAY,
     width: '90%',
     borderTopWidth: 1,
-    alignSelf:"center",
-    marginBottom:20
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  readMoreFooter: {
+    fontSize: fontSizeResponsive(1.9),
+    color: BLUE,
   },
 });
