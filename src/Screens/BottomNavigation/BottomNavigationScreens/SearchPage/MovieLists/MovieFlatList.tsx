@@ -12,7 +12,7 @@ import {
 import { styles } from "./styles";
 import Request from '../../../../../constants/requestPath';
 // import axios from '../../../../services/axios';
-import { TouchableOpacity } from '../../../../../components/TouchableOpacity/TouchableOpacity';
+import { TouchableOpacity } from '../../../../../components/CustomTouchableOpacity/CustomTouchableOpacity';
 import Spinner from '../../../../../components/Spinner/Spinner';
 // import Screen from '../../utils/Screen';
 import MovieListRow from '../MovieListRow/MovieListRow';

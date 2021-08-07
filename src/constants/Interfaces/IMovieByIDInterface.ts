@@ -1,5 +1,3 @@
-import { ITVProductionCompanies } from "./IMovieByIDTVInterface";
-
 export interface IMovieIDInterface {
   adult: string;
   backdrop_path: string;
@@ -41,7 +39,7 @@ interface ICollection {
   poster_path: string;
   backdrop_path: string;
 }
-interface IGenres {
+export interface IGenres {
   id: number;
   name: string;
 }

@@ -1,16 +1,16 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {styles} from './styles';
-import {TouchableOpacity} from '../../../TouchableOpacity/TouchableOpacity';
-import {IHandleReadMoreFooterProps} from './IHandleReadMoreFooterProps';
+import {IReadMoreFooterProps} from './IReadMoreFooterProps';
+import {CustomTouchableOpacity} from '../../../CustomTouchableOpacity/CustomTouchableOpacity';
 
-export const ReadMoreFooter: React.FC<IHandleReadMoreFooterProps> = ({
+export const ReadMoreFooter: React.FC<IReadMoreFooterProps> = ({
   text,
   handlePress,
-}: IHandleReadMoreFooterProps) => {
+}: IReadMoreFooterProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={() => handlePress()}>
+    <CustomTouchableOpacity activeOpacity={0.5} onPress={() => handlePress()}>
       <Text style={styles.footerContainer}>{text}</Text>
-    </TouchableOpacity>
+    </CustomTouchableOpacity>
   );
 };

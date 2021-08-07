@@ -1,5 +1,4 @@
 import {StyleProp, TextStyle, ViewStyle} from 'react-native';
-
 export interface ICustomButtonProps {
   style?: object;
   mode: 'text' | 'outlined' | 'contained' | undefined;

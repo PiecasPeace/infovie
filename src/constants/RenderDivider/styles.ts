@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {fontSizeResponsive} from '../utils/dimensions';
-import {BLACK, DARK_GRAY, DARK_RED, GRAY_BLUE, WHITE} from '../Colors/colorpalette';
+import {BLACK} from '../Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   trace: {

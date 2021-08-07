@@ -8,7 +8,7 @@ import {
   IMovieIDInterface,
   IProductionCompanies,
 } from '../../../constants/Interfaces/IMovieByIDInterface';
-import {sliceArrayLength} from '../../../constants/utils/array';
+import {sliceArrayLength} from '../../../constants/utils/sliceArrayLength';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SelectionRow} from '../Cast/SelectionRow/SelectionRow';
 import {PosterImages} from '../PosterImages/PosterImages';
@@ -116,20 +116,6 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
       setLoading(false);
     }
   };
-
-  // const handleReadMoreOverview = (text: string, handlePress: () => void) => (
-  //   <TouchableOpacity activeOpacity={0.5} onPress={() => handlePress()}>
-  //     <Text
-  //       style={{
-  //         color: PINK,
-  //         marginTop: 5,
-  //         textAlign: 'right',
-  //         marginRight: 25,
-  //       }}>
-  //       {text}
-  //     </Text>
-  //   </TouchableOpacity>
-  // );
 
   const {
     backdrop_path,

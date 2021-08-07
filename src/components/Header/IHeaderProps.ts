@@ -1,9 +1,8 @@
-import { AboutDrawerProps, HomeProps } from "../../constants/Navigation/navigation";
-import { RouteRootStackParamList } from "../../constants/Navigation/route";
+import {FunctionComponent} from 'react';
 
 export interface IHeaderProps {
   navigation?: any;
-  component: Element;
+  component: FunctionComponent<any>;
   componentName: string;
   componentTitle: string;
   onPress: () => void;

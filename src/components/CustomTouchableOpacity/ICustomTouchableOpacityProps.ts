@@ -1,4 +1,4 @@
-export interface ITouchableOpacityProps {
+export interface ICustomTouchableOpacityProps {
   activeOpacity: 0.5 | 1;
   style?: {};
   onPress: () => void;

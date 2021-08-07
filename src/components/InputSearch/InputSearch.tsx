@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import Feather from 'feather-icons-react';
-import { TouchableOpacity } from '../TouchableOpacity/TouchableOpacity';
+import { TouchableOpacity } from '../CustomTouchableOpacity/CustomTouchableOpacity';
 import { DARK_GRAY } from '../../constants/Colors/colorpalette';
 // import axios from '../services/axios'
 import styles from './styles';

@@ -7,8 +7,8 @@ import ImagesModal from './ImageDetails/ImageViewer';
 import {WHITE} from '../../../constants/Colors/colorpalette';
 import {width} from '../../../constants/utils/dimensions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TouchableOpacity} from '../../TouchableOpacity/TouchableOpacity';
 import {IPosterImageProps} from './IPosterImageProps';
+import { CustomTouchableOpacity } from '../../CustomTouchableOpacity/CustomTouchableOpacity';
 
 export const PosterImages: React.FC<IPosterImageProps> = ({
   backdropPath,
@@ -28,7 +28,7 @@ export const PosterImages: React.FC<IPosterImageProps> = ({
         resizeMode="cover"
       />
       {video[0] && video[0].site === 'YouTube' && (
-        <TouchableOpacity
+        <CustomTouchableOpacity
           activeOpacity={0.5}
           style={styles.play}
           onPress={() =>
@@ -40,9 +40,9 @@ export const PosterImages: React.FC<IPosterImageProps> = ({
             color={WHITE}
             style={styles.buttonPlay}
           />
-        </TouchableOpacity>
+        </CustomTouchableOpacity>
       )}
-      <TouchableOpacity
+      <CustomTouchableOpacity
         style={styles.containerMainPhotoInfo}
         activeOpacity={images.length ? 0.5 : 1}
         onPress={images.length ? onPress : () => null}>
@@ -62,7 +62,7 @@ export const PosterImages: React.FC<IPosterImageProps> = ({
             ))}
           </View>
         </View>
-      </TouchableOpacity>
+      </CustomTouchableOpacity>
       {images.length ? (
         <ImagesModal showImage={showImage} images={images} onClose={onPress} />
       ) : null}

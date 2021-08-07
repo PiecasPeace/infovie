@@ -1,4 +1,3 @@
-import {GestureResponderEvent} from 'react-native';
 import {ItmdbItem} from '../../../constants/Interfaces/IMovieInterface';
 
 export interface IMovieLayoutInterface {

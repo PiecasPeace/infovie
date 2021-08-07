@@ -1,5 +1,5 @@
 import { IBackDropItem } from "../Interfaces/IMovieByIDInterface";
-import { sliceArrayLength } from "./array";
+import { sliceArrayLength } from "./sliceArrayLength";
 import { getImageApi } from "./Image";
 
 export const formatImageUrl = (images: IBackDropItem[]) =>
