@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../../components/blueprints/CustomButton/CustomButton';
 import Spinner from '../../../../../components/Spinner/Spinner';
 import {PINK, WHITE} from '../../../../../constants/Colors/colorpalette';
 import {styles} from './styles';

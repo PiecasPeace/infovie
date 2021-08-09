@@ -4,7 +4,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
 import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
-import {CustomButton} from '../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../components/blueprints/CustomButton/CustomButton';
 import {MovieDetails} from '../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
 import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';

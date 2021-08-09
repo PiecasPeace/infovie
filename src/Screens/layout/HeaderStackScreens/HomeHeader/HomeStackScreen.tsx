@@ -3,7 +3,7 @@ import HomeScreen from '../../../BottomNavigation/BottomNavigationScreens/HomePa
 import {CustomHeader} from '../../../../components/Header/Header';
 import {RootStackParamList} from '../../../../constants/Navigation/navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MovieVideo from '../../../../components/MovieLayout/PosterImages/MovieVideo/MovieVideo';
+import MovieVideo from '../../../../components/MovieLayout/PosterImages/video/MovieVideo';
 import {DARK_PURPLE} from '../../../../constants/Colors/colorpalette';
 import {MovieDetails} from '../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {createStackNavigator} from '@react-navigation/stack';

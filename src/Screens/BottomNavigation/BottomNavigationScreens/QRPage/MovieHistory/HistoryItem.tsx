@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {View, Text} from 'react-native';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../../components/blueprints/CustomButton/CustomButton';
 import {
   WHITE,
   BORDEAUX_RED,

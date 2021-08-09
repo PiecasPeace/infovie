@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {FlatList, ListRenderItem, View} from 'react-native';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../../components/blueprints/CustomButton/CustomButton';
 import {styles} from '../styles';
 import {ItmdbItem} from '../../../../../constants/Interfaces/IMovieInterface';
 

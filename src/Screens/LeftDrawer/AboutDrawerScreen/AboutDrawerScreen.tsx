@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Button, Text} from 'react-native';
-import {CustomButton} from '../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../components/blueprints/CustomButton/CustomButton';
 import { AboutDrawerProps } from '../../../constants/Navigation/navigation';
 
 

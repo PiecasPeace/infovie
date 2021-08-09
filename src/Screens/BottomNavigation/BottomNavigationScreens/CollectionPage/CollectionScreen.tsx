@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {CustomButton} from '../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../components/blueprints/CustomButton/CustomButton';
 import {PINK, WHITE} from '../../../../constants/Colors/colorpalette';
 import {CollectionProps} from '../../../../constants/Navigation/navigation';
 import {CollectionItem} from './CollectionItem/CollectionItem';

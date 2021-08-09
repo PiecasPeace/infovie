@@ -5,7 +5,7 @@ import {ItmdbItem} from '../../../../../constants/Interfaces/IMovieInterface';
 import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FavoriteItem from './FavoriteItem/FavoriteItem';
-import {CustomButton} from '../../../../../components/CustomButton/CustomButton';
+import {CustomButton} from '../../../../../components/blueprints/CustomButton/CustomButton';
 import {WHITE} from '../../../../../constants/Colors/colorpalette';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RowMap, SwipeListView} from 'react-native-swipe-list-view';

@@ -1,6 +1,4 @@
 import {Alert, Image, View} from 'react-native';
-import { width, height } from '../../../../../constants/utils/dimensions';
-// import e from "../../../../../assets"
 
 const noFoundImage = () => require('../../../../../assets/images/not_found.png');
 export const ShowNotFound = () => {
@@ -10,10 +8,6 @@ export const ShowNotFound = () => {
     </View>
   );
 };
-
-// if (res.data === 0) {
-//    <ShowNotFound />
-// }
 
 export const NoTitleFoundAlert = (
   lightTitle: string,

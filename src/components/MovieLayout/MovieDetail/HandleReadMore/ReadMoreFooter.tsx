@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'react-native';
 import {styles} from './styles';
 import {IReadMoreFooterProps} from './IReadMoreFooterProps';
-import {CustomTouchableOpacity} from '../../../CustomTouchableOpacity/CustomTouchableOpacity';
+import {CustomTouchableOpacity} from '../../../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
 
 export const ReadMoreFooter: React.FC<IReadMoreFooterProps> = ({
   text,
