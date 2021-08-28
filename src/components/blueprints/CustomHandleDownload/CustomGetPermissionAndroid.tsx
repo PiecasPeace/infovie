@@ -1,4 +1,4 @@
-import { PermissionsAndroid, Alert } from "react-native";
+import {PermissionsAndroid, Alert} from 'react-native';
 
 export const CustomGetPermissionAndroid = async () => {
   try {
@@ -24,7 +24,7 @@ export const CustomGetPermissionAndroid = async () => {
     Alert.alert(
       'Save remote Image',
       'Failed to save Image: ' + err.message,
-      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+      [{text: 'OK', onPress: () => console.log('Failed to save Image')}],
       {cancelable: false},
     );
   }

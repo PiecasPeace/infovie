@@ -1,83 +1,22 @@
 import React, {useState} from 'react';
-import {Modal, Platform, Text, View} from 'react-native';
+import {Modal, Platform, ToastAndroid, View} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Spinner from '../../../Spinner/Spinner';
 import {BLACK, WHITE} from '../../../../constants/Colors/colorpalette';
 import {IImageModalProps} from './IImageProps';
-import Button from '@material-ui/core/Button';
-import MuiAlert, {AlertProps} from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
 import RNFetchBlob, {FetchBlobResponse} from 'rn-fetch-blob';
-import {CustomGetPermissionAndroid} from '../../../blueprints/CustomGetPermissionAndroid/CustomGetPermissionAndroid';
-import {CustomSnackBar} from '../../../blueprints/CustomSnackBar/CustomSnackBar';
+import {CustomGetPermissionAndroid} from '../../../blueprints/CustomHandleDownload/CustomGetPermissionAndroid';
 import CameraRoll from '@react-native-community/cameraroll';
-import {IImageInterface} from '../../MovieDetail/Interfaces/IImageInterface';
 import {CustomButton} from '../../../blueprints/CustomButton/CustomButton';
-
-const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-};
-interface ISnackProps {
-  text: string;
-  handleClick: () => void;
-  open: boolean | undefined;
-}
 
 const ImagesModal: React.FC<IImageModalProps> = ({
   showImage = false,
   images,
   onClose,
 }: IImageModalProps) => {
-  const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const CustomRenderFooter = (images: IImageInterface[], index: number) => (
-    <View>
-      <MuiAlert elevation={6} variant="filled" severity="success">
-        <Text> This is a success message!</Text>
-      </MuiAlert>
-      {/* <Alert severity="error">This is an error message!</Alert>
-      <Alert severity="warning">This is a warning message!</Alert>
-      <Alert severity="info">This is an information message!</Alert>
-      <Alert severity="success">This is a success message!</Alert> */}
-      {/* <Text style={{width: '100%'}}>
-        <CustomButton
-          color={BLACK}
-          mode={"contained"}
-          Text={'Open success snackbar'}
-          onPress={() => handleClick()}
-        />
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            <Text>WAHOO</Text>
-          </Alert>
-        </Snackbar>
-      </Text> */}
-      {/* <CustomButton
-        onPress={() => HandlePermission(images, index)}
-        color={BLACK}
-        mode={'contained'}
-        Text={'Save to Gallery'}
-        icon={'download'}
-        style={{flex: 1, minWidth: '100%'}}
-      /> */}
-    </View>
-  );
-
-  const HandlePermission = async (images: IImageInterface[], index: number) => {
-    //If you use android, you have to ask for permission
+  const handleDownload = async (currentIndex: number) => {
     if (Platform.OS === 'android') {
       const granted = await CustomGetPermissionAndroid();
       if (!granted) {
@@ -91,49 +30,36 @@ const ImagesModal: React.FC<IImageModalProps> = ({
       appendExt: 'png',
       path: dirs.DownloadDir + '/path-to-file.png',
     })
-      .fetch('GET', images[index].url)
+      .fetch('GET', images[currentIndex].url, {})
       .then((res: FetchBlobResponse) => {
+        setLoading(false);
         CameraRoll.save(res.data)
           .then(() => {
-            <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                Success
-              </Alert>
-            </Snackbar>;
+            ToastAndroid.showWithGravity(
+              'Your file has been downloaded to downloads folder!',
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+            );
           })
           .catch((err) => {
-            <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                Fail
-              </Alert>
-            </Snackbar>;
+            ToastAndroid.showWithGravity(
+              'Error' + err,
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+            );
           })
           .finally(() => setLoading(false));
       })
       .catch((err) => {
         setLoading(false);
-        <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            Failure on catch
-          </Alert>
-        </Snackbar>;
+        ToastAndroid.showWithGravity(
+          'Error beim catching ganz unten' + err,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        );
       });
   };
 
-  const Snack = ({text, handleClick, open}: ISnackProps) => {
-    return (
-      <Text style={{width: '100%'}}>
-        <Button variant="outlined" onClick={handleClick}>
-          Open success snackbar
-        </Button>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success">
-            {text}
-          </Alert>
-        </Snackbar>
-      </Text>
-    );
-  };
   return (
     <Modal visible={showImage} transparent onRequestClose={onClose}>
       <ImageViewer
@@ -145,7 +71,18 @@ const ImagesModal: React.FC<IImageModalProps> = ({
         pageAnimateTime={200}
         flipThreshold={10}
         swipeDownThreshold={25}
-        renderFooter={(index: number) => CustomRenderFooter(images, index)}
+        renderFooter={(currentIndex: number) => (
+          <View>
+            <CustomButton
+              onPress={() => handleDownload(currentIndex)}
+              color={BLACK}
+              mode={'contained'}
+              Text={'Save to Gallery'}
+              icon={'download'}
+              style={{flex: 1, minWidth: '100%'}}
+            />
+          </View>
+        )}
         loadingRender={() => <Spinner color={WHITE} />}
         onCancel={onClose}
       />

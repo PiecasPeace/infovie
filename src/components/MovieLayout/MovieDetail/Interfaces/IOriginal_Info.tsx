@@ -1,5 +1,4 @@
-import {IProductionCompanies, IResultItem} from '../../../../constants/Interfaces/IMovieByIDInterface';
-import { ITVProductionCompanies } from '../../../../constants/Interfaces/IMovieByIDTVInterface';
+import {IResultItem} from '../../../../constants/Interfaces/IMovieByIDInterface';
 
 export const UNINFORMED = 'Uninformed';
 export const ADULT_RATE = {
