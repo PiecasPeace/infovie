@@ -28,7 +28,7 @@ const ImagesModal: React.FC<IImageModalProps> = ({
     RNFetchBlob.config({
       fileCache: true,
       appendExt: 'png',
-      path: dirs.DownloadDir + '/path-to-file.png',
+      path: dirs.DCIMDir + '/path-to-file.png',
     })
       .fetch('GET', images[currentIndex].url, {})
       .then((res: FetchBlobResponse) => {
@@ -36,7 +36,7 @@ const ImagesModal: React.FC<IImageModalProps> = ({
         CameraRoll.save(res.data)
           .then(() => {
             ToastAndroid.showWithGravity(
-              'Your file has been downloaded to downloads folder!',
+              'Your file has been downloaded to your DCIM folder!',
               ToastAndroid.SHORT,
               ToastAndroid.BOTTOM,
             );
