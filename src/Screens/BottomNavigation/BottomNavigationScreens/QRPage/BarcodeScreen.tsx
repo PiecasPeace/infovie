@@ -3,7 +3,7 @@ import {View, Text, Linking, ListRenderItem} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {styles} from './styles';
 import {getFirstWord, removeSpecialSigns} from './Regex/Regex';
-import {RequestMovieTitleByBarcode} from '../../../../constants/APICalls/RequestMovieTitleByBarcode';
+import {RequestMovieTitleByBarcode} from '../../../../constants/services/RequestMovieTitleByBarcode';
 import {CustomButton} from '../../../../components/blueprints/CustomButton/CustomButton';
 import {MovieDetails} from '../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {BarcodeMovieList} from './MovieList/BarcodeMovieList';
@@ -11,7 +11,7 @@ import {NoTitleFoundAlert} from './MovieNoTitleAlert/NoTitleFoundAlert';
 import {
   tmdbGetById,
   tmdbGetByTitle,
-} from '../../../../constants/APICalls/APICallsTMDB';
+} from '../../../../constants/services/APICallsTMDB';
 import {extractMovieTitles} from './utils/TitleUtilities';
 import _ from 'lodash';
 import {MovieLayout} from '../../../../components/MovieLayout/MovieItem/MovieLayout';

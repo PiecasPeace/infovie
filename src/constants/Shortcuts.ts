@@ -19,6 +19,14 @@ export const buildIDUrl = (getId: number): string => {
 export const buildIDUrlforTV = (getId: number): string => {
   return `${IDMovieUrlTV}/${getId}?${API_KEY2}${APP_TO_RESULT}${appendMovies.credits},${appendMovies.videos},${appendMovies.images}`;
 };
+// https://api.themoviedb.org/3/person/5d33b7e66a300b2f7ea6bc88?api_key=94ff60134af5b7bbe6cb00087e37359f&language=en-Us
+export const buildPerson = (id: number): string => {
+  return `${baseTMDBUrl}/person/${id}?${API_KEY2}&language=en-Us`;
+};
+
+export const buildCompany = (id: number): string => {
+  return `${baseTMDBUrl}/company/${id}?${API_KEY2}&language=en-Us`;
+};
 
 const APP_TO_RESULT = `&append_to_response=`;
 

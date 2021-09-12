@@ -9,7 +9,6 @@ import {width} from '../../../constants/utils/dimensions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {IPosterImageProps} from './IPosterImageProps';
 import { CustomTouchableOpacity } from '../../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
-import { IResultItem } from '../../../constants/Interfaces/IMovieByIDInterface';
 
 export const PosterImages: React.FC<IPosterImageProps> = ({
   backdropPath,

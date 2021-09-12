@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, ListRenderItem, Text} from 'react-native';
+import {View, ListRenderItem, Text, ListRenderItemInfo} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {CastItem} from '../Cast/CastItem';
 import {
@@ -13,7 +13,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {SelectionRow} from '../Cast/SelectionRow/SelectionRow';
 import {PosterImages} from '../PosterImages/PosterImages';
 import Screen from '../../Screen/Screen';
-import {tmdbGetById} from '../../../constants/APICalls/APICallsTMDB';
+import {tmdbGetById} from '../../../constants/services/APICallsTMDB';
 import {convertMinsToHrs} from '../../../constants/convert/convertMinToHour';
 import {convertTypeWithGenre} from '../../../constants/utils/genreFunctions';
 import {convertToDate} from '../../../constants/convert/convertToDates';
@@ -34,24 +34,50 @@ import {formatImageUrl} from '../../../constants/utils/formatImageFormat';
 import ReadMore from 'react-native-read-more-text';
 import {styles} from './styles';
 import {ReadMoreFooter} from './HandleReadMore/ReadMoreFooter';
+import {CastModal} from '../Cast/CastModal/CastModal';
+import {BLUE} from '../../../constants/Colors/colorpalette';
+import {fontSizeResponsive} from '../../../constants/utils/dimensions';
 
 export const MovieDetails: React.FC<IMovieDetailProps> = ({
   item,
   route,
   navigation,
 }: IMovieDetailProps) => {
-  const [loading, setLoading] = useState(false);
-  const [showImage, setShowImage] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showImage, setShowImage] = useState<boolean>(false);
+  const [personVisible, setPersonVisible] = useState<boolean>(false);
+  const [companyVisible, setCompanyVisible] = useState<boolean>(false);
+  const [creditId, setCreditId] = useState<number>(0);
+  const [companyId, setCompanyId] = useState<number>(0);
   const [detailInfo, setDetailInfo] = useState(IOriginal_Info);
-  const handleImage = () => {
-    setShowImage(!showImage);
-  };
 
   useFocusEffect(
     React.useCallback(() => {
       requestMovieDetails();
     }, []),
   );
+
+  const handleImage = () => {
+    setShowImage(!showImage);
+  };
+  //PERSON
+  const handlePersonModal = (id: number) => {
+    setCreditId(id);
+    handleVisiblePerson();
+  };
+  const handleVisiblePerson = () => {
+    setPersonVisible(!personVisible);
+  };
+
+  //COMPANY
+  const handleCompanyModal = (id: number) => {
+    setCompanyId(id);
+    handleVisibleCompany();
+  };
+
+  const handleVisibleCompany = () => {
+    setCompanyVisible(!companyVisible);
+  };
 
   const getInfosDetail = ({
     runtime = 0,
@@ -75,7 +101,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     setLoading(true);
     try {
       const {id} = route.params;
-      await tmdbGetById(id).then(async (item) => {
+      await tmdbGetById(id).then(async (item: IMovieIDInterface) => {
         // if (return.result === 0) {
         //   await tmdbGetByIdTV(id).then(async (item) => {
         //     setDetailInfo({
@@ -109,6 +135,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
         });
       });
       console.log(tmdbGetById(id));
+      console.log(cast);
     } catch (err) {
       console.log('Error at MovieDetails');
       throw err;
@@ -117,6 +144,56 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     }
   };
 
+  const renderEmptyList = () => {
+    return (
+      <View>
+        <Text
+          style={{
+            fontSize: fontSizeResponsive(2.1),
+            color: BLUE,
+            textAlign: 'justify',
+          }}>
+          No Information
+        </Text>
+      </View>
+    );
+  };
+
+  const PersonList: ListRenderItem<ICastItem> = ({
+    item,
+  }: ListRenderItemInfo<ICastItem>) => (
+    <CastItem
+      credit_id={item.credit_id}
+      image={item.profile_path}
+      name={item.character}
+      original_name={item.original_name}
+      onPress={handlePersonModal(item.id)}
+    />
+  );
+
+  const CrewList: ListRenderItem<ICrewItem> = ({
+    item,
+  }: ListRenderItemInfo<ICrewItem>) => (
+    <CastItem
+      credit_id={item.credit_id}
+      image={item.profile_path || null}
+      name={item.known_for_department}
+      original_name={item.original_name}
+      onPress={handlePersonModal(item.id)}
+    />
+  );
+
+  const CompanyList: ListRenderItem<IProductionCompanies> = ({
+    item,
+  }: ListRenderItemInfo<IProductionCompanies>) => (
+    <CastItem
+      credit_id={item.id}
+      image={item.logo_path || null}
+      name={item.origin_country}
+      original_name={item.name}
+      onPress={handleCompanyModal(item.id)}
+    />
+  );
   const {
     backdrop_path,
     vote_average,
@@ -170,38 +247,18 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
               <CompanyRowList
                 data={production_companies}
                 renderItem={CompanyList}
+                ListEmptyComponent={renderEmptyList}
               />
             </SelectionRow>
           </View>
+          <CastModal
+            isVisible={personVisible}
+            creditId={creditId}
+            style={{justifyContent: 'flex-end', margin: 0}}
+            onClose={handleVisiblePerson}
+          />
         </ScrollView>
       )}
     </Screen>
   );
 };
-
-const PersonList: ListRenderItem<ICastItem> = ({item}) => (
-  <CastItem
-    credit_id={item.credit_id}
-    image={item.profile_path}
-    name={item.character}
-    original_name={item.original_name}
-  />
-);
-
-const CrewList: ListRenderItem<ICrewItem> = ({item}) => (
-  <CastItem
-    credit_id={item.credit_id}
-    image={item.profile_path || null}
-    name={item.known_for_department}
-    original_name={item.original_name}
-  />
-);
-
-const CompanyList: ListRenderItem<IProductionCompanies> = ({item}) => (
-  <CastItem
-    credit_id={`${item.id}`}
-    image={item.logo_path || null}
-    name={item.origin_country}
-    original_name={item.name}
-  />
-);

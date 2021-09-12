@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import {getImageApi} from '../../../constants/utils/Image';
+import {CustomTouchableOpacity} from '../../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
 import {ICastProps} from './ICastProps';
 import {styles} from './styles';
 
@@ -10,9 +10,13 @@ export const CastItem: React.FC<ICastProps> = ({
   name,
   image,
   original_name,
+  onPress,
 }: ICastProps) => {
   return (
-    <TouchableHighlight key={credit_id}>
+    <CustomTouchableOpacity
+      key={credit_id}
+      onPress={onPress}
+      activeOpacity={0.5}>
       <View style={styles.castContainer}>
         <View>
           <Text numberOfLines={1} style={styles.character}>
@@ -28,6 +32,6 @@ export const CastItem: React.FC<ICastProps> = ({
           {original_name}
         </Text>
       </View>
-    </TouchableHighlight>
+    </CustomTouchableOpacity>
   );
 };

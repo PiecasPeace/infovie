@@ -18,7 +18,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {
   tmdbGetById,
   tmdbGetByIdTV,
-} from '../../../../../constants/APICalls/APICallsTMDB';
+} from '../../../../../constants/services/APICallsTMDB';
 import {IMovieIDInterface} from '../../../../../constants/Interfaces/IMovieByIDInterface';
 import {
   MapState,

@@ -46,9 +46,8 @@ export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
         updateMap(result.results[i].id, result.results[i]);
       }
       setMovieMap(MovieMapBody);
-    } catch (err) {
-      console.log('Fetchproblem at CustomFlatList Url: ' + err.message);
-      throw err;
+    } catch (error) {
+      console.log('Fetchproblem at CustomFlatList');
     } finally {
       setLoading(false);
     }
