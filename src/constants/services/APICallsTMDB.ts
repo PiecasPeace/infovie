@@ -1,11 +1,16 @@
+import {ICast, IPersonWithMovieCredits} from '../../components/MovieLayout/MovieDetail/Interfaces/ICastWithCredits';
 import {IPerson} from '../../components/MovieLayout/MovieDetail/Interfaces/Person';
-import {IMovieIDInterface, IProductionCompanies} from '../Interfaces/IMovieByIDInterface';
+import {
+  IMovieIDInterface,
+  IProductionCompanies,
+} from '../Interfaces/IMovieByIDInterface';
 import {IMovieIDTVInterface} from '../Interfaces/IMovieByIDTVInterface';
 import {ItmdbJsonGET} from '../Interfaces/IMovieInterface';
 import {
   buildIDUrl,
   buildIDUrlforTV,
   buildPerson,
+  buildPersonWithMovieReferences,
   TMDBRequest,
 } from '../Shortcuts';
 //SEARCH VIA MOVIE TITLE
@@ -40,10 +45,23 @@ export const tmdbGetPerson = async (id: number): Promise<IPerson> => {
 
   return result;
 };
-export const tmdbGetCompany = async (id: number): Promise<IProductionCompanies> => {
+//SEARCH VIA PERSON->COMPANY // NOT CORRECT
+export const tmdbGetCompany = async (
+  id: number,
+): Promise<IProductionCompanies> => {
   const request = await fetch(buildPerson(id));
   const result = (await request.json()) as IProductionCompanies;
   console.log(result);
+
+  return result;
+};
+//Here we are searching movie_credits from a person's creditId. (this will give us the movies he/she played in)
+export const tmdbGetPersonReferences = async (
+  id: number,
+): Promise<ICast> => {
+  const request = await fetch(buildPersonWithMovieReferences(id));
+  const result = (await request.json()) as ICast;
+  // console.log(result);
 
   return result;
 };

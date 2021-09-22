@@ -6,21 +6,21 @@ import {width} from '../../constants/utils/dimensions';
 import {CustomTouchableOpacity} from '../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
 import {styles} from './styles';
 
-interface INotificationCard {
+interface INotificationCardProps {
   style: {};
-  icon: 'alert-octagon';
-  textError: 'Something wrong has happened, please try again later.';
-  textButton: 'Load';
+  icon: string;
+  textError: string;
+  textButton: string;
   onPress: () => Promise<void> | undefined;
 }
 
-const NotificationCard: React.FC<INotificationCard> = ({
+const NotificationCard: React.FC<INotificationCardProps> = ({
   style = styles.containerError,
   icon,
   textError,
   textButton,
   onPress,
-}: INotificationCard) => (
+}: INotificationCardProps) => (
   <View style={style}>
     <MaterialCommunityIcons name={icon} size={width * 0.09} color={WHITE} />
     <Text style={styles.errorInfo}>{textError}</Text>

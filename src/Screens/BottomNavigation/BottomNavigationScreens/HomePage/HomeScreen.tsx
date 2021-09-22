@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {View} from 'react-native';
-import {CustomFlatlist} from './Flatlist/CustomFlatlist';
+import {HomeList} from './Flatlist/HomeList';
 import {styles} from './styles';
 import {WHITE} from '../../../../constants/Colors/colorpalette';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -63,7 +63,7 @@ const HomeScreen: React.FC<IHomeProps> = ({navigation}: IHomeProps) => {
             },
           ]}
         />
-        <CustomFlatlist fetchUrl={dropdownString} navigation={navigation} />
+        <HomeList fetchUrl={dropdownString} navigation={navigation} />
       </Fragment>
     </View>
   );

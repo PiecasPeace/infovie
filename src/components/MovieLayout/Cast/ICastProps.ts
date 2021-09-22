@@ -3,5 +3,5 @@ export interface ICastProps {
   image: string | null;
   original_name: string;
   credit_id: string | number | undefined | null;
-  onPress: void;
+  onPress: () => void;
 }

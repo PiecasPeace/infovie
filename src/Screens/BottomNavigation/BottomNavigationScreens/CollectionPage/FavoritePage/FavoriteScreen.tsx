@@ -23,7 +23,7 @@ import {IMovieIDInterface} from '../../../../../constants/Interfaces/IMovieByIDI
 import {
   MapState,
   MapStateTV,
-} from '../../HomePage/Flatlist/ICustomFlatListInterface';
+} from '../../HomePage/Flatlist/IHomeListProps';
 import {MovieDetails} from '../../../../../components/MovieLayout/MovieDetail/MovieDetails';
 import {IMovieIDTVInterface} from '../../../../../constants/Interfaces/IMovieByIDTVInterface';
 import {TVSeriesPopup} from '../../../../../components/MovieLayout/TVSeriesPopup/TVSeriesPopup';

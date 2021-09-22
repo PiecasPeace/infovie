@@ -23,6 +23,9 @@ export const buildIDUrlforTV = (getId: number): string => {
 export const buildPerson = (id: number): string => {
   return `${baseTMDBUrl}/person/${id}?${API_KEY2}&language=en-Us`;
 };
+export const buildPersonWithMovieReferences = (id: number): string => {
+  return `${baseTMDBUrl}/person/${id}/movie_credits?${API_KEY2}&language=en-Us`;
+};
 
 export const buildCompany = (id: number): string => {
   return `${baseTMDBUrl}/company/${id}?${API_KEY2}&language=en-Us`;

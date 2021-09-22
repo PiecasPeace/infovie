@@ -167,7 +167,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
       image={item.profile_path}
       name={item.character}
       original_name={item.original_name}
-      onPress={handlePersonModal(item.id)}
+      onPress={() => handlePersonModal(item.id)}
     />
   );
 
@@ -179,7 +179,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
       image={item.profile_path || null}
       name={item.known_for_department}
       original_name={item.original_name}
-      onPress={handlePersonModal(item.id)}
+      onPress={() => handlePersonModal(item.id)}
     />
   );
 
@@ -191,7 +191,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
       image={item.logo_path || null}
       name={item.origin_country}
       original_name={item.name}
-      onPress={handleCompanyModal(item.id)}
+      onPress={() => handleCompanyModal(item.id)}
     />
   );
   const {
@@ -254,7 +254,6 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
           <CastModal
             isVisible={personVisible}
             creditId={creditId}
-            style={{justifyContent: 'flex-end', margin: 0}}
             onClose={handleVisiblePerson}
           />
         </ScrollView>

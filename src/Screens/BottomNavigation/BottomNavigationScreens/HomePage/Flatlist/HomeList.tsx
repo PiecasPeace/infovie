@@ -9,17 +9,17 @@ import {
 } from '../../../../../constants/Interfaces/IMovieInterface';
 import {baseTMDBUrl} from '../../../../../constants/Shortcuts';
 import _ from 'lodash';
-import {ICustomFlatListProps} from './ICustomFlatListInterface';
+import {IHomeListProps} from './IHomeListProps';
 import {MovieLayout} from '../../../../../components/MovieLayout/MovieItem/MovieLayout';
 import {
   loadFavorites,
   handleMovies,
 } from '../../../../../constants/HandleAsyncStorage/HandleAS';
 
-export const CustomFlatlist: React.FC<ICustomFlatListProps> = ({
+export const HomeList: React.FC<IHomeListProps> = ({
   fetchUrl,
   navigation,
-}: ICustomFlatListProps) => {
+}: IHomeListProps) => {
   const [loading, setLoading] = useState(true);
   const [movieMap, setMovieMap] = useState<Map<number, ItmdbItem>>(
     new Map<number, ItmdbItem>(),

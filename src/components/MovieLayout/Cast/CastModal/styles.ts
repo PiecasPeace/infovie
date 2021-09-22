@@ -1,25 +1,30 @@
 import {StyleSheet} from 'react-native';
 import {
-  BLUE,
-  DARK_BLUE,
-  WHITE,
+  DARK_PURPLE,
+  LIGHT_GRAY,
+  LIGHT_PURPLE,
+  SUB_GRAY,
 } from '../../../../constants/Colors/colorpalette';
-import {
-  fontSizeResponsive,
-  height,
-} from '../../../../constants/utils/dimensions';
+import {fontSizeResponsive} from '../../../../constants/utils/dimensions';
 
 export const styles = StyleSheet.create({
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
   containerModal: {
-    backgroundColor: WHITE,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    height: height * 0.7,
+    backgroundColor: DARK_PURPLE,
+    height: '100%',
   },
   containerScroll: {
-    padding: 22,
+    padding: 10,
     paddingTop: 0,
-    marginTop: 22,
+    marginTop: 20,
+  },
+  image: {
+    width: '30%',
+    height: '100%',
+    borderRadius: 5,
   },
   containerCenter: {
     alignItems: 'center',
@@ -36,17 +41,16 @@ export const styles = StyleSheet.create({
   },
   titleInfo: {
     fontSize: fontSizeResponsive(2.4),
-    fontWeight: 'bold',
-    color: DARK_BLUE,
+    // fontWeight: 'bold',
+    color: LIGHT_PURPLE,
     marginBottom: 7,
   },
   titleName: {
-    fontSize: fontSizeResponsive(2.6),
-    fontWeight: 'bold',
-    color: DARK_BLUE,
+    fontSize: fontSizeResponsive(2.3),
+    color: LIGHT_GRAY,
     marginBottom: 10,
   },
-  textItens: {
+  textItems: {
     marginLeft: 20,
     flex: 1,
     flexDirection: 'column',
@@ -54,11 +58,10 @@ export const styles = StyleSheet.create({
   },
   textSmall: {
     fontSize: fontSizeResponsive(2.1),
-    color: BLUE,
-  },
-  textJustify: {
+    color: SUB_GRAY,
     textAlign: 'justify',
   },
+
   textLineHeight: {
     lineHeight: 20,
   },
@@ -68,17 +71,21 @@ export const styles = StyleSheet.create({
   containerRow: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 22,
+    padding: 10,
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: WHITE,
+    backgroundColor: LIGHT_PURPLE,
     borderWidth: 1,
-    borderColor: DARK_BLUE,
-    paddingVertical: 9.1,
-    borderRadius: 100,
-    width: '60%',
+    borderColor: DARK_PURPLE,
+    // paddingVertical: 9.1,
+    borderRadius: 10,
+    width: '100%',
+  },
+  readMore: {
+    fontSize: fontSizeResponsive(1.9),
+    color: LIGHT_GRAY,
   },
   icon: {
     fontSize: fontSizeResponsive(2.8),

@@ -1,84 +1,160 @@
-import React, {useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/core';
+import React, {Fragment, useEffect, useState} from 'react';
 import {
   View,
-  Modal,
   Text,
   Image,
-  ScrollView,
-  TouchableOpacity,
+  ListRenderItem,
+  ListRenderItemInfo,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import ReadMore from 'react-native-read-more-text';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {WHITE} from '../../../../constants/Colors/colorpalette';
-import {tmdbGetPerson} from '../../../../constants/services/APICallsTMDB';
+import {BLACK, WHITE} from '../../../../constants/Colors/colorpalette';
+import {
+  tmdbGetPerson,
+  tmdbGetPersonReferences,
+} from '../../../../constants/services/APICallsTMDB';
 import {width} from '../../../../constants/utils/dimensions';
+import {getAge} from '../../../../constants/utils/getAge';
 import {getImageApi} from '../../../../constants/utils/Image';
-import {CustomButton} from '../../../blueprints/CustomButton/CustomButton';
+import {CustomFlatList} from '../../../blueprints/CustomFlatList/CustomFlatList';
+import {CustomModal} from '../../../blueprints/CustomModal/CustomModal';
+import {CustomTouchableOpacity} from '../../../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
 import NotificationCard from '../../../NotificationCard/NotificationCard';
 import Spinner from '../../../Spinner/Spinner';
+import {ReadMoreFooter} from '../../MovieDetail/HandleReadMore/ReadMoreFooter';
+import {
+  ICast,
+  IPersonWithMovieCredits,
+} from '../../MovieDetail/Interfaces/ICastWithCredits';
+import {CREDITS_INIT} from './MovieCreditsInitials';
+import {PERSON_INIT} from './PersonInitials';
 import {styles} from './styles';
 
 interface ICastModalProps {
   isVisible: boolean;
   onClose: () => void;
   creditId: number;
-  style: {};
 }
-
-const UNINFORMED = 'Uninformed';
-const INITIAL_INFO = {
-  profilePath: '',
-  name: `${UNINFORMED} name`,
-  knownForDepartment: `${UNINFORMED} department`,
-  birthday: '',
-  placeOfBirth: `${UNINFORMED} place of birth`,
-  biography: UNINFORMED,
-};
 
 export const CastModal: React.FC<ICastModalProps> = ({
   isVisible,
   onClose,
   creditId,
-  style,
 }: ICastModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [info, setInfo] = useState(INITIAL_INFO);
-  const {name, profilePath, knownForDepartment, placeOfBirth, biography} = info;
 
-  useEffect(() => {
-    requestTeamInfo();
-  }, [creditId]);
+  const [creditLoading, setCreditsLoading] = useState(false);
+  const [playedInMap, setPlayedInMap] = useState<
+    Map<number, IPersonWithMovieCredits>
+  >(new Map<number, IPersonWithMovieCredits>());
 
-  const getAge = () => {
-    const {birthday} = info;
+  const [info, setInfo] = useState(PERSON_INIT);
+  const [infoCredit, setInfoCredit] = useState(CREDITS_INIT);
+  const {
+    name,
+    profile_path,
+    known_for_department,
+    place_of_birth,
+    biography,
+    birthday,
+  } = info;
 
-    if (birthday) {
-      const today = new Date();
-      const birthDate = new Date(birthday);
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age -= 1;
-      return `${age} years`;
+  const {
+    adult,
+    backdrop_path,
+    character,
+    credit_id,
+    genre_ids,
+    id,
+    order,
+    original_language,
+    original_title,
+    overview,
+    poster_path,
+    release_date,
+    title,
+    video,
+    vote_average,
+    vote_count,
+    popularity,
+  } = infoCredit;
+  const updateMap = (id: number, movieValues: IPersonWithMovieCredits) => {
+    setPlayedInMap(
+      new Map<number, IPersonWithMovieCredits>(
+        playedInMap.set(id, movieValues),
+      ),
+    );
+  };
+
+  const requestCredits = async () => {
+    try {
+      if (creditId) {
+        let playedMovieBody = new Map<number, IPersonWithMovieCredits>();
+        setCreditsLoading(true);
+        const mc = await tmdbGetPersonReferences(creditId);
+
+        for (let i = 0; i < mc.cast.length; i++) {
+          playedMovieBody = playedMovieBody.set(mc.cast[i].id, mc.cast[i]);
+
+          updateMap(mc.cast[i].id, mc.cast[i]);
+        }
+        setPlayedInMap(playedMovieBody);
+        // console.log('HERE ARE THE PLAYEDMOVIEBODY INFORMATIONS');
+        // console.log(playedMovieBody);
+        // setInfoCredit({
+        //   adult: mc.cast[0].adult || CREDITS_INIT.adult,
+        //   backdrop_path: mc.cast[0].backdrop_path || CREDITS_INIT.backdrop_path,
+        //   poster_path: mc.cast[2].poster_path || CREDITS_INIT.poster_path,
+        //   character: mc.cast[0].character || CREDITS_INIT.character,
+        //   credit_id: mc.cast[0].credit_id || CREDITS_INIT.credit_id,
+        //   genre_ids: mc.cast[0].genre_ids || CREDITS_INIT.genre_ids,
+        //   id: mc.cast[0].id || CREDITS_INIT.id,
+        //   order: mc.cast[0].order || CREDITS_INIT.order,
+        //   original_language:
+        //     mc.cast[0].original_language || CREDITS_INIT.original_language,
+        //   original_title:
+        //     mc.cast[0].original_title || CREDITS_INIT.original_title,
+        //   overview: mc.cast[0].overview || CREDITS_INIT.overview,
+        //   popularity: mc.cast[0].popularity || CREDITS_INIT.popularity,
+        //   release_date: mc.cast[0].release_date || CREDITS_INIT.release_date,
+        //   title: mc.cast[0].title || CREDITS_INIT.title,
+        //   video: mc.cast[0].video || CREDITS_INIT.video,
+        //   vote_average: mc.cast[0].vote_average || CREDITS_INIT.vote_average,
+        //   vote_count: mc.cast[0].vote_count || CREDITS_INIT.vote_count,
+        // });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setCreditsLoading(false);
     }
-
-    return `${UNINFORMED} age`;
   };
 
   const requestTeamInfo = async () => {
     try {
       if (creditId) {
         setIsLoading(true);
-
-        const data = await tmdbGetPerson(creditId);
+        const item = await tmdbGetPerson(creditId);
 
         setInfo({
-          profilePath: data.profile_path || INITIAL_INFO.profilePath,
-          name: data.name || INITIAL_INFO.name,
-          knownForDepartment:
-            data.known_for_department || INITIAL_INFO.knownForDepartment,
-          birthday: data.birthday || INITIAL_INFO.birthday,
-          placeOfBirth: data.place_of_birth || INITIAL_INFO.placeOfBirth,
-          biography: data.biography || INITIAL_INFO.biography,
+          profile_path: item.profile_path || PERSON_INIT.profile_path,
+          name: item.name || PERSON_INIT.name,
+          known_for_department:
+            item.known_for_department || PERSON_INIT.known_for_department,
+          birthday: item.birthday || PERSON_INIT.birthday,
+          place_of_birth: item.place_of_birth || PERSON_INIT.place_of_birth,
+          biography: item.biography || PERSON_INIT.biography,
+          also_known_as: item.also_known_as || PERSON_INIT.also_known_as,
+          deathday: item.deathday || PERSON_INIT.deathday,
+          gender: item.gender || PERSON_INIT.gender,
+          homepage: item.homepage || PERSON_INIT.homepage,
+          popularity: item.popularity || PERSON_INIT.popularity,
+          adult: item.adult || PERSON_INIT.adult,
+          id: item.id || PERSON_INIT.id,
+          imdb_id: item.imdb_id || PERSON_INIT.imdb_id,
         });
       }
     } catch (err) {
@@ -88,77 +164,119 @@ export const CastModal: React.FC<ICastModalProps> = ({
     }
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      requestTeamInfo();
+      requestCredits();
+    }, [creditId]),
+  );
+
+  const renderMovieCreditsItem: ListRenderItem<IPersonWithMovieCredits> = ({
+    item,
+  }: ListRenderItemInfo<IPersonWithMovieCredits>) => (
+    <CustomTouchableOpacity
+      onPress={() => console.log(item.id)}
+      activeOpacity={0.5}
+      key={item.id}>
+      <span
+        style={{
+          paddingRight: 10,
+          paddingTop: 5,
+          width:110
+        }}>
+        <Image
+          source={getImageApi(item.poster_path)}
+          style={{
+            height: 150,
+            width: 100,
+            borderRadius: 5,
+          }}
+          resizeMode="cover"
+        />
+      </span>
+    </CustomTouchableOpacity>
+  );
+
   return (
-    <Modal visible={isVisible} onRequestClose={onClose}>
-      <View style={style}>
-        <View style={styles.containerModal}>
-          {isLoading ? (
-            <Spinner />
-          ) : isError ? (
-            <ScrollView style={styles.containerScroll}>
-              <NotificationCard
-                textError="Something wrong has happened, please try again later."
-                textButton="Load"
-                style
-                icon="alert-octagon"
-                onPress={requestTeamInfo}
+    <CustomModal style={styles.modal} isVisible={isVisible} onClose={onClose}>
+      <View style={styles.containerModal}>
+        {isLoading && creditLoading ? (
+          <Spinner />
+        ) : isError ? (
+          <ScrollView style={styles.containerScroll}>
+            <NotificationCard
+              textError="There was an error fetching. Catched in: CastModal-Notificationcard"
+              textButton="Load"
+              style
+              icon="alert-octagon"
+              onPress={requestTeamInfo}
+            />
+          </ScrollView>
+        ) : (
+          <ScrollView style={styles.containerScroll}>
+            <View style={styles.containerMainText}>
+              <Image
+                source={getImageApi(profile_path)}
+                style={styles.image}
+                resizeMode="cover"
               />
-            </ScrollView>
-          ) : (
-            <ScrollView style={styles.containerScroll}>
-              <View style={styles.containerMainText}>
-                <Image
-                  source={getImageApi(profilePath)}
-                  style={styles.photo}
-                  width={width * 0.33}
-                />
-                <View style={styles.textItens}>
-                  <Text style={styles.titleName}>{name}</Text>
-                  <View style={styles.containerTitleMargin}>
-                    <Text
-                      numberOfLines={2}
-                      style={[styles.textSmall, styles.textJustify]}>
-                      {knownForDepartment}
-                    </Text>
-                  </View>
-                  <View style={styles.containerTitleMargin}>
-                    <Text
-                      numberOfLines={2}
-                      style={[styles.textSmall, styles.textJustify]}>
-                      {getAge()}
-                    </Text>
-                  </View>
-                  <View style={styles.containerTitleMargin}>
-                    <Text
-                      numberOfLines={2}
-                      style={[styles.textSmall, styles.textJustify]}>
-                      {placeOfBirth}
-                    </Text>
-                  </View>
+              <View style={styles.textItems}>
+                <Text style={styles.titleName}>{name}</Text>
+                <View style={styles.containerTitleMargin}>
+                  <Text numberOfLines={2} style={styles.textSmall}>
+                    {known_for_department}
+                  </Text>
+                </View>
+                <View style={styles.containerTitleMargin}>
+                  <Text numberOfLines={2} style={styles.textSmall}>
+                    {getAge(birthday)}
+                  </Text>
+                </View>
+                <View style={styles.containerTitleMargin}>
+                  <Text numberOfLines={2} style={styles.textSmall}>
+                    {place_of_birth}
+                  </Text>
                 </View>
               </View>
-              <Text style={styles.titleInfo}>Biography</Text>
-              <Text
-                style={[
-                  styles.textSmall,
-                  styles.textLineHeight,
-                  styles.textJustify,
-                ]}>
-                {biography}
-              </Text>
-            </ScrollView>
-          )}
-          <View style={styles.containerRow}>
-            <TouchableOpacity style={styles.button} onPress={onClose}>
-              <MaterialCommunityIcons
-                name={'chevron-down'}
-                size={width * 0.09}
-                color={WHITE}
+            </View>
+            <Text style={styles.titleInfo}>Biography</Text>
+            <View style={{marginBottom: 10}}>
+              {/* <ReadMore
+                numberOfLines={8}
+                renderTruncatedFooter={(handlePress: () => void) =>
+                  ReadMoreFooter({text: 'Read more', handlePress})
+                }
+                renderRevealedFooter={(handlePress: () => void) =>
+                  ReadMoreFooter({text: 'Read less', handlePress})
+                }>
+                <Text style={styles.readMore}>{biography}</Text>
+              </ReadMore> */}
+            </View>
+            <Fragment>
+              <Text style={styles.titleInfo}>Played in</Text>
+              <CustomFlatList
+                data={Array.from(playedInMap.values())}
+                keyExtractor={(item: IPersonWithMovieCredits, index: number) =>
+                  `${item.id}-${index}`
+                }
+                renderItem={renderMovieCreditsItem}
               />
-            </TouchableOpacity>
-          </View>
+            </Fragment>
+          </ScrollView>
+        )}
+        <View style={styles.containerRow}>
+          <CustomTouchableOpacity
+            activeOpacity={0.5}
+            style={styles.button}
+            onPress={onClose}>
+            <MaterialCommunityIcons
+              name={'chevron-down'}
+              size={width * 0.09}
+              color={BLACK}
+            />
+          </CustomTouchableOpacity>
         </View>
       </View>
-    </Modal>
+    </CustomModal>
   );
 };
