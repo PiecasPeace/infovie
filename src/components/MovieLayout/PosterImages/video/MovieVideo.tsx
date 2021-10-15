@@ -1,6 +1,6 @@
 import React from 'react';
 import {WebView} from 'react-native-webview';
-import Screen from '../../../Screen/Screen';
+import CustomSafeAreaView from '../../../Screen/CustomSafeAreaView';
 import Spinner from '../../../Spinner/Spinner';
 import { IMovieVideoProps } from './IMovieVideoProps';
 
@@ -11,7 +11,7 @@ export const MovieVideo: React.FC<IMovieVideoProps> = ({
 }: IMovieVideoProps) => {
   const {key} = route.params;
   return (
-    <Screen>
+    <CustomSafeAreaView>
       <WebView
         source={{
           uri: `https://www.youtube.com/embed/${key}?start=0`,
@@ -19,7 +19,7 @@ export const MovieVideo: React.FC<IMovieVideoProps> = ({
         startInLoadingState
         renderLoading={Loading}
       />
-    </Screen>
+    </CustomSafeAreaView>
   );
 };
 

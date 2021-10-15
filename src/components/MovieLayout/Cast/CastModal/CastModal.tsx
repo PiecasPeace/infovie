@@ -1,4 +1,5 @@
 import {useFocusEffect} from '@react-navigation/core';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {Fragment, useEffect, useState} from 'react';
 import {
   View,
@@ -9,8 +10,14 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import ReadMore from 'react-native-read-more-text';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {BLACK, WHITE} from '../../../../constants/Colors/colorpalette';
+import {
+  BLACK,
+  LIGHT_PURPLE,
+  WHITE,
+} from '../../../../constants/Colors/colorpalette';
+import {RootStackParamList} from '../../../../constants/Navigation/navigation';
 import {
   tmdbGetPerson,
   tmdbGetPersonReferences,
@@ -22,12 +29,14 @@ import {CustomFlatList} from '../../../blueprints/CustomFlatList/CustomFlatList'
 import {CustomModal} from '../../../blueprints/CustomModal/CustomModal';
 import {CustomTouchableOpacity} from '../../../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
 import NotificationCard from '../../../NotificationCard/NotificationCard';
+import CustomSafeAreaView from '../../../Screen/CustomSafeAreaView';
 import Spinner from '../../../Spinner/Spinner';
 import {ReadMoreFooter} from '../../MovieDetail/HandleReadMore/ReadMoreFooter';
 import {
   ICast,
   IPersonWithMovieCredits,
 } from '../../MovieDetail/Interfaces/ICastWithCredits';
+import {SelectionRow} from '../SelectionRow/SelectionRow';
 import {CREDITS_INIT} from './MovieCreditsInitials';
 import {PERSON_INIT} from './PersonInitials';
 import {styles} from './styles';
@@ -36,12 +45,14 @@ interface ICastModalProps {
   isVisible: boolean;
   onClose: () => void;
   creditId: number;
+  navigation: StackNavigationProp<RootStackParamList, 'MovieDetails'>;
 }
 
 export const CastModal: React.FC<ICastModalProps> = ({
   isVisible,
   onClose,
   creditId,
+  navigation,
 }: ICastModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -52,7 +63,6 @@ export const CastModal: React.FC<ICastModalProps> = ({
   >(new Map<number, IPersonWithMovieCredits>());
 
   const [info, setInfo] = useState(PERSON_INIT);
-  const [infoCredit, setInfoCredit] = useState(CREDITS_INIT);
   const {
     name,
     profile_path,
@@ -62,25 +72,6 @@ export const CastModal: React.FC<ICastModalProps> = ({
     birthday,
   } = info;
 
-  const {
-    adult,
-    backdrop_path,
-    character,
-    credit_id,
-    genre_ids,
-    id,
-    order,
-    original_language,
-    original_title,
-    overview,
-    poster_path,
-    release_date,
-    title,
-    video,
-    vote_average,
-    vote_count,
-    popularity,
-  } = infoCredit;
   const updateMap = (id: number, movieValues: IPersonWithMovieCredits) => {
     setPlayedInMap(
       new Map<number, IPersonWithMovieCredits>(
@@ -92,8 +83,8 @@ export const CastModal: React.FC<ICastModalProps> = ({
   const requestCredits = async () => {
     try {
       if (creditId) {
-        let playedMovieBody = new Map<number, IPersonWithMovieCredits>();
         setCreditsLoading(true);
+        let playedMovieBody = new Map<number, IPersonWithMovieCredits>();
         const mc = await tmdbGetPersonReferences(creditId);
 
         for (let i = 0; i < mc.cast.length; i++) {
@@ -102,29 +93,6 @@ export const CastModal: React.FC<ICastModalProps> = ({
           updateMap(mc.cast[i].id, mc.cast[i]);
         }
         setPlayedInMap(playedMovieBody);
-        // console.log('HERE ARE THE PLAYEDMOVIEBODY INFORMATIONS');
-        // console.log(playedMovieBody);
-        // setInfoCredit({
-        //   adult: mc.cast[0].adult || CREDITS_INIT.adult,
-        //   backdrop_path: mc.cast[0].backdrop_path || CREDITS_INIT.backdrop_path,
-        //   poster_path: mc.cast[2].poster_path || CREDITS_INIT.poster_path,
-        //   character: mc.cast[0].character || CREDITS_INIT.character,
-        //   credit_id: mc.cast[0].credit_id || CREDITS_INIT.credit_id,
-        //   genre_ids: mc.cast[0].genre_ids || CREDITS_INIT.genre_ids,
-        //   id: mc.cast[0].id || CREDITS_INIT.id,
-        //   order: mc.cast[0].order || CREDITS_INIT.order,
-        //   original_language:
-        //     mc.cast[0].original_language || CREDITS_INIT.original_language,
-        //   original_title:
-        //     mc.cast[0].original_title || CREDITS_INIT.original_title,
-        //   overview: mc.cast[0].overview || CREDITS_INIT.overview,
-        //   popularity: mc.cast[0].popularity || CREDITS_INIT.popularity,
-        //   release_date: mc.cast[0].release_date || CREDITS_INIT.release_date,
-        //   title: mc.cast[0].title || CREDITS_INIT.title,
-        //   video: mc.cast[0].video || CREDITS_INIT.video,
-        //   vote_average: mc.cast[0].vote_average || CREDITS_INIT.vote_average,
-        //   vote_count: mc.cast[0].vote_count || CREDITS_INIT.vote_count,
-        // });
       }
     } catch (err) {
       console.log(err);
@@ -166,35 +134,52 @@ export const CastModal: React.FC<ICastModalProps> = ({
 
   useFocusEffect(
     React.useCallback(() => {
-      requestTeamInfo();
       requestCredits();
+      requestTeamInfo();
     }, [creditId]),
   );
+  interface ICreditLayout {
+    openDetails: (id: number) => void;
+    item: IPersonWithMovieCredits;
+  }
+  const CreditLayout: React.FC<ICreditLayout> = ({
+    item,
+    openDetails,
+  }: ICreditLayout) => {
+    return (
+      <CustomTouchableOpacity
+        onPress={() => openDetails(item.id)}
+        activeOpacity={0.5}
+        key={item.id}>
+        <View
+          style={{
+            paddingRight: 10,
+            width: '50%',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            // flex:1
+          }}>
+          <Image
+            source={getImageApi(item.poster_path)}
+            style={{
+              width: 130,
+              height: 200,
+              borderRadius: 5,
+            }}
+            resizeMode="cover"
+          />
+        </View>
+      </CustomTouchableOpacity>
+    );
+  };
 
   const renderMovieCreditsItem: ListRenderItem<IPersonWithMovieCredits> = ({
     item,
   }: ListRenderItemInfo<IPersonWithMovieCredits>) => (
-    <CustomTouchableOpacity
-      onPress={() => console.log(item.id)}
-      activeOpacity={0.5}
-      key={item.id}>
-      <span
-        style={{
-          paddingRight: 10,
-          paddingTop: 5,
-          width:110
-        }}>
-        <Image
-          source={getImageApi(item.poster_path)}
-          style={{
-            height: 150,
-            width: 100,
-            borderRadius: 5,
-          }}
-          resizeMode="cover"
-        />
-      </span>
-    </CustomTouchableOpacity>
+    <CreditLayout
+      openDetails={() => navigation.navigate('MovieDetails', {id: item.id})}
+      item={item}
+    />
   );
 
   return (
@@ -239,29 +224,39 @@ export const CastModal: React.FC<ICastModalProps> = ({
                 </View>
               </View>
             </View>
-            <Text style={styles.titleInfo}>Biography</Text>
-            <View style={{marginBottom: 10}}>
-              {/* <ReadMore
-                numberOfLines={8}
-                renderTruncatedFooter={(handlePress: () => void) =>
-                  ReadMoreFooter({text: 'Read more', handlePress})
-                }
-                renderRevealedFooter={(handlePress: () => void) =>
-                  ReadMoreFooter({text: 'Read less', handlePress})
-                }>
-                <Text style={styles.readMore}>{biography}</Text>
-              </ReadMore> */}
-            </View>
-            <Fragment>
-              <Text style={styles.titleInfo}>Played in</Text>
-              <CustomFlatList
-                data={Array.from(playedInMap.values())}
-                keyExtractor={(item: IPersonWithMovieCredits, index: number) =>
-                  `${item.id}-${index}`
-                }
-                renderItem={renderMovieCreditsItem}
-              />
-            </Fragment>
+            <SelectionRow
+              marginLeft={0}
+              color={LIGHT_PURPLE}
+              title={'Biography'}>
+              <View style={{marginBottom: 10}}>
+                <ReadMore
+                  numberOfLines={8}
+                  renderTruncatedFooter={(handlePress: () => void) =>
+                    ReadMoreFooter({text: 'Read more', handlePress})
+                  }
+                  renderRevealedFooter={(handlePress: () => void) =>
+                    ReadMoreFooter({text: 'Read less', handlePress})
+                  }>
+                  <Text style={styles.readMore}>{biography}</Text>
+                </ReadMore>
+              </View>
+            </SelectionRow>
+            <CustomSafeAreaView style={{flex: 1}}>
+              <SelectionRow
+                title={'Played in'}
+                color={LIGHT_PURPLE}
+                marginLeft={0}>
+                <CustomFlatList
+                  horizontal={true}
+                  data={Array.from(playedInMap.values())}
+                  keyExtractor={(
+                    item: IPersonWithMovieCredits,
+                    index: number,
+                  ) => `${item.id}-${index}`}
+                  renderItem={renderMovieCreditsItem}
+                />
+              </SelectionRow>
+            </CustomSafeAreaView>
           </ScrollView>
         )}
         <View style={styles.containerRow}>

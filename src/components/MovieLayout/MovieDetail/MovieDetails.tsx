@@ -12,7 +12,7 @@ import {sliceArrayLength} from '../../../constants/utils/sliceArrayLength';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SelectionRow} from '../Cast/SelectionRow/SelectionRow';
 import {PosterImages} from '../PosterImages/PosterImages';
-import Screen from '../../Screen/Screen';
+import CustomSafeAreaView from '../../Screen/CustomSafeAreaView';
 import {tmdbGetById} from '../../../constants/services/APICallsTMDB';
 import {convertMinsToHrs} from '../../../constants/convert/convertMinToHour';
 import {convertTypeWithGenre} from '../../../constants/utils/genreFunctions';
@@ -206,7 +206,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     production_companies,
   } = detailInfo;
   return (
-    <Screen>
+    <CustomSafeAreaView>
       {loading ? (
         <Spinner />
       ) : (
@@ -255,9 +255,10 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
             isVisible={personVisible}
             creditId={creditId}
             onClose={handleVisiblePerson}
+            navigation={navigation}
           />
         </ScrollView>
       )}
-    </Screen>
+    </CustomSafeAreaView>
   );
 };

@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     height: '100%',
   },
   containerScroll: {
+    flex: 1,
     padding: 10,
     paddingTop: 0,
     marginTop: 20,
@@ -35,7 +36,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
   },
   containerMainText: {
-    marginBottom: 30,
+    marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
