@@ -1,13 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {fontSizeResponsive} from '../../components/utils/Dimensions';
-import {LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE} from '../Colors';
+import {fontSizeResponsive} from '../utils/dimensions';
+import {LIME,DARK_GRAY, LIGHT_GREEN, LIGHT_RED, LIGHT_YELLOW, WHITE, BLACK} from '../Colors/colorpalette';
 
 export const styles = StyleSheet.create({
   score: {
     minWidth: '25%',
-    paddingVertical: 2,
-    paddingHorizontal: 4,
-    borderRadius: 40,
+    padding:3,
+    borderRadius: 3,
   },
   textPercent: {
     fontSize: fontSizeResponsive(2.1),
@@ -24,4 +23,10 @@ export const styles = StyleSheet.create({
   high: {
     backgroundColor: LIGHT_GREEN,
   },
+  zero: {
+    backgroundColor:DARK_GRAY,
+  },
+  lime:{
+    backgroundColor:LIME,
+  }
 });

@@ -1,6 +1,6 @@
 const API_KEY = '94ff60134af5b7bbe6cb00087e37359f';
 
-const RequestPath = {
+export const requestPath = {
     Trending: `/trending/all/week?api_key=${API_KEY}&language=en-US`,
     NetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
     TopRated: `/movie/top_rated?api_key=${API_KEY}&language=en-US`,
@@ -11,8 +11,6 @@ const RequestPath = {
     Documentaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
     MostPopular: `/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
 }
-
-export default RequestPath;
 
 // https://image.tmdb.org/t/p/original//trending/all/week?api_key=94ff60134af5b7bbe6cb00087e37359f&language=en-US
 // https://image.tmdb.org/t/p/original/uGhQ2ZGBpzCj6wC5jUrybsZuPTI.jpg

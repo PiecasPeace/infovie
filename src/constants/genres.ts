@@ -1,4 +1,4 @@
-export const genre = {
+export const genreObject = {
   '12': {name: 'Adventure'},
   '14': {name: 'Fantasy'},
   '16': {name: 'Animation'},
@@ -17,6 +17,8 @@ export const genre = {
   '10749': {name: 'Romance'},
   '10751': {name: 'Family'},
   '10752': {name: 'War'},
+  '10765': {name: 'Sci-Fi & Fantasy'},
+  '10768': {name: 'War & Politics'},
   '10770': {name: 'TV Movie'},
 };
 
@@ -39,5 +41,7 @@ export const genreMap = new Map([
   [10749, 'Romance'],
   [10751, 'Family'],
   [10752, 'War'],
+  [10765, 'Sci-Fi & Fantasy'],
+  [10768, 'War & Politics'],
   [10770, 'TV Movie'],
 ]);

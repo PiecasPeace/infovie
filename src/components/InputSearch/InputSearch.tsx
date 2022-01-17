@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import Feather from 'feather-icons-react';
-import { TouchableOpacity } from '../TouchableOpacity/TouchableOpacity';
-import { DARK_GRAY } from '../../constants/Colors';
+import { TouchableOpacity } from '../blueprints/CustomTouchableOpacity/CustomTouchableOpacity';
+import { DARK_GRAY } from '../../constants/Colors/colorpalette';
 // import axios from '../services/axios'
 import styles from './styles';
-import { tmdbITEM } from '../../PageScreens/QRPage/Interfaces/IMovieInterface';
+import { ItmdbItem } from '../../constants/Interfaces/IMovieInterface';
 
 const InputSearch = () => {
     const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=94ff60134af5b7bbe6cb00087e37359f&query=`;
