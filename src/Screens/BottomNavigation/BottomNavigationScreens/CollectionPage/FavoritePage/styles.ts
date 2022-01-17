@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
- 
+
   //YOUTUBE VID
   backTextWhite: {
     color: '#FFF',
@@ -38,12 +38,11 @@ export const styles = StyleSheet.create({
   },
   deleteOpacity: {
     backgroundColor: '#c92e2c',
-    width:100,
-    height:100,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:1,
-
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 1,
   },
   backRightBtn: {
     alignItems: 'center',
