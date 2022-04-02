@@ -119,7 +119,6 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
         //     });
         //   })
         // }
-        setLoading(false);
         setDetailInfo({
           id,
           backdrop_path: item.backdrop_path || IOriginal_Info.backdrop_path,
@@ -133,6 +132,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
           images: formatImageUrl(item.images.backdrops),
           infosDetail: getInfosDetail(item),
         });
+        setLoading(false);
       });
       console.log(tmdbGetById(id));
       console.log(cast);
@@ -164,7 +164,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
   }: ListRenderItemInfo<ICastItem>) => (
     <CastItem
       credit_id={item.credit_id}
-      image={item.profile_path}
+      image={item.profile_path || null}
       name={item.character}
       original_name={item.original_name}
       onPress={() => handlePersonModal(item.id)}
@@ -205,6 +205,7 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
     crew,
     production_companies,
   } = detailInfo;
+
   return (
     <CustomSafeAreaView>
       {loading ? (
@@ -238,10 +239,18 @@ export const MovieDetails: React.FC<IMovieDetailProps> = ({
             </SelectionRow>
 
             <SelectionRow title={'Main Cast'}>
-              <PersonRowList data={cast} renderItem={PersonList} />
+              <PersonRowList
+                data={cast}
+                renderItem={PersonList}
+                ListEmptyComponent={renderEmptyList}
+              />
             </SelectionRow>
             <SelectionRow title={'Producer'}>
-              <CrewRowList data={crew} renderItem={CrewList} />
+              <CrewRowList
+                data={crew}
+                renderItem={CrewList}
+                ListEmptyComponent={renderEmptyList}
+              />
             </SelectionRow>
             <SelectionRow title={'Companies'}>
               <CompanyRowList

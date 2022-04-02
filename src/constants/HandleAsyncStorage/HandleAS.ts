@@ -70,10 +70,10 @@ export const HandleStoring = async (
       } else {
         deleteFavorite(favoriteMovieValues.id, favoriteMap);
       }
-    } catch (err) {
-      err.message;
-    }
+  } catch (err) {
+    console.log("CHECK")
   }
+}
 };
 
 export const handleMovies = async (

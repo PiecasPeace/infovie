@@ -4,4 +4,5 @@ import {ICastItem} from '../../../../../../constants/Interfaces/IMovieByIDInterf
 export interface IPersonRowListProps {
   data: ICastItem[];
   renderItem: ListRenderItem<ICastItem>;
+  ListEmptyComponent: React.ComponentType<any> | React.ReactElement | null;
 }

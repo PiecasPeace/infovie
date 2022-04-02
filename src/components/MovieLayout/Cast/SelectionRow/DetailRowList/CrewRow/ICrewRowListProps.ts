@@ -4,4 +4,5 @@ import {ICrewItem} from '../../../../../../constants/Interfaces/IMovieByIDInterf
 export interface ICrewRowListProps {
   data: ICrewItem[];
   renderItem: ListRenderItem<ICrewItem>;
+  ListEmptyComponent: React.ComponentType<any> | React.ReactElement | null;
 }
